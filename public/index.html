@@ -59,9 +59,9 @@
         <div class="glass-card rounded-2xl p-6 border border-amber-500/20">
             <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-6 border-b border-gray-800">
                 <div>
-                    <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+                    <h2 id="txtDashTitle" class="text-2xl font-bold text-white flex items-center gap-2">
                         <i data-lucide="layout-dashboard" class="w-6 h-6 text-amber-400"></i>
-                        <span id="txtDashTitle">Dashboard Barataa</span>
+                        Dashboard Barataa
                     </h2>
                     <p id="txtDashSub" class="text-xs text-gray-400 mt-1">Baga nagaan dhufte! Barnoota kee asirraa hordofi.</p>
                 </div>
@@ -170,7 +170,7 @@
                 lblRegName: "Maqaa Guutuu", lblRegEmail: "Email", lblRegCode: "Verification Code (6-Digit Bot OTP)",
                 btnVerifyComplete: "Verify Code & Complete Registration",
                 loginTitle: "Log In VIP Account", lblLoginEmail: "Email", lblLoginCode: "Verification Code", btnSignIn: "Sign In",
-                markDone: "✓ Completed", markBtn: "Mark Done"
+                markDone: "✓ Xumurameera", markBtn: "Xumuruuf Mark Godhi"
             },
             am: {
                 subTitle: "የንግድ አካዳሚ", login: "ግባ", register: "VIP ይመዝገቡ", signOut: "ውጣ",
@@ -211,134 +211,726 @@
         const modulesData = [
             {
                 id: 1,
-                title: { om: "Moojulii 1: Seensa Gabaa Forex & Price Action Base", am: "ሞጁል 1: የፎሬክስ ገበያ መግቢያ እና ፕራይስ አክሽን", en: "Module 1: Introduction to Forex & Price Action Basics" },
+                title: {
+                    om: "Moojulii 1: Seensa Gabaa Forex & Price Action Base",
+                    am: "ሞጁል 1: የፎሬክስ ገበያ መግቢያ እና ፕራይስ አክሽን",
+                    en: "Module 1: Introduction to Forex & Price Action Basics"
+                },
                 lessons: [
-                    { id: 1, title: "L1: Gabaan Forex Maali? (Market Mechanics)", desc: "Gabaan Forex gabaa faayinaansii addunyaa isa guddaadha. Pips, Lot Size, Bid/Ask Price fi Spread galmeessuu." },
-                    { id: 2, title: "L2: Price Action Trading Philosophy", desc: "Indicator utuu hin hin fayyadamin sossoha gatii (Price Movement) qofa dhiheessuun analaayiz gochuu." },
-                    { id: 3, title: "L3: Structural Highs & Structural Lows", desc: "HH (Higher High), HL (Higher Low), LH (Lower High), fi LL (Lower Low) adda baasuu." }
+                    {
+                        id: 1,
+                        title: { om: "L1: Gabaan Forex Maali? (Market Mechanics)", am: "L1: የፎሬክስ ገበያ ምንድን ነው? (የገበያ አሰራር)", en: "L1: What is Forex Market? (Market Mechanics)" },
+                        p1: {
+                            om: "Gabaan Forex (Foreign Exchange Market) gabaa faayinaansii addunyaa irratti isa guddaa fi guyyaa keessatti daldala trillions 7 olii qabuudha. Bakka tokkotti walga'anii kan hin daldalamne ta'ee, baankota gurguddoo, dhaabbilee fi daldaltoota dhuunfaan internet-riin walitti hidhama.",
+                            am: "የፎሬክስ ገበያ (Foreign Exchange Market) በዓለም ላይ ትልቁ የፋይናንስ ገበያ ሲሆን በዕለት ተዕለት ከ 7 ትሪሊዮን ዶላር በላይ ዝውውር ይደረግበታል። በአንድ ቋሚ ቦታ የማይካሄድ ሆኖ በባንኮች፣ ተቋማት እና ነጋዴዎች መካከል በዲጂታል ቴክኖሎጂ የተገናኘ ነው።",
+                            en: "The Foreign Exchange Market is the largest financial market globally, trading over $7 trillion daily. It is a decentralized over-the-counter market connecting global banks, institutions, and individual traders digitally."
+                        },
+                        p2: {
+                            om: "Daldalli kun keessattuu currency pairs (fkn: EURUSD, GBPUSD, XAUUSD) irratti xiyyeeffata. Tokko gurguruudhaan isa biraa bituun bu'aa argachuuf pips, lot size, bid/ask price fi spread hubachuun murteessaadha.",
+                            am: "ይህ ንግድ በዋናነት በምንዛሬ ጥንዶች (ለምሳሌ EURUSD, GBPUSD, XAUUSD) ላይ ያተኮረ ነው። አንዱን በመሸጥ ሌላውን በመግዛት ትርፍ ለማግኘት የፒፕስ፣ የሎት ሳይዝ፣ የቢድ/አስክ ዋጋ እና የስፕሬድ ጽንሰ-ሀሳቦችን ማወቅ ወሳኝ ነው።",
+                            en: "Trading primarily focuses on currency pairs like EURUSD, GBPUSD, and XAUUSD. Understanding pips, lot sizes, bid/ask spreads, and leverage is essential to profiting from price fluctuations."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80"
+                    },
+                    {
+                        id: 2,
+                        title: { om: "L2: Price Action Trading Philosophy", am: "L2: የፕራይስ አክሽን ትሬዲንግ ፍልስፍና", en: "L2: Price Action Trading Philosophy" },
+                        p1: {
+                            om: "Price Action jechuun mala daldalaa kan indicator alatti haala sossoha gatii (Price Movement) qofa qorachuun murtoo irra gahuu dha. Gatiin ragaa sirrii gabaa qabateessadha.",
+                            am: "ፕራይስ አክሽን ማለት ኢንዲኬተሮችን ሳይጠቀሙ የዋጋ እንቅስቃሴን (Price Movement) ብቻ በማጥናት ውሳኔ ላይ የሚደርስበት የንግድ ዘዴ ነው። ዋጋው የገበያውን እውነተኛ መረጃ ያንጸባርቃል።",
+                            en: "Price Action trading is a methodology where traders analyze pure historical and current price movements without relying on lagging indicators. Price reflects all market sentiment."
+                        },
+                        p2: {
+                            om: "Daldaltoonni Price Action support, resistance, candelstick formations fi market structure qofa ilaaluun fedhii 'Buyers' fi 'Sellers' gabaa keessatti dorgoman adda baasu.",
+                            am: "የፕራይስ አክሽን ነጋዴዎች ሰፖርት፣ ሬዚስታንስ፣ የካንደልስቲክ ቅርጾች እና የገበያ መዋቅርን በመመልከት በገበያው ውስጥ ያሉትን የገዢዎች እና ሻጮች የበላይነት ይለያሉ።",
+                            en: "Price Action traders study support, resistance, candlestick formations, and market structure to determine whether buyers or sellers are currently in control of the market."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=800&q=80"
+                    },
+                    {
+                        id: 3,
+                        title: { om: "L3: Structural Highs & Structural Lows", am: "L3: የገበያ ከፍተኛ እና ዝቅተኛ ነጥቦች (HH/HL)", en: "L3: Structural Highs & Structural Lows" },
+                        p1: {
+                            om: "Caasaan gabaa (Market Structure) bu'uura daldala kamiyyuuti. Gatiin yeroo ol ka'u fi gadi bu'u Higher High (HH), Higher Low (HL), Lower High (LH) fi Lower Low (LL) uuma.",
+                            am: "የገበያ መዋቅር (Market Structure) የማንኛውም ትሬዲንግ መሠረት ነው። ዋጋ ሲጨምር እና ሲቀንስ Higher High (HH)፣ Higher Low (HL)፣ Lower High (LH) እና Lower Low (LL) ይፈጥራል።",
+                            en: "Market structure is the foundation of technical analysis. As price trends upward or downward, it creates distinct swing points known as Higher Highs, Higher Lows, Lower Highs, and Lower Lows."
+                        },
+                        p2: {
+                            om: "Bakka gurguddoo kana adda baasuun trend gabaa (Uptrend ykn Downtrend) sirriitti beekuuf akkasumas trade seenuuf gargaara.",
+                            am: "እነዚህን ዋና ዋና ነጥቦች መለየት የገበያውን አዝማሚያ (Uptrend ወይም Downtrend) በትክክል ለማወቅ እና የግብይት መግቢያ ቦታዎችን ለመምረጥ ይረዳል።",
+                            en: "Identifying these structural swing points allows traders to accurately determine trend direction and map institutional bias across higher timeframes."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=800&q=80"
+                    }
                 ]
             },
             {
                 id: 2,
                 title: { om: "Moojulii 2: Support & Resistance Levels Guutuu", am: "ሞጁል 2: የሰፖርት እና ሬዚስታንስ ደረጃዎች", en: "Module 2: Complete Support & Resistance Levels" },
                 lessons: [
-                    { id: 4, title: "L4: Horizontal Support & Resistance", desc: "Sadarkaa gatiin irra deddeebi'ee deebi'u horizontal key levels irraa adda baasuu." },
-                    { id: 5, title: "L5: Dynamic S/R & Moving Averages", desc: "Moving Averages (EMA 20, EMA 50, EMA 200) akka dynamic support/resistance fayyadamuu." },
-                    { id: 6, title: "L6: Breakout & Retest Confirmation", desc: "Level tokko yeroo cabu (Breakout) fi deebi'ee tuqu (Retest) trade seenuu." }
+                    {
+                        id: 4,
+                        title: { om: "L4: Horizontal Support & Resistance", am: "L4: አግድም ሰፖርት እና ሬዚስታንስ", en: "L4: Horizontal Support & Resistance" },
+                        p1: {
+                            om: "Support jechuun bakka gatiin gadi bu'uun dhaabbatee gara olitti deebi'uudha. Resistance jechuun immoo bakka gatiin ol bahee qabamee gara gadiitti deebi'uudha.",
+                            am: "ሰፖርት ማለት ዋጋው ወርዶ የሚቆምበት እና ወደላይ የሚመለስበት ቦታ ሲሆን ሬዚስታንስ ደግሞ ዋጋው ከፍ ብሎ የሚገደብበት እና ወደ ታች የሚመለስበት ነው።",
+                            en: "Support is a price level where downward momentum pauses due to concentrated demand. Resistance is a ceiling level where upward movement faces heavy selling pressure."
+                        },
+                        p2: {
+                            om: "Sadarkaan kun yeroo baayyee kanaan dura irra deddeebi'anii kan kabajaman ta'ee, daldaltoonni irraa deebi'anii trade itti banu.",
+                            am: "እነዚህ ደረጃዎች በአብዛኛው በቀድሞ ጊዜ የተከበሩና የተደጋገሙ በመሆናቸው ነጋዴዎች ከእነዚህ ቦታዎች ላይ ግብይቶችን ይከፍታሉ።",
+                            en: "These historical pivot zones represent psychological price barriers where institutional participants frequently execute pending orders."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1621416894569-0f39ed31d247?auto=format&fit=crop&w=800&q=80"
+                    },
+                    {
+                        id: 5,
+                        title: { om: "L5: Dynamic S/R & Moving Averages", am: "L5: ዳይናሚክ ሰፖርት እና ሬዚስታንስ", en: "L5: Dynamic S/R & Moving Averages" },
+                        p1: {
+                            om: "Dynamic Support fi Resistance jechuun sadarkaa yeroo hunda akka haala sossoha gatiitti jijjiiramaa deemuudha. Kunis Moving Averages (EMA 20, 50, 200) fayyadamuun argama.",
+                            am: "ዳይናሚክ ሰፖርት እና ሬዚስታንስ ማለት ከዋጋው እንቅስቃሴ ጋር እየተለዋወጡ የሚሄዱ መስመሮች ናቸው። እነዚህም የሙቪንግ አቭሬጅ (EMA 20, 50, 200) በመጠቀም ይሰላሉ።",
+                            en: "Dynamic support and resistance levels shift continuously with price action. Moving Averages such as EMA 20, 50, and 200 act as rolling barriers during strong trends."
+                        },
+                        p2: {
+                            om: "Yeroo trend cimaa jiru, gatiin EMA tuquun deebi'ee akka faffaca'u godha.",
+                            am: "ጠንካራ ትሬንድ ባለበት ጊዜ ዋጋው ኢኤምኤ (EMA) ንክኪ በማድረግ እንደገና አቅጣጫውን ይይዛል።",
+                            en: "During impulsive market phases, prices frequently retrace to touch these moving averages before resuming the primary trend."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80"
+                    },
+                    {
+                        id: 6,
+                        title: { om: "L6: Breakout & Retest Confirmation", am: "L6: የብሬክአውት እና ሪቴስት ማረጋገጫ", en: "L6: Breakout & Retest Confirmation" },
+                        p1: {
+                            om: "Yeroo sadarkaan support ykn resistance cabu (Breakout) jedhamaa. Garuu oggaa cabu battalatti seenuu mannaa deebi'ee tuquu (Retest) eeguun baay'ee amansiisaadha.",
+                            am: "የሰፖርት ወይም የሬዚስታንስ መስመር ሲሰበር ብሬክአውት ይባላል። ነገር ግን ሲሰበር ወዲያውኑ ከመግባት ፋንታ ዋጋው ተመልሶ መስመሩን እስኪነካ (Retest) መጠበቅ በጣም አስተማማኝ ነው።",
+                            en: "A breakout occurs when price forcefully breaches a key support or resistance level. Waiting for a retest of the broken level provides high-probability confirmation."
+                        },
+                        p2: {
+                            om: "Retest yeroo godhu resistance duraanii amma support ta'ee tajaajila, kunis entry sirrii kennuuf gargaara.",
+                            am: "ሪቴስት በሚያደርግበት ጊዜ የቀድሞው ሬዚስታንስ አሁን ሰፖርት ሆኖ ያገለግላል፣ ይህም ትክክለኛ የመግቢያ ቦታ ይሰጣል።",
+                            en: "During a retest, previous resistance successfully flips into new support, providing a clean risk-to-reward entry structure."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=800&q=80"
+                    }
                 ]
             },
             {
                 id: 3,
                 title: { om: "Moojulii 3: Candlestick Patterns & Formations", am: "ሞጁል 3: የካንደልስቲክ ቅርጾች", en: "Module 3: Candlestick Patterns & Formations" },
                 lessons: [
-                    { id: 7, title: "L7: Single Candlestick Patterns (Pin Bar, Doji)", desc: "Pin bar rejection candles fi Doji indecision candles adda baasuu." },
-                    { id: 8, title: "L8: Double Candlesticks (Engulfing Patterns)", desc: "Bullish Engulfing fi Bearish Engulfing momentum candles." },
-                    { id: 9, title: "L9: Triple Patterns (Morning/Evening Star)", desc: "Reversal signals gabaa gubbaa fi jalaa irratti argaman." }
+                    {
+                        id: 7,
+                        title: { om: "L7: Single Candlestick Patterns (Pin Bar, Doji)", am: "L7: ነጠላ የካንደልስቲክ ቅርጾች", en: "L7: Single Candlestick Patterns (Pin Bar, Doji)" },
+                        p1: {
+                            om: "Pin Bar jechuun kandilii fajjii dheeraa qabdu yoo ta'u, gabaan bakka sanitti dhiibbaa guddaan akkaataa itti didee deebi'e agarsiisa.",
+                            am: "ፒን ባር ማለት ረጅም ፉርሽ (Wick) ያላት ኬንደል ሲሆን ገበያው በዚያ ቦታ ላይ ከፍተኛ ተቃውሞ ገጥሞት አቅጣጫ መቀየሩን ያሳያል።",
+                            en: "A Pin Bar features a long rejection wick and a small body, signaling intense rejection of higher or lower prices by institutional traders."
+                        },
+                        p2: {
+                            om: "Doji immoo open fi close gatii wal qixxaataadha, kunis gabaa keessatti wal dhabdee fi qophii trend haaraaf taasifamu agarsiisa.",
+                            am: "ዶጂ ደግሞ የመክፈቻ እና የመዘጋቱ ዋጋ ተመሳሳይ የሆነበት ነው፤ ይህም በገበያው ውስጥ አለመተማመንን እና ለአዲስ ትሬንድ ዝግጅት መኖሩን ያሳያል።",
+                            en: "A Doji represents market equilibrium where open and close prices are virtually identical, signaling indecision and impending volatility."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=800&q=80"
+                    },
+                    {
+                        id: 8,
+                        title: { om: "L8: Double Candlesticks (Engulfing Patterns)", am: "L8: ድርብ የካንደልስቲክ ቅርጾች (Engulfing)", en: "L8: Double Candlesticks (Engulfing Patterns)" },
+                        p1: {
+                            om: "Bullish Engulfing kandilii diimaa dura jirtu guutummaatti kandilii magariisa gurguddaan yeroo uwwistu (Engulf uurtu) kan uumamudha.",
+                            am: "ቡሊሽ ኢንግልፊንግ ማለት የቀድሞውን ቀይ ኬንደል በአዲስ ትልቅ አረንጓዴ ኬንደል ሙሉ በሙሉ ሲሸፈን የሚፈጠር ጠንካራ ምልክት ነው።",
+                            en: "A Bullish Engulfing pattern forms when a large green candle completely engulfs the body of the preceding red candle, signaling strong buyer momentum."
+                        },
+                        p2: {
+                            om: "Kunis dhiibbaan bittaa (buying pressure) cimaan gabaa keessatti uumamuu isaa fi trend-ni gara olitti akka fuufus agarsiisa.",
+                            am: "ይህም ጠንካራ የግዢ ግፊት በገበያው ውስጥ መፈጠሩን እና ትሬንዱ ወደላይ እንደሚቀጥል ያመለክታል።",
+                            en: "It confirms aggressive accumulation by large institutions and frequently marks the start of a sustained bullish expansion."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1621416894569-0f39ed31d247?auto=format&fit=crop&w=800&q=80"
+                    },
+                    {
+                        id: 9,
+                        title: { om: "L9: Triple Patterns (Morning/Evening Star)", am: "L9: የሶስትዮሽ ቅርጾች (Morning/Evening Star)", en: "L9: Triple Patterns (Morning/Evening Star)" },
+                        p1: {
+                            om: "Morning Star pattern kandilii sadii qaba: kandilii gurguddoo diimaa, doji xixiqqoo, fi kandilii magariisa gurguddoo deebi'ee ol ba'u.",
+                            am: "ሞርኒንግ ስታር ንድፍ ሶስት ኬንደሎችን ይይዛል፡ ትልቅ ቀይ ኬንደል፣ ትንሽ የዶጂ ኬንደል፣ እና ወደላይ የሚወጣ ትልቅ አረንጓዴ ኬንደል።",
+                            en: "Morning Star is a three-candle bullish reversal pattern comprising a large bearish candle, a small indecision body, and a strong bullish recovery candle."
+                        },
+                        p2: {
+                            om: "Evening Star immoo faallaa kanaatiin gabaa gubbaa irraa gara gadiitti deebisuuf gargaara.",
+                            am: "ኢቭኒንግ ስታር ደግሞ ከዚህ በተቃራኒ ከላይ በኩል ገበያውን ወደ ታች ለመቀልበስ ያገለግላል።",
+                            en: "Conversely, the Evening Star pattern forms at market tops, signaling exhaustion among buyers and an incoming bearish reversal."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80"
+                    }
                 ]
             },
             {
                 id: 4,
                 title: { om: "Moojulii 4: Smart Money Concepts (SMC) Core", am: "ሞጁል 4: የስማርት मनी ኮንሴፕትስ መሠረቶች", en: "Module 4: Smart Money Concepts (SMC) Fundamentals" },
                 lessons: [
-                    { id: 10, title: "L10: Institutional vs Retail Traders", desc: "Bankiin fi financial institutions baankota gurguddoo akkaataa itti order kaa'an." },
-                    { id: 11, title: "L11: Liquidity Concept (BSL & SSL)", desc: "Buy-side Liquidity fi Sell-side Liquidity eessa akka jiru adda baasuu." },
-                    { id: 12, title: "L12: Liquidity Sweeps (Stop Hunt)", desc: "Bankiin stop loss retail traders sassaabuuf gatii akkaataa itti oofu." }
+                    {
+                        id: 10,
+                        title: { om: "L10: Institutional vs Retail Traders", am: "L10: ተቋማት እና সাধራና ነጋዴዎች", en: "L10: Institutional vs Retail Traders" },
+                        p1: {
+                            om: "Gabaan Forex keessatti daldaltoonni dhuunfaa (Retail traders) harki 5 qofa qabatu. Harki hafe hundi baankota gurguddoo fi hedge funds (Smart Money) ti.",
+                            am: "በፎሬክስ ገበያ ውስጥ የግል ነጋዴዎች (Retail traders) የሚቆጣጠሩት 5 በመቶ ብቻ ነው። የቀረው ትልቁ ድርሻ የባንኮች እና የትልቅ ፈንድ ተቋማት (Smart Money) ነው።",
+                            en: "Retail traders account for a tiny fraction of global volume. Institutional banks, central banks, and hedge funds command the vast majority of liquidity."
+                        },
+                        p2: {
+                            om: "Smart Money daldaltoota dhuunfaa gowwoomsuuf liquidity uuma, kanaafuu akkaataf isaan gabaa itti sochoosan hubachuun barbaachisaadha.",
+                            am: "ስማርት मनी የችርቻሮ ነጋዴዎችን ለማሳሳት ሊኩዊዲቲ ይፈጥራል፤ ስለዚህ እነሱ ገበያውን እንዴት እንደሚያንቀሳቅሱ መረዳት ወሳኝ ነው።",
+                            en: "Smart Money entities intentionally engineer liquidity traps against retail participants, making it imperative to trade alongside institutional order flow."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=800&q=80"
+                    },
+                    {
+                        id: 11,
+                        title: { om: "L11: Liquidity Concept (BSL & SSL)", am: "L11: ሊኩዊዲቲ ጽንሰ-ሀሳብ (BSL & SSL)", en: "L11: Liquidity Concept (BSL & SSL)" },
+                        p1: {
+                            om: "Buy-side Liquidity (BSL) jechuun bakka stop loss daldaltoota gurguruu (sellers) jiranuudha. Sell-side Liquidity (SSL) immoo bakka stop loss bittootaa jiruudha.",
+                            am: "Buy-side Liquidity (BSL) ማለት የሻጮች ስቶፕ ሎስ የሚገኝበት ቦታ ሲሆን Sell-side Liquidity (SSL) ደግሞ የገዢዎች ስቶፕ ሎስ የሚቀመጥበት ነው።",
+                            en: "Buy-side Liquidity resides above equal highs where retail short-sellers cluster their stop losses. Sell-side Liquidity sits below equal lows."
+                        },
+                        p2: {
+                            om: "Baankonni gurguddoo order isaanii guutuuf gara bakka liquidity kanaatti gatii oofuun ni qabatu (Stop Hunt).",
+                            am: "ትልልቅ ባንኮች ትዕዛዛቸውን ለመሙላት ዋጋውን ወደዚህ የሊኩዊዲቲ ቦታ በመግፋት አደን (Stop Hunt) ያካሂዳሉ።",
+                            en: "Institutions systematically target these liquidity pools to fill their massive buy or sell orders before initiating primary market expansions."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=800&q=80"
+                    },
+                    {
+                        id: 12,
+                        title: { om: "L12: Liquidity Sweeps (Stop Hunt)", am: "L12: የሊኩዊዲቲ ስዊፕስ (Stop Hunt)", en: "L12: Liquidity Sweeps (Stop Hunt)" },
+                        p1: {
+                            om: "Liquidity Sweep jechuun gatiin gadi ykn ol fageenyaan deemuun stop loss daldaltootaa cabsuun battalumaatti deebi'uu dha.",
+                            am: "ሊኩዊዲቲ ስዊፕ ማለት ዋጋው ከፍ ወይም ዝቅ በማለት የነጋዴዎችን ስቶፕ ሎስ ሰብሮ ወዲያውኑ አቅጣጫውን የሚቀይርበት ክስተት ነው።",
+                            en: "A Liquidity Sweep occurs when price spikes past a swing high or low to trigger retail stop losses, immediately reversing in the true direction."
+                        },
+                        p2: {
+                            om: "Kunis kiyyaa baankotaa ta'ee, yeroo daldaltoonni gabaan cabe jedhanii seenan gabaan faallaa isaaniitti deebi'a.",
+                            am: "ይህም የባንኮች ወጥመድ ሲሆን ነጋዴዎች ገበያው ተሰበረ ብለው ሲገቡ ገበያው ወደ ተቃራኒው አቅጣጫ ይንቀሳቀሳል።",
+                            en: "Recognizing liquidity sweeps allows SMC traders to enter trades immediately after the stop hunt concludes, riding the institutional impulse."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1621416894569-0f39ed31d247?auto=format&fit=crop&w=800&q=80"
+                    }
                 ]
             },
             {
                 id: 5,
-                title: { om: "Moojulii 5: Market Structure Shift (MSS) & CHoCH", am: "ሞጁል 5: የገበያ መዋቅር மாற்றம் (MSS/CHoCH)", en: "Module 5: Market Structure Shift & CHoCH" },
+                title: { om: "Moojulii 5: Market Structure Shift (MSS) & CHoCH", am: "ሞጁል 5: የገበያ መዋቅር ለውጥ (MSS/CHoCH)", en: "Module 5: Market Structure Shift & CHoCH" },
                 lessons: [
-                    { id: 13, title: "L13: Change of Character (CHoCH)", desc: "Jijjiirama trend jalqabaa (First sign of trend reversal)." },
-                    { id: 14, title: "L14: Market Structure Shift (MSS)", desc: "Break of Structure (BOS) wajjin walqabatee structural shift uumamu." },
-                    { id: 15, title: "L15: Multi-Timeframe Structural Mapping", desc: "Daily, 4H, 15M structure map gochuu." }
+                    {
+                        id: 13,
+                        title: { om: "L13: Change of Character (CHoCH)", am: "L13: የባህሪ ለውጥ (CHoCH)", en: "L13: Change of Character (CHoCH)" },
+                        p1: {
+                            om: "Change of Character (CHoCH) jechuun mallattoo jalqabaa jijjiirama trend gabaati. Uptrend irraa gara Downtrend ykn faallaa isaatti jijjiiramuu agarsiisa.",
+                            am: "Change of Character (CHoCH) ማለት የገበያ አዝማሚያ መቀየር የመጀመሪያው ምልክት ነው። ከእፕትሬንድ ወደ ዳውንትሬንድ ወይም በተቃራኒው መቀየሩን ያሳያል።",
+                            en: "Change of Character (CHoCH) represents the first structural warning sign that an ongoing trend is about to reverse."
+                        },
+                        p2: {
+                            om: "Yeroo CHoCH uumamu gatiin internal structural high ykn low cabsuun dandeettii dhaabbachuu trend durii mirkaneessa.",
+                            am: "CHoCH በሚፈጠርበት ጊዜ ዋጋው የውስጥ መዋቅር ከፍተኛውን ወይም ዝቅተኛውን በመስበር የቀድሞውን ትሬንድ ማብቃት ያረጋግጣል።",
+                            en: "During a CHoCH, price breaks a key internal swing point against the prevailing trend direction, shifting market control."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80"
+                    },
+                    {
+                        id: 14,
+                        title: { om: "L14: Market Structure Shift (MSS)", am: "L14: የገበያ መዋቅር ሽግግር (MSS)", en: "L14: Market Structure Shift (MSS)" },
+                        p1: {
+                            om: "Market Structure Shift (MSS) immoo cimsamee Break of Structure (BOS) wajjin walqabatee caasaan gabaa guutumaatti gosa haaraatti jijjiiramuu dha.",
+                            am: "Market Structure Shift (MSS) ደግሞ ከብሬክ ኦፍ ስትራክቸር (BOS) ጋር ተያይዞ የገበያው መዋቅር ሙሉ በሙሉ ወደ አዲስ አቅጣጫ መሸጋገሩ ነው።",
+                            en: "Market Structure Shift (MSS) confirms a robust directional change, often breaking critical higher timeframe structural levels."
+                        },
+                        p2: {
+                            om: "MSS erga uumamee booda daldaltoonni SMC order blocks fi FVG fayyadamuun trade seenuuf qophaa'u.",
+                            am: "MSS ከተፈጠረ በኋላ የስማርት मनी ነጋዴዎች ኦርደር ብሎክስ እና ኤፍቪጂ (FVG) በመጠቀም ንግድ ለመጀመር ይዘጋጃሉ።",
+                            en: "Once an MSS is confirmed, SMC traders look for high-confluence mitigation entries such as Order Blocks and Fair Value Gaps."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=800&q=80"
+                    },
+                    {
+                        id: 15,
+                        title: { om: "L15: Multi-Timeframe Structural Mapping", am: "L15: የበርካታ ታይምፍሬም መዋቅር ካርታ", en: "L15: Multi-Timeframe Structural Mapping" },
+                        p1: {
+                            om: "Top-down analysis godhuun caasaa gabaa Daily fi 4H irraa kaasuun gara 15M fi 5Mtti gadi buusuun barbachisaadha.",
+                            am: "ቶፕ-ዳውን ትንተና በማድረግ የገበያውን መዋቅር ከዴይሊ እና 4ኤች ጀምሮ እስከ 15 ደቂቃ እና 5 ደቂቃ ዝቅ ብሎ ማየት አስፈላጊ ነው።",
+                            en: "Multi-timeframe mapping requires aligning higher timeframe bias (Daily/4H) with execution timeframes (15M/5M) for precision entries."
+                        },
+                        p2: {
+                            om: "Kunis dogoggora xiqqeessuun daldala milkaa'aa ta'e akka argannu nu gargaara.",
+                            am: "ይህም ስህተትን በመቀነስ የተሳካ ንግድ እንድናገኝ ይረዳናል።",
+                            en: "This disciplined alignment ensures traders operate in harmony with institutional momentum rather than fighting major market cycles."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=800&q=80"
+                    }
                 ]
             },
             {
                 id: 6,
                 title: { om: "Moojulii 6: Order Blocks (OB) & Breaker Blocks", am: "ሞጁል 6: ኦርደር ብሎክስ እና ብሬከር ብሎክስ", en: "Module 6: Order Blocks & Breaker Blocks" },
                 lessons: [
-                    { id: 16, title: "L16: Institutional Order Block (OB)", desc: "Candle xumuraa kaffaltii guddaa dura jiru (Last opposite candle before impulse)." },
-                    { id: 17, title: "L17: High-Probability Order Block Selection", desc: "OB FVG fi Liquidity sweep qabu filachu." },
-                    { id: 18, title: "L18: Breaker Blocks & Mitigation Blocks", desc: "OB failed ta'ee akka support/resistance fidu." }
+                    {
+                        id: 16,
+                        title: { om: "L16: Institutional Order Block (OB)", am: "L16: የተቋማዊ ትዕዛዝ ብሎክ (OB)", en: "L16: Institutional Order Block (OB)" },
+                        p1: {
+                            om: "Order Block (OB) jechuun kandilii xumuraa kan mormii argisiiftu fi kaffaltii guddaa dura jirtu dha (Last opposite candle before impulse).",
+                            am: "ኦርደር ብሎክ (OB) ማለት ከትልቅ የዋጋ ንቅንቄ በፊት የሚገኘው የመጨረሻው ተቃራኒ ኬንደል ነው።",
+                            en: "An Order Block represents the last opposing candle before an institutional impulsive expansion that breaks market structure."
+                        },
+                        p2: {
+                            om: "Baankonni order isaanii bittaa ykn gurgurtaa bakka kanaatti dachaasanii waan kaa'aniif, gatiin yeroo deebi'ee tuqu bittaan ni ka'a.",
+                            am: "ባንኮች ትዕዛዛቸውን በዚህ ቦታ ላይ መልሰው ስለሚከማቹ ዋጋው ተመልሶ ሲነካው ግዢው ወይም ሽያጩ ይቀጥላል።",
+                            en: "Institutions leave residual resting limit orders in these zones, causing price to react strongly upon mitigation."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1621416894569-0f39ed31d247?auto=format&fit=crop&w=800&q=80"
+                    },
+                    {
+                        id: 17,
+                        title: { om: "L17: High-Probability Order Block Selection", am: "L17: ከፍተኛ ዕድል ያላቸው ኦርደር ብሎኮች", en: "L17: High-Probability Order Block Selection" },
+                        p1: {
+                            om: "OB hundi wal qixa miti. Isa FVG qabu, liquidity sweep godhee fi structure cabse filachuun dirqama.",
+                            am: "ሁሉም ኦርደር ብሎክ አንድ አይነት አይደሉም። ኤፍቪጂ (FVG) ያላቸውን፣ ሊኩዊዲቲ ስዊፕ ያደረጉትን እና መዋቅር የሰበሩትን መምረጥ ግዴታ ነው።",
+                            en: "High-probability Order Blocks are validated by concurrent Fair Value Gaps, prior liquidity sweeps, and decisive market structure breaks."
+                        },
+                        p2: {
+                            om: "Kunis risk xiqqeessuun bu'aa guddaa akka argannuuf nu dandeessisa.",
+                            am: "ይህም ሪስክን በመቀነስ ትልቅ ትርፍ እንድናገኝ ያስችለናል።",
+                            en: "Filtering order blocks using institutional confluences drastically improves win rate and reward-to-risk profiles."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80"
+                    },
+                    {
+                        id: 18,
+                        title: { om: "L18: Breaker Blocks & Mitigation Blocks", am: "L18: ብሬከር ብሎክስ እና ሚቲጌሽን ብሎክስ", en: "Module 18: Breaker Blocks & Mitigation Blocks" },
+                        p1: {
+                            om: "Breaker Block jechuun Order Block yeroo cabee (failed) ta'ee fuuldheetti akka support ykn resistance haaraatti tajaajiluudha.",
+                            am: "ብሬከር ብሎክ ማለት ኦርደር ብሎክ ተሰብሮ (failed) ሲወጣ ወደፊት እንደ አዲስ ሰፖርት ወይም ሬዚስታንስ ሆኖ የሚያገለግል ነው።",
+                            en: "A Breaker Block forms when a previously respected Order Block fails and is decisively breached, subsequently flipping roles."
+                        },
+                        p2: {
+                            om: "Gatiin yeroo deebi'ee breaker block tuqu daldaltoonni trade haaraa irraa banu.",
+                            am: "ዋጋው ተመልሶ ብሬከር ብሎኩን ሲነካ ነጋዴዎች አዲስ ንግድ ይከፍታሉ።",
+                            en: "Traders utilize breaker blocks as secondary mitigation zones when primary order blocks fail during aggressive market shifts."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=800&q=80"
+                    }
                 ]
             },
             {
                 id: 7,
-                title: { om: "Moojulii 7: Fair Value Gap (FVG) & Imbalance", am: "ሞጁል 7: ፌር ವ್ಯಾልዩ ጋፕ (FVG)", en: "Module 7: Fair Value Gap & Imbalance" },
+                title: { om: "Moojulii 7: Fair Value Gap (FVG) & Imbalance", am: "ሞጁል 7: ፌር ዋልዩ ጋፕ (FVG)", en: "Module 7: Fair Value Gap & Imbalance" },
                 lessons: [
-                    { id: 19, title: "L19: Understanding Inefficiency & FVG", desc: "Gabaan imbalance uumuun fi akkaataa FVG itti uumamu." },
-                    { id: 20, title: "L20: FVG Fill & Mitigation Entry", desc: "Gatii FVG keessa seenee retrace yeroo godhu trade entry." },
-                    { id: 21, title: "L21: Confluence of OB + FVG", desc: "Order Block fi FVG walitti dhufanii level jabaa uumani." }
+                    {
+                        id: 19,
+                        title: { om: "L19: Understanding Inefficiency & FVG", am: "L19: አለመመጣጠን እና ኤፍቪጂ (FVG)", en: "L19: Understanding Inefficiency & FVG" },
+                        p1: {
+                            om: "Fair Value Gap (FVG) jechuun bakka gabaan saffisaan dabruun imbalance (Inefficiency) uumuudha. Kunis kandilii 3 gidduutti argama.",
+                            am: "Fair Value Gap (FVG) ማለት ገበያው በፍጥነት በማለፍ አለመመጣጠን (Inefficiency) የሚፈጥርበት ቦታ ነው። ይህ በሶስት ኬንደሎች መካከል ይታያል።",
+                            en: "A Fair Value Gap (FVG) represents price inefficiency where aggressive institutional buying or selling leaves an unfilled price void."
+                        },
+                        p2: {
+                            om: "Gabaan yeroo baayyee FVG kana deebi'ee guutuuf (Fill) ni deebi'a.",
+                            am: "ገበያው በአብዛኛው ይህንን FVG ለመሙላት (Fill) ተመልሶ ይመጣል።",
+                            en: "Market dynamics dictate that price frequently retraces to equilibrium, filling these imbalances before continuing the trend."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=800&q=80"
+                    },
+                    {
+                        id: 20,
+                        title: { om: "L20: FVG Fill & Mitigation Entry", am: "L20: የኤፍቪጂ ሙሌት እና የመግቢያ ነጥብ", en: "L20: FVG Fill & Mitigation Entry" },
+                        p1: {
+                            om: "Yeroo gatiin FVG keessa seenee 50% ykn guutuu tuqu entry fudhachuun danda'ama.",
+                            am: "ዋጋው ወደ FVG ውስጥ ገብቶ 50% ወይም ሙሉ በሙሉ ሲነካ የመግቢያ ቦታ መውሰድ ይቻላል።",
+                            en: "Entering trades upon mitigation of an FVG (typically at the 50% equilibrium level or the outer boundary) offers high-precision entries."
+                        },
+                        p2: {
+                            om: "Stop loss-n FVG gadii ykn gubbaa kaasuun RRR bal'aa argachuuf nama dandeessisa.",
+                            am: "ስቶፕ ሎስን ከኤፍቪጂው በታች ወይም በላይ በማድረግ ትልቅ የትርፍ እና ሪስክ ምጣኔ (RRR) ማግኘት ይቻላል።",
+                            en: "Placing stop losses just beyond the inefficiency boundary protects capital while yielding exceptional risk-to-reward ratios."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1621416894569-0f39ed31d247?auto=format&fit=crop&w=800&q=80"
+                    },
+                    {
+                        id: 21,
+                        title: { om: "L21: Confluence of OB + FVG", am: "L21: የኦርደር ብሎክ እና ኤፍቪጂ ጥምረት", en: "L21: Confluence of OB + FVG" },
+                        p1: {
+                            om: "Bakki Order Block fi FVG walitti dhufanii jiran Confluence Zone jedhama. Kunis bakka daldalaaf baay'ee mijataadha.",
+                            am: "የኦርደር ብሎክ እና ኤፍቪጂ በአንድ ላይ የሚገኙበት ቦታ Confluence Zone ይባላል። ይህ ለንግድ ስራ በጣም ምቹ እና ጠንካራ ነው።",
+                            en: "When an Order Block and a Fair Value Gap overlap, they form a powerful confluence zone with exceptional reaction probability."
+                        },
+                        p2: {
+                            om: "Daldaltoonni SMC carraa kana dhabuu hin barbaadan, sababni isaas qabxii milkaa'inaa olaanaa qaba.",
+                            am: "የስማርት मनी ነጋዴዎች ይህንን እድል ማጣት አይፈልጉም፣ ምክንያቱም ከፍተኛ የስኬት እድል ስላለው።",
+                            en: "Institutional algorithms frequently respect these overlapping zones, making them premier targets for high-leverage execution."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80"
+                    }
                 ]
             },
             {
                 id: 8,
                 title: { om: "Moojulii 8: Premium vs Discount Pricing Arrays", am: "ሞጁል 8: ፕሪሚየም እና ዲሲካውንት ዞኖች", en: "Module 8: Premium vs Discount Arrays" },
                 lessons: [
-                    { id: 22, title: "L22: Fibonacci Retracement Array (50% Equilibrium)", desc: "Gabaa Premium (Gati qaalii) fi Discount (Gatii muraasa) gariitti qooduu." },
-                    { id: 23, title: "L23: OTE (Optimal Trade Entry) Zone", desc: "Fibonacci 61.8% - 78.6% Optimal Trade Entry." }
+                    {
+                        id: 22,
+                        title: { om: "L22: Fibonacci Retracement Array (50% Equilibrium)", am: "L22: ፊቦናቺ እና የዋጋ እኩልነት (Equilibrium)", en: "L22: Fibonacci Retracement Array (50% Equilibrium)" },
+                        p1: {
+                            om: "Gabaan range tokko keessatti Premium (Gatii qaalii) fi Discount (Gatii madaalawaa) jedhamee qoodama. Qajeeltoon kun Equilibrium (50%) qabateera.",
+                            am: "ገበያው በአንድ ክልል ውስጥ ፕሪሚየም (ውድ ዋጋ) እና ዲካውንት (ርካሽ ዋጋ) ተብሎ ይከፈላል። ይህ መርህ ኢኩሊብሪየም (50%) ማዕከል ያደረገ ነው።",
+                            en: "Price ranges divide naturally into Premium (expensive pricing above 50%) and Discount (bargain pricing below 50%) relative to equilibrium."
+                        },
+                        p2: {
+                            om: "Nu bittaa kan raawwannu gabaa Discount irra yeroo jiru qofa, gurgurtaa immoo Premium irra jiruudha.",
+                            am: "እኛ ግዢ የምንፈጽመው ገበያው ዲካውንት ላይ ሲሆን ብቻ ነው፣ ሽያጭ ደግሞ ፕሪሚየም ላይ ሲሆን ነው።",
+                            en: "Institutional participants strictly buy in Discount zones and sell in Premium zones to maximize delivery efficiency."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=800&q=80"
+                    },
+                    {
+                        id: 23,
+                        title: { om: "L23: OTE (Optimal Trade Entry) Zone", am: "L23: የኦቲኢ (OTE) የመግቢያ ዞን", en: "L23: Optimal Trade Entry (OTE) Zone" },
+                        p1: {
+                            om: "Optimal Trade Entry (OTE) jechuun 61.8% hanga 78.6% Fibonacci retracement zone dha.",
+                            am: "Optimal Trade Entry (OTE) ማለት ከ 61.8% እስከ 78.6% የፊቦናቺ ሪትሬስመንት ዞን ነው።",
+                            en: "Optimal Trade Entry (OTE) spans the 61.8% to 78.6% Fibonacci retracement levels, representing deep discount institutional entry points."
+                        },
+                        p2: {
+                            om: "Bakki kun bakka baankonni order isaanii irra deebi'anii itti fe'an (re-accumulation) dha.",
+                            am: "ይህ ቦታ ባንኮች ትዕዛዛቸውን እንደገና የሚጭኑበት (re-accumulation) ዋናው ማዕከል ነው።",
+                            en: "Algorithmic delivery models frequently retrace precisely into the OTE zone before launching explosive impulsive continuations."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=800&q=80"
+                    }
                 ]
             },
             {
                 id: 9,
-                title: { om: "Moojulii 9: Inducement & Liquidity Traps", am: "ሞጁል 9: ኢንዱስመንት እና ሊኩዊዲቲ ትራፕስ", en: "Module 9: Inducement & Liquidity Traps" },
+                title: { om: "Moojulii 9: Inducement & Liquidity Traps", am: "Moojulii 9: Inducement & Liquidity Traps", en: "Module 9: Inducement & Liquidity Traps" },
                 lessons: [
-                    { id: 24, title: "L24: Minor Liquidity vs Major Liquidity", desc: "Inducement High/Low gabaa fake movement uumu." },
-                    { id: 25, title: "L25: Trendline Liquidity Sweeps", desc: "Trendline liquidity retail traders kijibsiisu." }
+                    {
+                        id: 24,
+                        title: { om: "L24: Minor Liquidity vs Major Liquidity", am: "L24: አነስተኛ እና ዋና ሊኩዊዲቲ", en: "L24: Minor Liquidity vs Major Liquidity" },
+                        p1: {
+                            om: "Inducement jechuun kiyyaa gabaa jalqabaa irratti daldaltoota dhuunfaaf diriirfamuudha. Gatiin osoo Order Block hin gubatin dura liquidity xiqqoo cabsa.",
+                            am: "ኢንዱስመንት ማለት በችርቻሮ ነጋዴዎች ላይ የሚዘረጋ የመጀመሪያው ወጥመድ ነው። ዋጋው ትክክለኛውን ኦርደር ብሎክ ሳይነካ በፊት ትናንሽ ሊኩዊዲቲዎችን ይሰብራል።",
+                            en: "Inducement serves as premature liquidity designed to entice retail traders into entering breakouts before mitigation."
+                        },
+                        p2: {
+                            om: "Kana hubachuun kiyyaa kana keessa akka hin buuneef nu gargara.",
+                            am: "ይህንን መረዳት በዚህ ወጥመድ ውስጥ እንዳንወድቅ ይረዳናል።",
+                            en: "Identifying inducement prevents traders from entering prematurely and falling victim to institutional stop hunts."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1621416894569-0f39ed31d247?auto=format&fit=crop&w=800&q=80"
+                    },
+                    {
+                        id: 25,
+                        title: { om: "L25: Trendline Liquidity Sweeps", am: "L25: የትሬንድላይን ሊኩዊዲቲ ስዊፕስ", en: "L25: Trendline Liquidity Sweeps" },
+                        p1: {
+                            om: "Trendline gubbaa ykn gadii daldaltoonni stop loss kaasan baankotaan salphaatti ni saamama (Sweep).",
+                            am: "በትሬንድላይን ላይ ወይም በታች ነጋዴዎች የሚያስቀምጧቸው ስቶፕ ሎሶች በባንኮች በቀላሉ ይታደናሉ።",
+                            en: "Retail trendlines accumulate massive resting liquidity as numerous participants align stops along visible diagonal barriers."
+                        },
+                        p2: {
+                            om: "Kanaafu trendline qofaan daldaluun balaa qaba, SMC wajjin walqabsiisuu qaba.",
+                            am: "ስለዚህ በንጹህ ትሬንድላይን ብቻ መገበያየት አደገኛ ነው፤ ከኤስኤምሲ (SMC) ጋር ሊጣመር ይገባል።",
+                            en: "Smart money operators routinely target and sweep trendline liquidity pools to fuel their primary position building."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80"
+                    }
                 ]
             },
             {
                 id: 10,
-                title: { om: "Moojulii 10: Kill Zones & Session Timing", am: "ሞጁል 10: ኪል ዞንስ እና የገበያ ሰዓታት", en: "Module 10: Kill Zones & Session Timing" },
+                title: { om: "Moojulii 10: Kill Zones & Session Timing", am: "ሞጁል 10: የገበያ ክፍለ ጊዜዎች እና ኪል ዞንስ", en: "Module 10: Kill Zones & Session Timing" },
                 lessons: [
-                    { id: 26, title: "L26: Asian Session Accumulation", desc: "Gabaa Asia kan Range uumu." },
-                    { id: 27, title: "L27: London Kill Zone (Judas Swing)", desc: "London Open Manipulation (False expansion)." },
-                    { id: 28, title: "L28: New York Kill Zone & Reversal", desc: "NY Open trend guddaa fi reversal point." }
+                    {
+                        id: 26,
+                        title: { om: "L26: Asian Session Accumulation", am: "L26: የኤዥያ ክፍለ ጊዜ ስብሰባ", en: "L26: Asian Session Accumulation" },
+                        p1: {
+                            om: "Gabaan Asia yeroo baayyee range xiqqoo uumuun beekama. Kunis London session dura gabaan akka walitti qabamu (Accumulation) taasisa.",
+                            am: "የኤዥያ ገበያ በአብዛኛው አነስተኛ የዋጋ ክልል (Range) በመፍጠር ይታወቃል፤ ይህም ከሎንዶን ክፍለ ጊዜ በፊት ገበያው እንዲሰባሰብ ያደርጋል።",
+                            en: "The Asian session typically establishes a narrow consolidation range, setting the accumulation stage for upcoming volatility."
+                        },
+                        p2: {
+                            om: "Range kana irratti hundaa'uun London open irratti kiyyaa eeguun danda'ama.",
+                            am: "በዚህ ክልል ላይ በመመስረት በሎንዶን ክፍለ ጊዜ መክፈቻ ላይ ወጥመድን መጠበቅ ይቻላል።",
+                            en: "Traders monitor Asian high and low boundaries anticipating liquidity sweeps during the subsequent London session open."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=800&q=80"
+                    },
+                    {
+                        id: 27,
+                        title: { om: "L27: London Kill Zone (Judas Swing)", am: "L27: የሎንዶን ኪል ዞን (Judas Swing)", en: "L27: London Kill Zone (Judas Swing)" },
+                        p1: {
+                            om: "London Kill Zone yeroo bittaa fi gurgurtaa cimaadha. Judas Swing jechuun sossoha gowwoomsaa kan jalqaba irratti uumamuudha.",
+                            am: "የሎንዶን ኪል ዞን ጠንካራ የግዢ እና ሽያጭ ሰዓት ነው። ጁዳስ ስዊንግ ማለት በመጀመሪያው ሰዓት ላይ የሚፈጠር የማሳሳቻ እንቅስቃሴ ነው።",
+                            en: "The London Kill Zone frequently initiates with a Judas Swing—a deceptive false breakout designed to trap early breakout traders."
+                        },
+                        p2: {
+                            om: "Erga kiyyaan sun darbee booda gabaan gara fuula duraatti trend qabatanii deema.",
+                            am: "ይህ ወጥመድ ካለፈ በኋላ ገበያው ትክክለኛውን አቅጣጫ ይዞ ይጓዛል።",
+                            en: "Once retail participants are trapped, institutional algorithms drive price rapidly in the true intended direction."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=800&q=80"
+                    },
+                    {
+                        id: 28,
+                        title: { om: "L28: New York Kill Zone & Reversal", am: "L28: የኒውዮርክ ኪል ዞን እና መለወጫ", en: "L28: New York Kill Zone & Reversal" },
+                        p1: {
+                            om: "New York session zoniin volaytiliitii guddaa qabduu dha. News release fi trend gurguddoon asirratti uumamu.",
+                            am: "የኒውዮርክ ክፍለ ጊዜ ከፍተኛ የዋጋ ንቅንቀት (Volatility) የሚታይበት ነው። የዜና መለቀቆች እና ዋና ዋና አዝማሚያዎች እዚህ ላይ ይከሰታሉ።",
+                            en: "The New York Kill Zone brings peak daily volume, frequently overlapping with London afternoon hours and high-impact economic news."
+                        },
+                        p2: {
+                            om: "Daldaltoonni NY open irratti setup argachuun bu'aa guddaa argachuu danda'u.",
+                            am: "ነጋዴዎች በኒውዮርክ መክፈቻ ሰዓት ሴትአፕ በማግኘት ትልቅ ትርፍ ማግኘት ይችላሉ።",
+                            en: "Executing SMC setups during NY open offers lightning-fast target delivery and expansive daily trend ranges."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1621416894569-0f39ed31d247?auto=format&fit=crop&w=800&q=80"
+                    }
                 ]
             },
             {
                 id: 11,
                 title: { om: "Moojulii 11: Top-Down Multi-Timeframe Analysis", am: "ሞጁል 11: ታፕ-ዳውን መልቲ-ታይምፍሬም ትንተና", en: "Module 11: Top-Down Multi-Timeframe Analysis" },
                 lessons: [
-                    { id: 29, title: "L29: Daily / 4H Higher Timeframe Bias", desc: "Direction guddaa gabaa HTF irraa fiduu." },
-                    { id: 30, title: "L30: 15M / 5M Refinement & Entry Confirmations", desc: "LTF Entry refine gochuu." }
+                    {
+                        id: 29,
+                        title: { om: "L29: Daily / 4H Higher Timeframe Bias", am: "L29: የዴይሊ እና 4ኤች አዝማሚያ አቅጣጫ", en: "L29: Daily / 4H Higher Timeframe Bias" },
+                        p1: {
+                            om: "Bias gabaa guddaa beekuuf Daily fi 4H ilaaluun dirqama. Kunis kallattii gabaa gurguddaa beekuuf gargaara.",
+                            am: "ዋናውን የገበያ አቅጣጫ (Bias) ለማወቅ ዴይሊ እና 4ኤች ማየት ግዴታ ነው። ይህ ትክክለኛውን የትሬድ አቅጣጫ ያሳየናል።",
+                            en: "Establishing higher timeframe bias on Daily and 4H charts ensures traders align with dominant market intentions."
+                        },
+                        p2: {
+                            om: "Utuu HTF bias hin beekin LTF irratti daldaluun balaa qaba.",
+                            am: "የከፍተኛ ታይምፍሬም አቅጣጫን ሳያውቁ በትንሽ ታይምፍሬም መገበያየት አደገኛ ነው።",
+                            en: "Trading counter-bias on lower timeframes without higher timeframe backing dramatically increases loss probability."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80"
+                    },
+                    {
+                        id: 30,
+                        title: { om: "L30: 15M / 5M Refinement & Entry Confirmations", am: "L30: የ 15 ደቂቃ እና 5 ደቂቃ መግቢያ ማረጋገጫ", en: "L30: 15M / 5M Refinement & Entry Confirmations" },
+                        p1: {
+                            om: "Zooniin HTF irraa fudhatame 15M ykn 5M irratti qulqullaa'ee (refined) entry fudhatama.",
+                            am: "ከከፍተኛ ታይምፍሬም የተወሰደው ዞን በ 15 ደቂቃ ወይም 5 ደቂቃ ላይ ተጣርቶ (Refined) የመግቢያ ቦታ ይመረጣል።",
+                            en: "Refining 4H/Daily zones down to 15M or 5M order blocks allows for extremely tight stop losses and massive reward ratios."
+                        },
+                        p2: {
+                            om: "Kunis stop loss xiqqeessuun RRR bal'aa argachuuf nama dandeessisa.",
+                            am: "ይህም ስቶፕ ሎስን አሳንሶ ትልቅ የትርፍ ምጣኔ ለማግኘት ያስችላል።",
+                            en: "This precision refinement is the hallmark of professional institutional trading methodology."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=800&q=80"
+                    }
                 ]
             },
             {
                 id: 12,
                 title: { om: "Moojulii 12: Advanced Chart Patterns", am: "ሞጁል 12: የላቁ የቻርት ቅርጾች", en: "Module 12: Advanced Chart Patterns" },
                 lessons: [
-                    { id: 31, title: "L31: Head & Shoulders & Inverse H&S", desc: "Reversal pattern jabaa." },
-                    { id: 32, title: "L32: Double Top & Double Bottom", desc: "Equal Highs/Equal Lows liquidity trap." },
-                    { id: 33, title: "L33: Triangles & Flags (Continuation Patterns)", desc: "Bullish Flag, Bearish Flag, Triangles." }
+                    {
+                        id: 31,
+                        title: { om: "L31: Head & Shoulders & Inverse H&S", am: "L31: ሄድ ኤንድ ሾልደርስ እና ተቃራኒው", en: "L31: Head & Shoulders & Inverse H&S" },
+                        p1: {
+                            om: "Head and Shoulders pattern reversal jabaa kan gabaa gubbaa irratti uumamuudha. Left shoulder, Head, fi Right shoulder qaba.",
+                            am: "ሄድ ኤንድ ሾልደርስ ከላይኛው የገበያ ክፍል ላይ የሚፈጠር ጠንካራ የለውጥ ቅርጽ ነው። ግራ ትከሻ፣ ራስ እና ቀኝ ትከሻን ይይዛል።",
+                            en: "Head and Shoulders patterns indicate trend exhaustion, featuring a central peak (Head) flanked by two lower highs (Shoulders)."
+                        },
+                        p2: {
+                            om: "Neckline yeroo cabu bittaan ykn gurgurtaan saffisaan gadi bu'a.",
+                            am: "ኔክላይን (Neckline) ሲሰበር ሽያጩ ወይም ግዢው በፍጥነት ይቀጥላል።",
+                            en: "A decisive break of the neckline triggers strong institutional momentum toward projected measured move targets."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=800&q=80"
+                    },
+                    {
+                        id: 32,
+                        title: { om: "L32: Double Top & Double Bottom", am: "L32: ድርብ ቶፕ እና ድርብ ቦቶም", en: "L32: Double Top & Double Bottom" },
+                        p1: {
+                            om: "Double Top jechuun gatiin resistance lama tuquun gadi deebi'uudha. Double Bottom immoo faallaa kanaati.",
+                            am: "ዳብል ቶፕ ማለት ዋጋው ሁለት ጊዜ ሬዚስታንስን ነክቶ ወደ ታች የሚመለስበት ነው። ዳብል ቦቶም ደግሞ ከዚህ በተቃራኒ ነው።",
+                            en: "Double Tops and Bottoms represent equal high/low liquidity clusters where institutions test barrier resilience twice."
+                        },
+                        p2: {
+                            om: "Kunis liquidity sweep uumuun gabaan akka deebi'u taasisa.",
+                            am: "ይህም ሊኩዊዲቲ ስዊፕ በመፍጠር ገበያው እንዲቀለበስ ያደርጋል።",
+                            en: "Retail traders often trap themselves by entering prematurely, allowing smart money to sweep them before reversing."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1621416894569-0f39ed31d247?auto=format&fit=crop&w=800&q=80"
+                    },
+                    {
+                        id: 33,
+                        title: { om: "L33: Triangles & Flags (Continuation Patterns)", am: "L33: ትሪያንግልስ እና ፍላግስ (የመቀጠያ ቅርጾች)", en: "L33: Triangles & Flags (Continuation Patterns)" },
+                        p1: {
+                            om: "Bullish Flag fi Pennants jechuun yeroo trend cimaa keessatti gabaan xiqqoo qabbanaa'ee deebi'ee ol qajeeluudha.",
+                            am: "ቡሊሽ ፍላግ እና ፔናንትስ ማለት በጠንካራ ትሬንድ መሃል ገበያው ትንሽ አርፎ እንደገና ወደላይ የሚቀጥልበት ቅርጽ ነው።",
+                            en: "Bullish Flags and Pennants form brief consolidation channels following strong impulse legs, offering continuation entries."
+                        },
+                        p2: {
+                            om: "Flag pole hamma qabu gabaan deebi'ee ol fufa.",
+                            am: "የፍላግ ፖሉ ያነሰውን ያህል ገበያው ተመልሶ ከፍ ይላል።",
+                            en: "Trading flag breakouts provides high-probability trend continuation entries with minimal drawdown risk."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80"
+                    }
                 ]
             },
             {
                 id: 13,
                 title: { om: "Moojulii 13: Risk Management & Position Sizing", am: "ሞጁል 13: የሪስክ አስተዳደር", en: "Module 13: Risk Management & Position Sizing" },
                 lessons: [
-                    { id: 34, title: "L34: 1% - 2% Account Risk Rule", desc: "Capital kee balaa irraa eeguu." },
-                    { id: 35, title: "L35: Risk to Reward Ratio (RRR 1:3+)", desc: "Win rate xeqqoo wajjin bu'a qabeessa ta'uu." },
-                    { id: 36, title: "L36: Dynamic Lot Size Calculation", desc: "Calculator fayyadamuu." }
+                    {
+                        id: 34,
+                        title: { om: "L34: 1% - 2% Account Risk Rule", am: "L34: የ 1% እና 2% የሪስክ ህግ", en: "L34: 1% - 2% Account Risk Rule" },
+                        p1: {
+                            om: "Daldala tokko qofa irratti 1% hanga 2% qofa capital keessaa risk gochuun dirqama. Kunis account kee balaa irraa eega.",
+                            am: "በአንድ ንግድ ላይ ከካፒታልዎ 1% እስከ 2% ብቻ ሪስክ ማድረግ ግዴታ ነው። ይህ አካውንትዎን ከከፍተኛ ኪሳራ ይጠብቃል።",
+                            en: "Risking no more than 1% to 2% of total capital per trade ensures long-term survival through inevitable losing streaks."
+                        },
+                        p2: {
+                            om: "Daldaltoonni milkaa'an yeroo hunda risk management dursa irratti hiriirsu.",
+                            am: "የተሳካላቸው ነጋዴዎች ሁልጊዜ የሪስክ አስተዳደርን ከፊት ያስቀድማሉ።",
+                            en: "Professional traders prioritize risk mitigation above all else, treating capital preservation as their core mandate."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=800&q=80"
+                    },
+                    {
+                        id: 35,
+                        title: { om: "L35: Risk to Reward Ratio (RRR 1:3+)", am: "L35: የትርፍ እና ሪስክ ምጣኔ (RRR 1:3+)", en: "L35: Risk to Reward Ratio (RRR 1:3+)" },
+                        p1: {
+                            om: "Risk to Reward Ratio (RRR) yoo xiqqaate 1:3 qabaachuu qaba. Dollar 1 risk gootee Dollar 3 argachuuf karoorfachuu.",
+                            am: "የትርፍ እና ሪስክ ምጣኔ (RRR) ቢያንስ 1:3 ሊኖረው ይገባል። 1 ዶላር ሪስክ አድርገው 3 ዶላር ለማግኘት ማቀድ አለብዎት።",
+                            en: "Maintaining a minimum 1:3 Risk-to-Reward Ratio ensures profitability even with modest win rates around 40%."
+                        },
+                        p2: {
+                            om: "Kunis SMC fi Price Action fayyadamuun salphaatti argamuu danda'a.",
+                            am: "ይህም ኤስኤምሲ (SMC) እና ፕራይስ አክሽን በመጠቀም በቀላሉ ሊገኝ ይችላል።",
+                            en: "Institutional setups naturally yield high RRR due to tight structural stop losses and expansive liquidity targets."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=800&q=80"
+                    },
+                    {
+                        id: 36,
+                        title: { om: "L36: Dynamic Lot Size Calculation", am: "L36: የሎት ሳይዝ ስሌት", en: "L36: Dynamic Lot Size Calculation" },
+                        p1: {
+                            om: "Lot size herreguun pips fi capital kee irratti hundaa'a. Lot size sirrii fayyadamuun baay'ee barbaachisaadha.",
+                            am: "የሎት ሳይዝ ማስላት በፒፕስ እና በካፒታልዎ ላይ የተመሰረተ ነው። ትክክለኛውን ሎት ሳይዝ መጠቀም በጣም አስፈላጊ ነው።",
+                            en: "Accurately calculating lot size based on stop loss pips and account equity prevents over-leveraging and emotional stress."
+                        },
+                        p2: {
+                            om: "Calculator fayyadamuun lot size sirrii baafadhu.",
+                            am: "ካልኩሌተር በመጠቀም ትክክለኛውን ሎት ሳይዝ ያግኙ።",
+                            en: "Always utilize position size calculators prior to executing live orders to maintain strict financial discipline."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1621416894569-0f39ed31d247?auto=format&fit=crop&w=800&q=80"
+                    }
                 ]
             },
             {
                 id: 14,
                 title: { om: "Moojulii 14: Trading Psychology & Discipline", am: "ሞጁል 14: የትሬዲንግ ሳይኮሎጂ", en: "Module 14: Trading Psychology & Discipline" },
                 lessons: [
-                    { id: 37, title: "L37: Overcoming FOMO & Greed", desc: "Sodaa fi hawwii to'achuu." },
-                    { id: 38, title: "L38: Trade Journaling & Execution Plan", desc: "Trade hunda galmeessuu." }
+                    {
+                        id: 37,
+                        title: { om: "L37: Overcoming FOMO & Greed", am: "L37: የ FOMO እና ስግብግብነት ቁጥጥር", en: "L37: Overcoming FOMO & Greed" },
+                        p1: {
+                            om: "FOMO (Fear Of Missing Out) fi Greed (Hawwii) daldaltoota hedduu kan miidhuudha. Obsaan setup eeguun murteessaadha.",
+                            am: "FOMO (እንዳያመልጠኝ የሚል ስጋት) እና ስግብግብነት ብዙ ነጋዴዎችን የሚጎዱ ናቸው። በትዕግስት ሴትአፕን መጠበቅ ወሳኝ ነው።",
+                            en: "FOMO and greed destroy trading accounts. Cultivating patience to wait for A+ setups is the hallmark of a professional trader."
+                        },
+                        p2: {
+                            om: "Gabaan guyyaa hunda ni jira, carraan hin dhumu.",
+                            am: "ገበያው በየዕለቱ አለ፣ እድሎች አያልቁም።",
+                            en: "The market will remain open tomorrow; preserving capital is always superior to chasing erratic price action."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80"
+                    },
+                    {
+                        id: 38,
+                        title: { om: "L38: Trade Journaling & Execution Plan", am: "L38: የትሬድ ጆርናል እና የዕቅድ አፈፃፀም", en: "L38: Trade Journaling & Execution Plan" },
+                        p1: {
+                            om: "Trade hunda galmeessuu (Trade Journal) qabachuun dogoggora keenya irraa akka barru nu gargaara.",
+                            am: "እያንዳንዱን ንግድ መዝገብ (Trade Journal) መያዝ ከስህተቶቻችን እንድንማር ይረዳናል።",
+                            en: "Maintaining a meticulous trade journal documenting entries, exits, emotions, and screenshots accelerates mastery."
+                        },
+                        p2: {
+                            om: "Qabxii milkaa'inaa fi dadhabina kee xiinxaluun sadarkaa ol'aanaatti si ceesisa.",
+                            am: "የስኬት ነጥቦችዎን እና ድክመቶችዎን መተንተን ከፍተኛ ደረጃ ላይ ያደርሰዎታል።",
+                            en: "Regularly reviewing journal data uncovers psychological leaks and strategy inefficiencies for continuous improvement."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=800&q=80"
+                    }
                 ]
             },
             {
                 id: 15,
                 title: { om: "Moojulii 15: Live Model Execution & Strategy Blueprint", am: "ሞጁል 15: የቀጥታ ትሬዲንግ ብሉፕሪንት", en: "Module 15: Live Model Execution & Strategy Blueprint" },
                 lessons: [
-                    { id: 39, title: "L39: Model 1: London Liquidity Sweep Entry", desc: "Step-by-step Execution Model." },
-                    { id: 40, title: "L40: Model 2: NY Continuation FVG Entry", desc: "Trend continuation model." },
-                    { id: 41, title: "L41: Full Institutional Blueprint Checklist", desc: "Trade seenuu dura checklist 5." },
-                    { id: 42, title: "L42 - L50: Case Studies & Real Market Backtesting", desc: "Chart dhihoo backtest gochuu." }
+                    {
+                        id: 39,
+                        title: { om: "L39: Model 1: London Liquidity Sweep Entry", am: "L39: ሞዴል 1: የሎንዶን ሊኩዊዲቲ ስዊፕ መግቢያ", en: "L39: Model 1: London Liquidity Sweep Entry" },
+                        p1: {
+                            om: "Model 1: London Kill Zone irratti Asia high/low sweep ta'uu eeguun CHoCH hordofee FVG/OB irratti entry fudhachuu.",
+                            am: "ሞዴል 1: በሎንዶን ኪል ዞን ላይ የኤዥያ ከፍተኛ/ዝቅተኛ ነጥብ ስዊፕ መደረጉን ጠብቆ CHoCH ተከትሎ በ FVG/OB ላይ መግባት።",
+                            en: "Model 1 Execution: Wait for London session to sweep Asian range liquidity, confirm a 15M CHoCH, and mitigate at an aligned FVG/OB."
+                        },
+                        p2: {
+                            om: "Modelni kun XAUUSD fi EURUSD irratti baay'ee hojjeta.",
+                            am: "ይህ ሞዴል በ XAUUSD እና EURUSD ላይ በደንብ ይሰራል።",
+                            en: "This model boasts high win rates on major forex pairs and gold (XAUUSD) during London morning hours."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&w=800&q=80"
+                    },
+                    {
+                        id: 40,
+                        title: { om: "L40: Model 2: NY Continuation FVG Entry", am: "L40: ሞዴል 2: የኒውዮርክ ቀጣይነት ኤፍቪጂ መግቢያ", en: "L40: Model 2: NY Continuation FVG Entry" },
+                        p1: {
+                            om: "Model 2: New York open irratti trend London itti fufe hordofee FVG mitigation irratti continuation trade seenuu.",
+                            am: "ሞዴል 2: በኒውዮርክ መክፈቻ ላይ ሎንዶን የጀመረውን ትሬንድ ተከትሎ በ FVG mitigation ላይ ቀጣይ ንግድ መክፈት።",
+                            en: "Model 2 Execution: During New York open, identify continuation impulses and enter upon mitigation of fresh session FVG arrays."
+                        },
+                        p2: {
+                            om: "Kunis RRR 1:4 ol argachuuf baay'ee mijataadha.",
+                            am: "ይህም ከ 1:4 በላይ RRR ለማግኘት በጣም ምቹ ነው።",
+                            en: "Captures rapid afternoon expansion legs with exceptional risk-to-reward efficiency."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1621416894569-0f39ed31d247?auto=format&fit=crop&w=800&q=80"
+                    },
+                    {
+                        id: 41,
+                        title: { om: "L41: Full Institutional Blueprint Checklist", am: "L41: ሙሉ ተቋማዊ የቼክሊስት ዝግጅት", en: "L41: Full Institutional Blueprint Checklist" },
+                        p1: {
+                            om: "Checklist 5: 1. HTF Bias, 2. Liquidity Sweep, 3. CHoCH/MSS, 4. OB+FVG Confluence, 5. RRR 1:3+.",
+                            am: "የ 5 ቼክሊስት ዝግጅት: 1. የከፍተኛ ታይምፍሬም አቅጣጫ፣ 2. ሊኩዊዲቲ ስዊፕ፣ 3. CHoCH/MSS፣ 4. OB+FVG ጥምረት፣ 5. RRR 1:3+.",
+                            en: "The 5-Step Institutional Checklist: 1. Higher Timeframe Bias, 2. Liquidity Sweep, 3. Structural Shift, 4. OB/FVG Confluence, 5. 1:3+ RRR."
+                        },
+                        p2: {
+                            om: "Erga cufaansa checklist kanaa guuttee booda qofa trade seeni.",
+                            am: "እነዚህን የቼክሊስት መስፈርቶች ካሟሉ በኋላ ብቻ ንግድ ይክፈቱ።",
+                            en: "Strict adherence to this checklist eliminates impulsive trading and guarantees institutional alignment."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?auto=format&fit=crop&w=800&q=80"
+                    },
+                    {
+                        id: 42,
+                        title: { om: "L42 - L50: Case Studies & Real Market Backtesting", am: "L42 - L50: የእውነተኛ ገበያ ጥናቶች እና ባክቴስቲንግ", en: "L42 - L50: Case Studies & Real Market Backtesting" },
+                        p1: {
+                            om: "Kutaan kun chartii dhugaa qorachuun backtest gochuu, akkasumas trade live irratti argaman ilaaluun dandeettii cimsachuuf gargaara.",
+                            am: "ይህ ክፍል ትክክለኛ ቻርቶችን በማጥናት ባክቴስት ማድረግን እንዲሁም በቀጥታ ገበያ ላይ የሚገኙ ትሬዶችን በመመልከት ክህሎትን ለማዳበር ይረዳል።",
+                            en: "Final Modules 42-50: Comprehensive live market case studies, historical backtesting sessions, and psychology drills."
+                        },
+                        p2: {
+                            om: "Hojii irra oolchuun dandeettii daldalaa kee sadarkaa ol'aanaatti ceesisa.",
+                            am: "ወደ ተግባር ማዞር የንግድ ክህሎትዎን ከፍተኛ ደረጃ ላይ ያደርሰዋል።",
+                            en: "Mastering these real-world examples completes your transition into a fully confident institutional price action trader."
+                        },
+                        chartImg: "https://images.unsplash.com/photo-1642543492481-44e81e3914a7?auto=format&fit=crop&w=800&q=80"
+                    }
                 ]
             }
         ];
@@ -366,7 +958,7 @@
             document.getElementById('txtNavRegister').innerText = dict.register;
             if(document.getElementById('btnSignOut')) document.getElementById('btnSignOut').innerText = dict.signOut;
             
-            document.getElementById('txtDashTitle').innerText = dict.dashTitle;
+            document.getElementById('txtDashTitle').innerHTML = `<i data-lucide="layout-dashboard" class="w-6 h-6 text-amber-400"></i> ${dict.dashTitle}`;
             document.getElementById('txtDashSub').innerText = dict.dashSub;
             document.getElementById('txtDashProgress').innerText = dict.dashProgress;
             document.getElementById('txtProgressLabel').innerText = dict.progressLabel;
@@ -410,26 +1002,43 @@
                 let lessonsHTML = '';
                 mod.lessons.forEach(l => {
                     const isDone = completedLessons.includes(l.id);
+                    const lTitle = l.title[currentLang] || l.title.om;
+                    const p1Text = l.p1[currentLang] || l.p1.om;
+                    const p2Text = l.p2[currentLang] || l.p2.om;
+
                     lessonsHTML += `
-                        <div class="p-4 bg-gray-900/40 border-t border-gray-800/60 flex items-start justify-between gap-4">
-                            <div class="flex-1">
-                                <h4 class="text-sm font-bold text-white flex items-center gap-2">
-                                    <i data-lucide="play-circle" class="w-4 h-4 text-amber-400"></i>
-                                    ${l.title}
-                                </h4>
-                                <p class="text-xs text-gray-400 mt-1 leading-relaxed">${l.desc}</p>
+                        <div class="p-6 bg-gray-900/40 border-t border-gray-800/60 space-y-4">
+                            <div class="flex items-start justify-between gap-4">
+                                <div class="flex-1">
+                                    <h4 class="text-base font-bold text-white flex items-center gap-2">
+                                        <i data-lucide="play-circle" class="w-5 h-5 text-amber-400"></i>
+                                        ${lTitle}
+                                    </h4>
+                                    <div class="mt-3 space-y-2 text-sm text-gray-300 leading-relaxed">
+                                        <p>${p1Text}</p>
+                                        <p>${p2Text}</p>
+                                    </div>
+                                </div>
+                                <button onclick="toggleLesson(${l.id})" class="px-4 py-2 rounded-xl text-xs font-bold transition whitespace-nowrap ${isDone ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-gray-800 text-gray-300 hover:text-white border border-gray-700'}">
+                                    ${isDone ? dict.markDone : dict.markBtn}
+                                </button>
                             </div>
-                            <button onclick="toggleLesson(${l.id})" class="px-3 py-1.5 rounded-lg text-xs font-bold transition ${isDone ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-gray-800 text-gray-400 hover:text-white'}">
-                                ${isDone ? dict.markDone : dict.markBtn}
-                            </button>
+                            <!-- Institutional Chart & Candlestick Diagram -->
+                            <div class="mt-4 rounded-xl overflow-hidden border border-gray-800 bg-black/40 p-2">
+                                <div class="flex items-center justify-between px-3 py-1.5 text-[11px] text-amber-400 font-semibold border-b border-gray-800/80 mb-2">
+                                    <span>📊 Institutional Chart & Price Action Setup</span>
+                                    <span>Timeframe: 15M / 4H</span>
+                                </div>
+                                <img src="${l.chartImg}" alt="Trading Chart Analysis" class="w-full h-56 object-cover rounded-lg opacity-90 hover:opacity-100 transition duration-300">
+                            </div>
                         </div>
                     `;
                 });
 
                 moduleEl.innerHTML = `
                     <button onclick="toggleAccordion('mod-${mod.id}')" class="w-full p-5 text-left flex items-center justify-between bg-gray-900/80 hover:bg-gray-800/80 transition">
-                        <span class="text-sm font-bold text-white flex items-center gap-3">
-                            <span class="w-7 h-7 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs flex items-center justify-center font-bold">${mod.id}</span>
+                        <span class="text-base font-bold text-white flex items-center gap-3">
+                            <span class="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400 text-sm flex items-center justify-center font-bold">${mod.id}</span>
                             ${titleText}
                         </span>
                         <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400"></i>
