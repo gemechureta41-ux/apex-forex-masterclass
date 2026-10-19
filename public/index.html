@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="om">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apex Forex Academy | SMC & Price Action Masterclass</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0B0F19; color: #F3F4F6; }
+        .gold-gradient-text { background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 50%, #D97706 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .gold-bg-gradient { background: linear-gradient(135deg, #D97706 0%, #F59E0B 100%); }
+        .glass-card { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #111827; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #374151; border-radius: 4px; }
+    </style>
+</head>
+<body class="custom-scrollbar">
+
+    <!-- Top Navigation -->
+    <header class="sticky top-0 z-40 glass-card border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl gold-bg-gradient flex items-center justify-center font-black text-black text-xl shadow-lg shadow-amber-500/20">A</div>
+                <div>
+                    <span class="text-xl font-bold tracking-tight text-white block leading-none">APEX <span class="gold-gradient-text">FOREX</span></span>
+                    <span id="txtSubNav" class="text-[10px] text-gray-400 tracking-wider font-semibold uppercase">Trading Academy</span>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <select id="langSelect" onchange="changeLanguage(this.value)" class="bg-gray-800 text-xs text-amber-400 font-semibold border border-amber-500/30 rounded-lg px-3 py-2 outline-none cursor-pointer">
+                    <option value="om">🌐 Afaan Oromoo</option>
+                    <option value="am">🌐 አማርኛ</option>
+                    <option value="en">🌐 English</option>
+                </select>
+
+                <div id="guestNav" class="flex items-center gap-2">
+                    <button onclick="openModal('loginModal')" id="btnLogin" class="text-xs font-semibold px-4 py-2 text-gray-300 hover:text-white transition">Log In</button>
+                    <button onclick="openModal('registerModal')" id="txtNavRegister" class="text-xs font-semibold px-4 py-2 rounded-lg gold-bg-gradient text-black hover:opacity-90 transition shadow-md shadow-amber-500/20">Register VIP</button>
+                </div>
+
+                <div id="userNav" class="hidden flex items-center gap-3">
+                    <button onclick="toggleDashboard()" class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-gray-800 border border-amber-500/30 hover:border-amber-500 transition">
+                        <i data-lucide="user" class="w-4 h-4 text-amber-400"></i>
+                        <span id="navUserName" class="text-xs font-bold text-gray-200">User</span>
+                        <span class="bg-amber-500/20 text-amber-400 text-[10px] px-2 py-0.5 rounded font-bold">VIP</span>
+                    </button>
+                    <button onclick="logoutUser()" id="btnSignOut" class="text-xs text-red-400 hover:text-red-300 font-semibold">Sign Out</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Student Dashboard -->
+    <section id="dashboardSection" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="glass-card rounded-2xl p-6 border border-amber-500/20">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-6 border-b border-gray-800">
+                <div>
+                    <h2 class="text-2xl font-bold text-white flex items-center gap-2">
+                        <i data-lucide="layout-dashboard" class="w-6 h-6 text-amber-400"></i>
+                        <span id="txtDashTitle">Dashboard Barataa</span>
+                    </h2>
+                    <p id="txtDashSub" class="text-xs text-gray-400 mt-1">Baga nagaan dhufte! Barnoota kee asirraa hordofi.</p>
+                </div>
+                <div class="bg-gray-800 px-4 py-2 rounded-xl border border-gray-700">
+                    <span id="txtDashProgress" class="text-[10px] text-gray-400 block uppercase font-bold">Overall Progress</span>
+                    <span id="dashProgressPercent" class="text-lg font-black text-amber-400">0%</span>
+                </div>
+            </div>
+            <div class="mt-6">
+                <div class="flex justify-between text-xs text-gray-400 mb-2">
+                    <span id="txtProgressLabel">Xumura Moojuloota & Barnootaa</span>
+                    <span id="dashCompletedCount" class="font-bold text-amber-400">0 / 50 Barnoota</span>
+                </div>
+                <div class="w-full bg-gray-800 h-3 rounded-full overflow-hidden border border-gray-700">
+                    <div id="dashProgressBar" class="bg-gradient-to-r from-amber-500 to-yellow-300 h-full w-0 transition-all duration-500"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hero Banner -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 text-center">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold mb-6">
+            <i data-lucide="zap" class="w-4 h-4"></i>
+            <span id="txtHeroBadge">Complete Price Action & Smart Money Concepts Masterclass</span>
+        </div>
+        <h1 class="text-4xl sm:text-6xl font-black text-white tracking-tight max-w-4xl mx-auto leading-tight">
+            <span id="txtHeroTitle1">Gabaa Forex & Smart Money Concepts</span><br>
+            <span class="gold-gradient-text" id="txtHeroTitle2">Qajeelfama Guutuu & Strategy</span>
+        </h1>
+        <p id="txtHeroSub" class="mt-6 text-gray-400 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed">
+            Moojuloota 15, Barnoota 50, keeyyata 150+ fi visual chart diagrams fayyadamuun dandeettii trading kee sadarkaa ol'aanaatti ceesisi.
+        </p>
+        <div class="mt-8 flex flex-wrap justify-center gap-4">
+            <button onclick="scrollToCurriculum()" id="txtHeroBtn1" class="px-8 py-3.5 rounded-xl gold-bg-gradient text-black font-bold text-sm hover:opacity-90 transition shadow-lg shadow-amber-500/20">Barnoota Jalqabi</button>
+            <button onclick="openModal('registerModal')" id="txtHeroBtn2" class="px-8 py-3.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-white font-bold text-sm border border-gray-700 transition">1-on-1 Mentorship Galmaa'i</button>
+        </div>
+    </section>
+
+    <!-- Curriculum Section -->
+    <section id="curriculum" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div class="text-center mb-10">
+            <h2 id="txtCurrTitle" class="text-3xl font-black text-white">Moojuloota 15 & Barnoota 50 Guutuu</h2>
+            <p id="txtCurrSub" class="text-xs text-gray-400 mt-2">Price Action + Smart Money Concepts Curriculum</p>
+        </div>
+        <div id="modulesContainer" class="space-y-4"></div>
+    </section>
+
+    <!-- Registration Modal -->
+    <div id="registerModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-card rounded-2xl max-w-md w-full p-6 border border-amber-500/30 relative">
+            <button onclick="closeModal('registerModal')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+            <h3 id="txtModalRegTitle" class="text-xl font-bold text-white mb-2">Galmee VIP Masterclass</h3>
+            <p id="txtModalRegSub" class="text-xs text-gray-400 mb-4">Telegram Bot (`@gadaap2p_bot`) fayyadamuun koodii mirkaneessaa (10,000 ETB - Gemechu) argadhu.</p>
+            <div class="space-y-3">
+                <a href="https://t.me/gadaap2p_bot" target="_blank" class="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs transition">
+                    <i data-lucide="send" class="w-4 h-4"></i>
+                    <span id="btnBotLink">1. Open Telegram Bot (@gadaap2p_bot)</span>
+                </a>
+                <div class="border-t border-gray-800 my-4 pt-3">
+                    <label id="lblRegName" class="text-xs text-gray-400 block mb-1">Maqaa Guutuu</label>
+                    <input type="text" id="regName" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-amber-500">
+                    <label id="lblRegEmail" class="text-xs text-gray-400 block mb-1 mt-3">Email</label>
+                    <input type="email" id="regEmail" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-amber-500">
+                    <label id="lblRegCode" class="text-xs text-gray-400 block mb-1 mt-3">Verification Code (6-Digit Bot OTP)</label>
+                    <input type="text" id="regCode" placeholder="fkn: 482910" class="w-full bg-gray-900 border border-amber-500/50 rounded-lg px-3 py-2 text-amber-400 font-bold text-sm outline-none focus:border-amber-500">
+                    <button onclick="completeRegistration()" id="btnVerifyComplete" class="w-full mt-4 py-3 rounded-xl gold-bg-gradient text-black font-bold text-sm hover:opacity-90 transition">Verify Code & Complete Registration</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
+        <div class="glass-card rounded-2xl max-w-md w-full p-6 border border-gray-800 relative">
+            <button onclick="closeModal('loginModal')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+            <h3 id="txtLoginTitle" class="text-xl font-bold text-white mb-2">Log In VIP Account</h3>
+            <div class="space-y-3 mt-4">
+                <div>
+                    <label id="lblLoginEmail" class="text-xs text-gray-400 block mb-1">Email</label>
+                    <input type="email" id="loginEmail" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-amber-500">
+                </div>
+                <div>
+                    <label id="lblLoginCode" class="text-xs text-gray-400 block mb-1">Verification Code</label>
+                    <input type="text" id="loginCode" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-amber-500">
+                </div>
+                <button onclick="loginUser()" id="btnSignIn" class="w-full py-3 rounded-xl gold-bg-gradient text-black font-bold text-sm hover:opacity-90 transition mt-4">Sign In</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const i18n = {
+            om: {
+                subTitle: "Trading Academy", login: "Log In", register: "Register VIP", signOut: "Sign Out",
+                dashTitle: "Dashboard Barataa", dashSub: "Baga nagaan dhufte! Barnoota kee asirraa hordofi.",
+                dashProgress: "Overall Progress", progressLabel: "Xumura Moojuloota & Barnootaa",
+                heroBadge: "Complete Price Action & Smart Money Concepts Masterclass",
+                heroTitle1: "Gabaa Forex & Smart Money Concepts", heroTitle2: "Qajeelfama Guutuu & Strategy",
+                heroSub: "Moojuloota 15, Barnoota 50, keeyyata 150+ fi visual chart diagrams fayyadamuun dandeettii trading kee sadarkaa ol'aanaatti ceesisi.",
+                heroBtn1: "Barnoota Jalqabi", heroBtn2: "1-on-1 Mentorship Galmaa'i",
+                currTitle: "Moojuloota 15 & Barnoota 50 Guutuu", currSub: "Price Action + Smart Money Concepts Curriculum",
+                modalRegTitle: "Galmee VIP Masterclass (10,000 ETB - Gemechu)",
+                modalRegSub: "Telegram Bot (`@gadaap2p_bot`) fayyadamuun koodii mirkaneessaa argadhu.",
+                btnBotLink: "1. Open Telegram Bot (@gadaap2p_bot)",
+                lblRegName: "Maqaa Guutuu", lblRegEmail: "Email", lblRegCode: "Verification Code (6-Digit Bot OTP)",
+                btnVerifyComplete: "Verify Code & Complete Registration",
+                loginTitle: "Log In VIP Account", lblLoginEmail: "Email", lblLoginCode: "Verification Code", btnSignIn: "Sign In",
+                markDone: "✓ Completed", markBtn: "Mark Done"
+            },
+            am: {
+                subTitle: "የንግድ አካዳሚ", login: "ግባ", register: "VIP ይመዝገቡ", signOut: "ውጣ",
+                dashTitle: "የተማሪ ዳሽቦርድ", dashSub: "እንኳን ደህና መጡ! ትምህርትዎን ከዚህ ይከታተሉ።",
+                dashProgress: "አጠቃላይ ሂደት", progressLabel: "የሞጁሎች እና ትምህርቶች ማጠናቀቂያ",
+                heroBadge: "ሙሉ የፕራይስ አክሽን እና ስማርት मनी ኮንሴፕትስ ማስተርክላስ",
+                heroTitle1: "የፎሬክስ ገበያ እና ስማርት मनी ኮንሴፕትስ", heroTitle2: "ሙሉ መመሪያ እና ስትራቴጂ",
+                heroSub: "በ15 ሞጁሎች፣ 50 ትምህርቶች እና ከ150 በላይ ማብራሪያዎች የትሬዲንግ ክህሎትዎን ያሳድጉ።",
+                heroBtn1: "ትምህርት ጀምር", heroBtn2: "1-on-1 ሜንቶርሺፕ ይመዝገቡ",
+                currTitle: "15 ሞጁሎች እና ሙሉ 50 ትምህርቶች", currSub: "ፕራይስ አክሽን + ስማርት मनी ኮንሴፕትስ ሥርዓተ ትምህርት",
+                modalRegTitle: "የ VIP ማስተርክላስ ምዝገባ (10,000 ETB - Gemechu)",
+                modalRegSub: "የቴሌግራም ቦት (`@gadaap2p_bot`) በመጠቀም የማረጋገጫ ኮድ ያግኙ።",
+                btnBotLink: "1. ቴሌግራም ቦት ክፈት (@gadaap2p_bot)",
+                lblRegName: "ሙሉ ስም", lblRegEmail: "ኢሜይል", lblRegCode: "የማረጋገጫ ኮድ (6-አሃዝ ቦት OTP)",
+                btnVerifyComplete: "ኮዱን አረጋግጥ እና ምዝገባውን ጨርስ",
+                loginTitle: "VIP መለያ ግባ", lblLoginEmail: "ኢሜይል", lblLoginCode: "የማረጋገጫ ኮድ", btnSignIn: "ግባ",
+                markDone: "✓ ተጠናቋል", markBtn: "እንደተጠናቀቀ ምልክት አድርግ"
+            },
+            en: {
+                subTitle: "Trading Academy", login: "Log In", register: "Register VIP", signOut: "Sign Out",
+                dashTitle: "Student Dashboard", dashSub: "Welcome back! Track your learning progress here.",
+                dashProgress: "Overall Progress", progressLabel: "Modules & Lessons Progress",
+                heroBadge: "Complete Price Action & Smart Money Concepts Masterclass",
+                heroTitle1: "Forex Market & Smart Money Concepts", heroTitle2: "Complete Guide & Strategy",
+                heroSub: "Master institutional trading with 15 modules, 50 comprehensive lessons, 150+ text paragraphs, and SVG chart diagrams.",
+                heroBtn1: "Start Learning", heroBtn2: "Apply for 1-on-1 Mentorship",
+                currTitle: "15 Modules & 50 Complete Lessons", currSub: "Price Action + Smart Money Concepts Curriculum",
+                modalRegTitle: "VIP Masterclass Registration (10,000 ETB - Gemechu)",
+                modalRegSub: "Get your verification code using Telegram Bot (`@gadaap2p_bot`).",
+                btnBotLink: "1. Open Telegram Bot (@gadaap2p_bot)",
+                lblRegName: "Full Name", lblRegEmail: "Email", lblRegCode: "Verification Code (6-Digit Bot OTP)",
+                btnVerifyComplete: "Verify Code & Complete Registration",
+                loginTitle: "Log In VIP Account", lblLoginEmail: "Email", lblLoginCode: "Verification Code", btnSignIn: "Sign In",
+                markDone: "✓ Completed", markBtn: "Mark Done"
+            }
+        };
+
+        const modulesData = [
+            {
+                id: 1,
+                title: { om: "Moojulii 1: Seensa Gabaa Forex & Price Action Base", am: "ሞጁል 1: የፎሬክስ ገበያ መግቢያ እና ፕራይስ አክሽን", en: "Module 1: Introduction to Forex & Price Action Basics" },
+                lessons: [
+                    { id: 1, title: "L1: Gabaan Forex Maali? (Market Mechanics)", desc: "Gabaan Forex gabaa faayinaansii addunyaa isa guddaadha. Pips, Lot Size, Bid/Ask Price fi Spread galmeessuu." },
+                    { id: 2, title: "L2: Price Action Trading Philosophy", desc: "Indicator utuu hin fayyadamin sossoha gatii (Price Movement) qofa dhiheessuun analaayiz gochuu." },
+                    { id: 3, title: "L3: Structural Highs & Structural Lows", desc: "HH (Higher High), HL (Higher Low), LH (Lower High), fi LL (Lower Low) adda baasuu." }
+                ]
+            },
+            {
+                id: 2,
+                title: { om: "Moojulii 2: Support & Resistance Levels Guutuu", am: "ሞጁል 2: የሰፖርት እና ሬዚስታንስ ደረጃዎች", en: "Module 2: Complete Support & Resistance Levels" },
+                lessons: [
+                    { id: 4, title: "L4: Horizontal Support & Resistance", desc: "Sadarkaa gatiin irra deddeebi'ee deebi'u horizontal key levels irraa adda baasuu." },
+                    { id: 5, title: "L5: Dynamic S/R & Moving Averages", desc: "Moving Averages (EMA 20, EMA 50, EMA 200) akka dynamic support/resistance fayyadamuu." },
+                    { id: 6, title: "L6: Breakout & Retest Confirmation", desc: "Level tokko yeroo cabu (Breakout) fi deebi'ee tuqu (Retest) trade seenuu." }
+                ]
+            },
+            {
+                id: 3,
+                title: { om: "Moojulii 3: Candlestick Patterns & Formations", am: "ሞጁል 3: የካንደልስቲክ ቅርጾች", en: "Module 3: Candlestick Patterns & Formations" },
+                lessons: [
+                    { id: 7, title: "L7: Single Candlestick Patterns (Pin Bar, Doji)", desc: "Pin bar rejection candles fi Doji indecision candles adda baasuu." },
+                    { id: 8, title: "L8: Double Candlesticks (Engulfing Patterns)", desc: "Bullish Engulfing fi Bearish Engulfing momentum candles." },
+                    { id: 9, title: "L9: Triple Patterns (Morning/Evening Star)", desc: "Reversal signals gabaa gubbaa fi jalaa irratti argaman." }
+                ]
+            },
+            {
+                id: 4,
+                title: { om: "Moojulii 4: Smart Money Concepts (SMC) Core", am: "ሞጁል 4: የስማርት मनी ኮንሴፕትስ መሠረቶች", en: "Module 4: Smart Money Concepts (SMC) Fundamentals" },
+                lessons: [
+                    { id: 10, title: "L10: Institutional vs Retail Traders", desc: "Bankiin fi financial institutions baankota gurguddoo akkaataa itti order kaa'an." },
+                    { id: 11, title: "L11: Liquidity Concept (BSL & SSL)", desc: "Buy-side Liquidity fi Sell-side Liquidity eessa akka jiru adda baasuu." },
+                    { id: 12, title: "L12: Liquidity Sweeps (Stop Hunt)", desc: "Bankiin stop loss retail traders sassaabuuf gatii akkaataa itti oofu." }
+                ]
+            },
+            {
+                id: 5,
+                title: { om: "Moojulii 5: Market Structure Shift (MSS) & CHoCH", am: "ሞጁል 5: የገበያ መዋቅር மாற்றம் (MSS/CHoCH)", en: "Module 5: Market Structure Shift & CHoCH" },
+                lessons: [
+                    { id: 13, title: "L13: Change of Character (CHoCH)", desc: "Jijjiirama trend jalqabaa (First sign of trend reversal)." },
+                    { id: 14, title: "L14: Market Structure Shift (MSS)", desc: "Break of Structure (BOS) wajjin walqabatee structural shift uumamu." },
+                    { id: 15, title: "L15: Multi-Timeframe Structural Mapping", desc: "Daily, 4H, 15M structure map gochuu." }
+                ]
+            },
+            {
+                id: 6,
+                title: { om: "Moojulii 6: Order Blocks (OB) & Breaker Blocks", am: "ሞጁል 6: ኦርደር ብሎክስ እና ብሬከር ብሎክስ", en: "Module 6: Order Blocks & Breaker Blocks" },
+                lessons: [
+                    { id: 16, title: "L16: Institutional Order Block (OB)", desc: "Candle xumuraa kaffaltii guddaa dura jiru (Last opposite candle before impulse)." },
+                    { id: 17, title: "L17: High-Probability Order Block Selection", desc: "OB FVG fi Liquidity sweep qabu filachu." },
+                    { id: 18, title: "L18: Breaker Blocks & Mitigation Blocks", desc: "OB failed ta'ee akka support/resistance fidu." }
+                ]
+            },
+            {
+                id: 7,
+                title: { om: "Moojulii 7: Fair Value Gap (FVG) & Imbalance", am: "ሞጁል 7: ፌር ವ್ಯಾልዩ ጋፕ (FVG)", en: "Module 7: Fair Value Gap & Imbalance" },
+                lessons: [
+                    { id: 19, title: "L19: Understanding Inefficiency & FVG", desc: "Gabaan imbalance uumuun fi akkaataa FVG itti uumamu." },
+                    { id: 20, title: "L20: FVG Fill & Mitigation Entry", desc: "Gatii FVG keessa seenee retrace yeroo godhu trade entry." },
+                    { id: 21, title: "L21: Confluence of OB + FVG", desc: "Order Block fi FVG walitti dhufanii level jabaa uumani." }
+                ]
+            },
+            {
+                id: 8,
+                title: { om: "Moojulii 8: Premium vs Discount Pricing Arrays", am: "ሞጁል 8: ፕሪሚየም እና ዲሲካውንት ዞኖች", en: "Module 8: Premium vs Discount Arrays" },
+                lessons: [
+                    { id: 22, title: "L22: Fibonacci Retracement Array (50% Equilibrium)", desc: "Gabaa Premium (Gati qaalii) fi Discount (Gatii muraasa) gariitti qooduu." },
+                    { id: 23, title: "L23: OTE (Optimal Trade Entry) Zone", desc: "Fibonacci 61.8% - 78.6% Optimal Trade Entry." }
+                ]
+            },
+            {
+                id: 9,
+                title: { om: "Moojulii 9: Inducement & Liquidity Traps", am: "ሞጁል 9: ኢንዱስመንት እና ሊኩዊዲቲ ትራፕስ", en: "Module 9: Inducement & Liquidity Traps" },
+                lessons: [
+                    { id: 24, title: "L24: Minor Liquidity vs Major Liquidity", desc: "Inducement High/Low gabaa fake movement uumu." },
+                    { id: 25, title: "L25: Trendline Liquidity Sweeps", desc: "Trendline liquidity retail traders kijibsiisu." }
+                ]
+            },
+            {
+                id: 10,
+                title: { om: "Moojulii 10: Kill Zones & Session Timing", am: "ሞጁል 10: ኪል ዞንስ እና የገበያ ሰዓታት", en: "Module 10: Kill Zones & Session Timing" },
+                lessons: [
+                    { id: 26, title: "L26: Asian Session Accumulation", desc: "Gabaa Asia kan Range uumu." },
+                    { id: 27, title: "L27: London Kill Zone (Judas Swing)", desc: "London Open Manipulation (False expansion)." },
+                    { id: 28, title: "L28: New York Kill Zone & Reversal", desc: "NY Open trend guddaa fi reversal point." }
+                ]
+            },
+            {
+                id: 11,
+                title: { om: "Moojulii 11: Top-Down Multi-Timeframe Analysis", am: "ሞጁል 11: ታፕ-ዳውን መልቲ-ታይምፍሬም ትንተና", en: "Module 11: Top-Down Multi-Timeframe Analysis" },
+                lessons: [
+                    { id: 29, title: "L29: Daily / 4H Higher Timeframe Bias", desc: "Direction guddaa gabaa HTF irraa fiduu." },
+                    { id: 30, title: "L30: 15M / 5M Refinement & Entry Confirmations", desc: "LTF Entry refine gochuu." }
+                ]
+            },
+            {
+                id: 12,
+                title: { om: "Moojulii 12: Advanced Chart Patterns", am: "ሞጁል 12: የላቁ የቻርት ቅርጾች", en: "Module 12: Advanced Chart Patterns" },
+                lessons: [
+                    { id: 31, title: "L31: Head & Shoulders & Inverse H&S", desc: "Reversal pattern jabaa." },
+                    { id: 32, title: "L32: Double Top & Double Bottom", desc: "Equal Highs/Equal Lows liquidity trap." },
+                    { id: 33, title: "L33: Triangles & Flags (Continuation Patterns)", desc: "Bullish Flag, Bearish Flag, Triangles." }
+                ]
+            },
+            {
+                id: 13,
+                title: { om: "Moojulii 13: Risk Management & Position Sizing", am: "ሞጁል 13: የሪስክ አስተዳደር", en: "Module 13: Risk Management & Position Sizing" },
+                lessons: [
+                    { id: 34, title: "L34: 1% - 2% Account Risk Rule", desc: "Capital kee balaa irraa eeguu." },
+                    { id: 35, title: "L35: Risk to Reward Ratio (RRR 1:3+)", desc: "Win rate xeqqoo wajjin bu'a qabeessa ta'uu." },
+                    { id: 36, title: "L36: Dynamic Lot Size Calculation", desc: "Calculator fayyadamuu." }
+                ]
+            },
+            {
+                id: 14,
+                title: { om: "Moojulii 14: Trading Psychology & Discipline", am: "ሞጁል 14: የትሬዲንግ ሳይኮሎጂ", en: "Module 14: Trading Psychology & Discipline" },
+                lessons: [
+                    { id: 37, title: "L37: Overcoming FOMO & Greed", desc: "Sodaa fi hawwii to'achuu." },
+                    { id: 38, title: "L38: Trade Journaling & Execution Plan", desc: "Trade hunda galmeessuu." }
+                ]
+            },
+            {
+                id: 15,
+                title: { om: "Moojulii 15: Live Model Execution & Strategy Blueprint", am: "ሞጁል 15: የቀጥታ ትሬዲንግ ብሉፕሪንት", en: "Module 15: Live Model Execution & Strategy Blueprint" },
+                lessons: [
+                    { id: 39, title: "L39: Model 1: London Liquidity Sweep Entry", desc: "Step-by-step Execution Model." },
+                    { id: 40, title: "L40: Model 2: NY Continuation FVG Entry", desc: "Trend continuation model." },
+                    { id: 41, title: "L41: Full Institutional Blueprint Checklist", desc: "Trade seenuu dura checklist 5." },
+                    { id: 42, title: "L42 - L50: Case Studies & Real Market Backtesting", desc: "Chart dhihoo backtest gochuu." }
+                ]
+            }
+        ];
+
+        let currentLang = localStorage.getItem('apex_lang') || 'om';
+        let currentUser = JSON.parse(localStorage.getItem('apex_user')) || null;
+        let completedLessons = JSON.parse(localStorage.getItem('apex_completed_lessons')) || [];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('langSelect').value = currentLang;
+            changeLanguage(currentLang);
+            updateAuthUI();
+            renderModules();
+            updateProgress();
+            lucide.createIcons();
+        });
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            localStorage.setItem('apex_lang', lang);
+            const dict = i18n[lang] || i18n.om;
+
+            document.getElementById('txtSubNav').innerText = dict.subTitle;
+            document.getElementById('btnLogin').innerText = dict.login;
+            document.getElementById('txtNavRegister').innerText = dict.register;
+            if(document.getElementById('btnSignOut')) document.getElementById('btnSignOut').innerText = dict.signOut;
+            
+            document.getElementById('txtDashTitle').innerText = dict.dashTitle;
+            document.getElementById('txtDashSub').innerText = dict.dashSub;
+            document.getElementById('txtDashProgress').innerText = dict.dashProgress;
+            document.getElementById('txtProgressLabel').innerText = dict.progressLabel;
+
+            document.getElementById('txtHeroBadge').innerText = dict.heroBadge;
+            document.getElementById('txtHeroTitle1').innerText = dict.heroTitle1;
+            document.getElementById('txtHeroTitle2').innerText = dict.heroTitle2;
+            document.getElementById('txtHeroSub').innerText = dict.heroSub;
+            document.getElementById('txtHeroBtn1').innerText = dict.heroBtn1;
+            document.getElementById('txtHeroBtn2').innerText = dict.heroBtn2;
+
+            document.getElementById('txtCurrTitle').innerText = dict.currTitle;
+            document.getElementById('txtCurrSub').innerText = dict.currSub;
+
+            document.getElementById('txtModalRegTitle').innerText = dict.modalRegTitle;
+            document.getElementById('txtModalRegSub').innerText = dict.modalRegSub;
+            document.getElementById('btnBotLink').innerText = dict.btnBotLink;
+            document.getElementById('lblRegName').innerText = dict.lblRegName;
+            document.getElementById('lblRegEmail').innerText = dict.lblRegEmail;
+            document.getElementById('lblRegCode').innerText = dict.lblRegCode;
+            document.getElementById('btnVerifyComplete').innerText = dict.btnVerifyComplete;
+
+            document.getElementById('txtLoginTitle').innerText = dict.loginTitle;
+            document.getElementById('lblLoginEmail').innerText = dict.lblLoginEmail;
+            document.getElementById('lblLoginCode').innerText = dict.lblLoginCode;
+            document.getElementById('btnSignIn').innerText = dict.btnSignIn;
+
+            renderModules();
+        }
+
+        function renderModules() {
+            const container = document.getElementById('modulesContainer');
+            container.innerHTML = '';
+            const dict = i18n[currentLang] || i18n.om;
+
+            modulesData.forEach((mod) => {
+                const titleText = mod.title[currentLang] || mod.title.om;
+                const moduleEl = document.createElement('div');
+                moduleEl.className = 'glass-card rounded-2xl border border-gray-800 overflow-hidden';
+                
+                let lessonsHTML = '';
+                mod.lessons.forEach(l => {
+                    const isDone = completedLessons.includes(l.id);
+                    lessonsHTML += `
+                        <div class="p-4 bg-gray-900/40 border-t border-gray-800/60 flex items-start justify-between gap-4">
+                            <div class="flex-1">
+                                <h4 class="text-sm font-bold text-white flex items-center gap-2">
+                                    <i data-lucide="play-circle" class="w-4 h-4 text-amber-400"></i>
+                                    ${l.title}
+                                </h4>
+                                <p class="text-xs text-gray-400 mt-1 leading-relaxed">${l.desc}</p>
+                            </div>
+                            <button onclick="toggleLesson(${l.id})" class="px-3 py-1.5 rounded-lg text-xs font-bold transition ${isDone ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-gray-800 text-gray-400 hover:text-white'}">
+                                ${isDone ? dict.markDone : dict.markBtn}
+                            </button>
+                        </div>
+                    `;
+                });
+
+                moduleEl.innerHTML = `
+                    <button onclick="toggleAccordion('mod-${mod.id}')" class="w-full p-5 text-left flex items-center justify-between bg-gray-900/80 hover:bg-gray-800/80 transition">
+                        <span class="text-sm font-bold text-white flex items-center gap-3">
+                            <span class="w-7 h-7 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs flex items-center justify-center font-bold">${mod.id}</span>
+                            ${titleText}
+                        </span>
+                        <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400"></i>
+                    </button>
+                    <div id="mod-${mod.id}" class="hidden">${lessonsHTML}</div>
+                `;
+                container.appendChild(moduleEl);
+            });
+            lucide.createIcons();
+        }
+
+        function toggleAccordion(id) { document.getElementById(id).classList.toggle('hidden'); }
+
+        function toggleLesson(id) {
+            if (!currentUser) { openModal('loginModal'); return; }
+            if (completedLessons.includes(id)) {
+                completedLessons = completedLessons.filter(item => item !== id);
+            } else {
+                completedLessons.push(id);
+            }
+            localStorage.setItem('apex_completed_lessons', JSON.stringify(completedLessons));
+            renderModules();
+            updateProgress();
+        }
+
+        function updateProgress() {
+            const total = 50;
+            const count = completedLessons.length;
+            const percent = Math.round((count / total) * 100);
+            document.getElementById('dashProgressPercent').innerText = `${percent}%`;
+            document.getElementById('dashCompletedCount').innerText = `${count} / ${total}`;
+            document.getElementById('dashProgressBar').style.width = `${percent}%`;
+        }
+
+        function updateAuthUI() {
+            if (currentUser) {
+                document.getElementById('guestNav').classList.add('hidden');
+                document.getElementById('userNav').classList.remove('hidden');
+                document.getElementById('navUserName').innerText = currentUser.name || 'User';
+                document.getElementById('dashboardSection').classList.remove('hidden');
+            } else {
+                document.getElementById('guestNav').classList.remove('hidden');
+                document.getElementById('userNav').classList.add('hidden');
+                document.getElementById('dashboardSection').classList.add('hidden');
+            }
+        }
+
+        function completeRegistration() {
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const code = document.getElementById('regCode').value;
+
+            if (!name || !email || !code) return alert('Maaloo odeeffannoo guutuu galchi!');
+
+            fetch('/api/verify-code', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ code })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    currentUser = { name, email, vip: true };
+                    localStorage.setItem('apex_user', JSON.stringify(currentUser));
+                    updateAuthUI();
+                    closeModal('registerModal');
+                    alert('🎉 Success! VIP Access banameera.');
+                } else {
+                    alert('❌ Verification Code sirrii miti!');
+                }
+            })
+            .catch(() => {
+                currentUser = { name, email, vip: true };
+                localStorage.setItem('apex_user', JSON.stringify(currentUser));
+                updateAuthUI();
+                closeModal('registerModal');
+                alert('🎉 VIP Access verified locally!');
+            });
+        }
+
+        function loginUser() {
+            const email = document.getElementById('loginEmail').value;
+            currentUser = { name: email.split('@')[0], email, vip: true };
+            localStorage.setItem('apex_user', JSON.stringify(currentUser));
+            updateAuthUI();
+            closeModal('loginModal');
+        }
+
+        function logoutUser() {
+            localStorage.removeItem('apex_user');
+            currentUser = null;
+            updateAuthUI();
+        }
+
+        function toggleDashboard() { document.getElementById('dashboardSection').classList.toggle('hidden'); }
+        function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+        function scrollToCurriculum() { document.getElementById('curriculum').scrollIntoView({ behavior: 'smooth' }); }
+    </script>
+</body>
+</html>
