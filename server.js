@@ -11,11 +11,11 @@ app.use(express.json());
 // Serve Static Files from 'public' folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Token & Admin Configuration
+// Configuration
 const BOT_TOKEN = process.env.BOT_TOKEN || '8871819505:AAHQyfyXvSFVoQpROkjFuueX7sgw_4Fgn58';
-const ADMIN_CHAT_ID = process.env.ADMIN_CHAT_ID || '6741214107';
+const ADMIN_CHAT_ID = String(process.env.ADMIN_CHAT_ID || '6741214107').trim();
 
-console.log(`🤖 Starting Telegram Bot... Token: ${BOT_TOKEN.substring(0, 10)}...`);
+console.log(`🤖 Telegram Bot Initializing... Admin Chat ID: ${ADMIN_CHAT_ID}`);
 
 const bot = new TelegramBot(BOT_TOKEN, { polling: true });
 
@@ -24,13 +24,14 @@ bot.on('polling_error', (error) => {
   console.error(`⚠️ Telegram Polling Error [${error.code}]: ${error.message}`);
 });
 
-// In-memory verification storage
-const pendingUsers = new Map();
-const verifiedCodes = new Map();
+// Storage
+const pendingUsers = new Map();  // chatId -> userData
+const verifiedCodes = new Map(); // otpCode -> { email, verified }
+const pendingApprovals = new Map(); // pendingId -> { userChatId, email, method }
 
 // ---------------- TELEGRAM BOT FLOW ----------------
 
-// /start Command Response
+// /start Command
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
   console.log(`📩 Received /start from Chat ID: ${chatId}`);
@@ -43,13 +44,12 @@ bot.onText(/\/start/, (msg) => {
   pendingUsers.set(chatId, { step: 'AWAITING_EMAIL' });
 });
 
-// Message Handling Flow
+// Handle Text Messages (Email Input)
 bot.on('message', (msg) => {
+  if (msg.photo || !msg.text || msg.text.startsWith('/')) return;
+
   const chatId = msg.chat.id;
-  const text = msg.text;
-
-  if (!text || text === '/start') return;
-
+  const text = msg.text.trim();
   const userState = pendingUsers.get(chatId);
 
   if (userState && userState.step === 'AWAITING_EMAIL') {
@@ -57,7 +57,7 @@ bot.on('message', (msg) => {
       return bot.sendMessage(chatId, '❌ Please enter a valid Email address!');
     }
 
-    userState.email = text.trim();
+    userState.email = text;
     userState.step = 'AWAITING_PAYMENT_METHOD';
 
     const opts = {
@@ -73,56 +73,126 @@ bot.on('message', (msg) => {
   }
 });
 
-// Button Callbacks (Telebirr / M-Pesa)
+// Payment Method Callbacks & Admin Action Buttons
 bot.on('callback_query', (query) => {
   const chatId = query.message.chat.id;
   const data = query.data;
-  const userState = pendingUsers.get(chatId) || {};
 
-  if (data === 'PAY_TELEBIRR') {
-    userState.method = 'Telebirr';
+  // 1. Student Payment Method Selection
+  if (data === 'PAY_TELEBIRR' || data === 'PAY_MPESA') {
+    const userState = pendingUsers.get(chatId) || { email: 'Not Provided' };
+    userState.method = data === 'PAY_TELEBIRR' ? 'Telebirr' : 'M-Pesa';
     userState.step = 'AWAITING_RECEIPT';
-    bot.sendMessage(
+    pendingUsers.set(chatId, userState);
+
+    const accountDetails = data === 'PAY_TELEBIRR'
+      ? `📲 **Telebirr Payment Details:**\n• Account Number: **0917091612**\n• Account Name: **Gemechu**\n• Course Fee: **10,000 ETB**`
+      : `💸 **M-Pesa Payment Details:**\n• Account Number: **0717120607**\n• Account Name: **Gemechu**\n• Course Fee: **10,000 ETB**`;
+
+    return bot.sendMessage(
       chatId,
-      `📲 **Telebirr Payment Details:**\n• Account Number: **0917091612**\n• Account Name: **Gemechu**\n• Course Fee: **10,000 ETB**\n\nAfter completing your payment, please send the **Transaction ID** and **Receipt Screenshot** here!`,
-      { parse_mode: 'Markdown' }
-    );
-  } else if (data === 'PAY_MPESA') {
-    userState.method = 'M-Pesa';
-    userState.step = 'AWAITING_RECEIPT';
-    bot.sendMessage(
-      chatId,
-      `💸 **M-Pesa Payment Details:**\n• Account Number: **0717120607**\n• Account Name: **Gemechu**\n• Course Fee: **10,000 ETB**\n\nAfter completing your payment, please send the **Transaction ID** and **Receipt Screenshot** here!`,
+      `${accountDetails}\n\nAfter completing your payment, please send the **Receipt Screenshot** here!`,
       { parse_mode: 'Markdown' }
     );
   }
-});
 
-// Screenshot & Pending Review Confirmation
-bot.on('photo', (msg) => {
-  const chatId = msg.chat.id;
-  const userState = pendingUsers.get(chatId);
+  // 2. Admin Actions (Approve / Reject)
+  if (data.startsWith('APPROVE_') || data.startsWith('REJECT_')) {
+    const pendingId = data.replace('APPROVE_', '').replace('REJECT_', '');
+    const pendingData = pendingApprovals.get(pendingId);
 
-  if (userState && userState.step === 'AWAITING_RECEIPT') {
-    const code = Math.floor(100000 + Math.random() * 900000).toString();
-    verifiedCodes.set(code, { email: userState.email, verified: false });
-
-    if (ADMIN_CHAT_ID) {
-      bot.sendPhoto(ADMIN_CHAT_ID, msg.photo[msg.photo.length - 1].file_id, {
-        caption: `🚨 **NEW PAYMENT SUBMITTED!**\n\n• **Student Email:** ${userState.email}\n• **Method:** ${userState.method}\n• **Generated OTP Code:** \`\${code}\`\n• **User Telegram ID:** ${chatId}`,
-        parse_mode: 'Markdown'
-      });
+    if (!pendingData) {
+      return bot.answerCallbackQuery(query.id, { text: '⚠️ Request expired or already processed!' });
     }
 
-    bot.sendMessage(
-      chatId,
-      `⏳ **Payment Received — Status: Pending Review**\n\nWe have received your payment receipt screenshot. Please wait patiently while the Admin reviews and approves your transaction.\n\n🔑 **Your Verification OTP Code:** \`\${code}\`\n\nOnce approved, you can enter this code on the website to unlock full VIP Access.`,
-      { parse_mode: 'Markdown' }
-    );
+    if (data.startsWith('APPROVE_')) {
+      // Generate 6-Digit Verification OTP Code
+      const code = Math.floor(100000 + Math.random() * 900000).toString();
+      verifiedCodes.set(code, { email: pendingData.email, verified: false });
+
+      // Notify Student with Verification Code
+      bot.sendMessage(
+        pendingData.userChatId,
+        `🎉 **Payment Approved by Admin!**\n\nYour payment has been successfully verified.\n\n🔑 **Your Verification OTP Code:** \`\${code}\`\n\nEnter this code on the website to instantly unlock VIP Masterclass Access!`,
+        { parse_mode: 'Markdown' }
+      );
+
+      // Edit Admin Message
+      bot.editMessageCaption(
+        `✅ **APPROVED PAYMENT**\n\n• **Student Email:** ${pendingData.email}\n• **Method:** ${pendingData.method}\n• **Generated OTP:** \`\${code}\`\n• **User ID:** ${pendingData.userChatId}`,
+        { chat_id: chatId, message_id: query.message.message_id, parse_mode: 'Markdown' }
+      );
+
+      bot.answerCallbackQuery(query.id, { text: 'Payment Approved and OTP sent to student!' });
+    } else {
+      // Reject Payment
+      bot.sendMessage(
+        pendingData.userChatId,
+        `❌ **Payment Verification Failed**\n\nYour payment receipt could not be verified by the Admin. Please double check your payment or contact support.`,
+        { parse_mode: 'Markdown' }
+      );
+
+      bot.editMessageCaption(
+        `❌ **REJECTED PAYMENT**\n\n• **Student Email:** ${pendingData.email}\n• **Method:** ${pendingData.method}\n• **User ID:** ${pendingData.userChatId}`,
+        { chat_id: chatId, message_id: query.message.message_id, parse_mode: 'Markdown' }
+      );
+
+      bot.answerCallbackQuery(query.id, { text: 'Payment Rejected.' });
+    }
+
+    pendingApprovals.delete(pendingId);
   }
 });
 
-// REST API endpoint for Website verification
+// Screenshot Received (Forward to Admin)
+bot.on('photo', (msg) => {
+  const chatId = msg.chat.id;
+  const userState = pendingUsers.get(chatId) || { email: 'Not Provided', method: 'Unknown' };
+
+  const photoFileId = msg.photo[msg.photo.length - 1].file_id;
+  const pendingId = `${chatId}_${Date.now()}`;
+
+  pendingApprovals.set(pendingId, {
+    userChatId: chatId,
+    email: userState.email || 'N/A',
+    method: userState.method || 'Unknown'
+  });
+
+  // Direct Forward to Admin Chat ID
+  if (ADMIN_CHAT_ID) {
+    const adminKeyboard = {
+      reply_markup: {
+        inline_keyboard: [
+          [
+            { text: '✅ Approve', callback_data: `APPROVE_${pendingId}` },
+            { text: '❌ Reject', callback_data: `REJECT_${pendingId}` }
+          ]
+        ]
+      }
+    };
+
+    bot.sendPhoto(ADMIN_CHAT_ID, photoFileId, {
+      caption: `🚨 **NEW PAYMENT SUBMITTED FOR REVIEW!**\n\n• **Student Email:** ${userState.email}\n• **Payment Method:** ${userState.method}\n• **Telegram User ID:** ${chatId}`,
+      parse_mode: 'Markdown',
+      ...adminKeyboard
+    }).then(() => {
+      console.log(`✅ Screenshot successfully sent to Admin (${ADMIN_CHAT_ID})`);
+    }).catch((err) => {
+      console.error(`❌ Failed to send photo to Admin:`, err.message);
+    });
+  } else {
+    console.error('❌ ADMIN_CHAT_ID is missing!');
+  }
+
+  // Response to Student
+  bot.sendMessage(
+    chatId,
+    `⏳ **Payment Received — Status: Pending Review**\n\nWe have received your payment receipt screenshot. Please wait while the Admin reviews and approves your transaction.\n\nYou will receive your **Verification OTP Code** here immediately once approved!`,
+    { parse_mode: 'Markdown' }
+  );
+});
+
+// REST API for Website Verification
 app.post('/api/verify-code', (req, res) => {
   const { code } = req.body;
 
@@ -140,9 +210,10 @@ app.post('/api/verify-code', (req, res) => {
   }
 });
 
+// Single Page Application Fallback
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`🚀 Server listening on port ${PORT}`));
