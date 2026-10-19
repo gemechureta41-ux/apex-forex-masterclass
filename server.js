@@ -11,8 +11,8 @@ app.use(express.json());
 // Serve Static Files from 'public' folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Telegram Bot Configuration
-const BOT_TOKEN = process.env.BOT_TOKEN || '8736595383:AAF33rpE_kS9ikG7n_AF2lLyv9zAVs7Bkrg';
+// Telegram Bot Configuration with New Token
+const BOT_TOKEN = process.env.BOT_TOKEN || '8736595383:AAFw60FperXsx1q7DGgDTmYvuCcvTpj2ckE';
 const ADMIN_CHAT_ID = process.env.ADMIN_CHAT_ID || '6741214107';
 
 const bot = new TelegramBot(BOT_TOKEN, { polling: true });
@@ -21,7 +21,7 @@ const bot = new TelegramBot(BOT_TOKEN, { polling: true });
 const pendingUsers = new Map();
 const verifiedCodes = new Map();
 
-console.log(`🚀 Apex Forex Bot Server Running... Admin Chat ID: ${ADMIN_CHAT_ID}`);
+console.log(`🚀 Apex Forex Bot Server Running with New Token... Admin Chat ID: ${ADMIN_CHAT_ID}`);
 
 // ---------------- TELEGRAM BOT FLOW (ENGLISH) ----------------
 
