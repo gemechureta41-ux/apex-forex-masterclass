@@ -52,7 +52,7 @@
         </div>
     </header>
 
-    <!-- Student Dashboard -->
+    <!-- Student Dashboard (Hidden for guests) -->
     <section id="dashboardSection" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div class="glass-card rounded-2xl p-6 border border-amber-500/20">
             <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-6 border-b border-gray-800">
@@ -94,16 +94,16 @@
             Master institutional trading with 15 modules, 50 comprehensive lessons, multi-paragraph explanations, and professional SVG Supply & Demand chart diagrams.
         </p>
         <div class="mt-8 flex flex-wrap justify-center gap-4">
-            <button onclick="scrollToCurriculum()" class="px-8 py-3.5 rounded-xl gold-bg-gradient text-black font-bold text-sm hover:opacity-90 transition shadow-lg shadow-amber-500/20">Start Learning</button>
-            <button onclick="openModal('registerModal')" class="px-8 py-3.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-white font-bold text-sm border border-gray-700 transition">Apply for 1-on-1 Mentorship</button>
+            <button onclick="openModal('registerModal')" class="px-8 py-3.5 rounded-xl gold-bg-gradient text-black font-bold text-sm hover:opacity-90 transition shadow-lg shadow-amber-500/20">Register & Unlock VIP</button>
+            <button onclick="scrollToCurriculum()" class="px-8 py-3.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-white font-bold text-sm border border-gray-700 transition">Preview Course Headings</button>
         </div>
     </section>
 
     <!-- Curriculum Section -->
     <section id="curriculum" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div class="text-center mb-10">
-            <h2 class="text-3xl font-black text-white">15 Modules & 50 Complete Lessons</h2>
-            <p class="text-xs text-gray-400 mt-2">Price Action + Supply & Demand + SMC Curriculum</p>
+            <h2 class="text-3xl font-black text-white">15 Modules & 50 Course Headings Preview</h2>
+            <p class="text-xs text-gray-400 mt-2">Explore curriculum modules below. Complete payment & register via Telegram Bot to unlock full lessons & charts.</p>
         </div>
         <div id="modulesContainer" class="space-y-4"></div>
     </section>
@@ -152,71 +152,22 @@
     </div>
 
     <script>
-        // Inline SVG Candlestick & Institutional Chart Generator to prevent any broken links or black screens
         function getSVGChart(type) {
-            if (type === 'supply-demand') {
-                return `<svg viewBox="0 0 700 280" class="w-full h-56 rounded-lg bg-[#0b0f19]" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Grid Lines -->
-                    <line x1="50" y1="50" x2="650" y2="50" stroke="#1f2937" stroke-dasharray="4"/>
-                    <line x1="50" y1="120" x2="650" y2="120" stroke="#1f2937" stroke-dasharray="4"/>
-                    <line x1="50" y1="190" x2="650" y2="190" stroke="#1f2937" stroke-dasharray="4"/>
-                    <!-- Supply Zone -->
-                    <rect x="50" y="30" width="600" height="40" fill="rgba(239, 68, 68, 0.2)" stroke="#ef4444" stroke-width="1.5" stroke-dasharray="6"/>
-                    <text x="70" y="55" fill="#ef4444" font-size="12" font-weight="bold">SUPPLY ZONE (Sellers Waiting)</text>
-                    <!-- Demand Zone -->
-                    <rect x="50" y="210" width="600" height="40" fill="rgba(16, 185, 129, 0.2)" stroke="#10b981" stroke-width="1.5" stroke-dasharray="6"/>
-                    <text x="70" y="235" fill="#10b981" font-size="12" font-weight="bold">DEMAND ZONE (Buyers Waiting)</text>
-                    <!-- Candlesticks -->
-                    <!-- Candlestick 1 -->
-                    <line x1="120" y1="180" x2="120" y2="230" stroke="#10b981" stroke-width="2"/>
-                    <rect x="112" y="195" width="16" height="25" fill="#10b981" rx="2"/>
-                    <!-- Candlestick 2 -->
-                    <line x1="200" y1="120" x2="200" y2="195" stroke="#10b981" stroke-width="2"/>
-                    <rect x="192" y="130" width="16" height="50" fill="#10b981" rx="2"/>
-                    <!-- Candlestick 3 (Rejection at Supply) -->
-                    <line x1="300" y1="35" x2="300" y2="140" stroke="#ef4444" stroke-width="2"/>
-                    <rect x="292" y="45" width="16" height="75" fill="#ef4444" rx="2"/>
-                    <!-- Candlestick 4 -->
-                    <line x1="400" y1="100" x2="400" y2="230" stroke="#ef4444" stroke-width="2"/>
-                    <rect x="392" y="110" width="16" height="100" fill="#ef4444" rx="2"/>
-                    <!-- Candlestick 5 (Bounce at Demand) -->
-                    <line x1="500" y1="205" x2="500" y2="255" stroke="#10b981" stroke-width="2"/>
-                    <rect x="492" y="215" width="16" height="30" fill="#10b981" rx="2"/>
-                    <!-- Arrows -->
-                    <path d="M 310 70 L 350 110" stroke="#f59e0b" stroke-width="2" marker-end="url(#arrow)"/>
-                    <text x="355" y="115" fill="#f59e0b" font-size="10">Price Rejection & Reversal</text>
-                </svg>`;
-            } else if (type === 'support-resistance') {
-                return `<svg viewBox="0 0 700 280" class="w-full h-56 rounded-lg bg-[#0b0f19]" xmlns="http://www.w3.org/2000/svg">
-                    <line x1="50" y1="60" x2="650" y2="60" stroke="#10b981" stroke-width="2"/>
-                    <text x="60" y="52" fill="#10b981" font-size="12" font-weight="bold">Resistance Level</text>
-                    <line x1="50" y1="220" x2="650" y2="220" stroke="#ef4444" stroke-width="2"/>
-                    <text x="60" y="240" fill="#ef4444" font-size="12" font-weight="bold">Support Level</text>
-                    <!-- Price Action Wave -->
-                    <path d="M 50 220 L 150 90 L 220 180 L 320 60 L 420 220 L 520 100 L 650 60" fill="none" stroke="#3b82f6" stroke-width="3"/>
-                    <circle cx="150" cy="90" r="5" fill="#ef4444"/>
-                    <circle cx="320" cy="60" r="5" fill="#ef4444"/>
-                    <circle cx="220" cy="180" r="5" fill="#10b981"/>
-                    <circle cx="420" cy="220" r="5" fill="#10b981"/>
-                </svg>`;
-            } else {
-                return `<svg viewBox="0 0 700 280" class="w-full h-56 rounded-lg bg-[#0b0f19]" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="0" y="0" width="700" height="280" fill="#0b0f19"/>
-                    <line x1="50" y1="140" x2="650" y2="140" stroke="#374151" stroke-dasharray="5"/>
-                    <!-- Candlestick Trend -->
-                    <line x1="100" y1="80" x2="100" y2="200" stroke="#10b981" stroke-width="2"/>
-                    <rect x="92" y="100" width="16" height="70" fill="#10b981" rx="2"/>
-                    <line x1="200" y1="60" x2="200" y2="180" stroke="#10b981" stroke-width="2"/>
-                    <rect x="192" y="80" width="16" height="70" fill="#10b981" rx="2"/>
-                    <line x1="300" y1="40" x2="300" y2="150" stroke="#ef4444" stroke-width="2"/>
-                    <rect x="292" y="60" width="16" height="60" fill="#ef4444" rx="2"/>
-                    <line x1="400" y1="90" x2="400" y2="220" stroke="#ef4444" stroke-width="2"/>
-                    <rect x="392" y="110" width="16" height="80" fill="#ef4444" rx="2"/>
-                    <line x1="500" y1="120" x2="500" y2="240" stroke="#10b981" stroke-width="2"/>
-                    <rect x="492" y="140" width="16" height="70" fill="#10b981" rx="2"/>
-                    <text x="250" y="30" fill="#f59e0b" font-size="14" font-weight="bold">APEX INSTITUTIONAL PRICE ACTION MODEL</text>
-                </svg>`;
-            }
+            return `<svg viewBox="0 0 700 280" class="w-full h-56 rounded-lg bg-[#0b0f19]" xmlns="http://www.w3.org/2000/svg">
+                <rect x="0" y="0" width="700" height="280" fill="#0b0f19"/>
+                <line x1="50" y1="140" x2="650" y2="140" stroke="#374151" stroke-dasharray="5"/>
+                <line x1="100" y1="80" x2="100" y2="200" stroke="#10b981" stroke-width="2"/>
+                <rect x="92" y="100" width="16" height="70" fill="#10b981" rx="2"/>
+                <line x1="200" y1="60" x2="200" y2="180" stroke="#10b981" stroke-width="2"/>
+                <rect x="192" y="80" width="16" height="70" fill="#10b981" rx="2"/>
+                <line x1="300" y1="40" x2="300" y2="150" stroke="#ef4444" stroke-width="2"/>
+                <rect x="292" y="60" width="16" height="60" fill="#ef4444" rx="2"/>
+                <line x1="400" y1="90" x2="400" y2="220" stroke="#ef4444" stroke-width="2"/>
+                <rect x="392" y="110" width="16" height="80" fill="#ef4444" rx="2"/>
+                <line x1="500" y1="120" x2="500" y2="240" stroke="#10b981" stroke-width="2"/>
+                <rect x="492" y="140" width="16" height="70" fill="#10b981" rx="2"/>
+                <text x="220" y="30" fill="#f59e0b" font-size="14" font-weight="bold">APEX INSTITUTIONAL PRICE ACTION MODEL</text>
+            </svg>`;
         }
 
         const modulesData = [
@@ -224,384 +175,24 @@
                 id: 1,
                 title: "Module 1: Introduction to Forex & Supply and Demand Zones",
                 lessons: [
-                    {
-                        id: 1,
-                        title: "L1: What are Supply and Demand Zones?",
-                        p1: "Supply and demand zones are areas on a price chart defined by a trader where price is likely to stall or reverse. A demand zone is a range where a significant number of buy orders will likely be executed if the price drops within that range.",
-                        p2: "A supply zone is conversely a range where a significant number of sell orders will be executed if the stock rises within that range. Price entering demand means price is likely to rise or stall, while entering supply means price is likely to drop or stall.",
-                        chartType: "supply-demand"
-                    },
-                    {
-                        id: 2,
-                        title: "L2: Identifying Supply and Demand Zones on Charts",
-                        p1: "To identify supply and demand zones on a chart, look for price ranges where the price has stalled or reversed. For instance, if every time price rises to 410-411\$ it drastically decreases, a strong supply zone exists there.",
-                        p2: "Pattern for Demand Zone: 1. Price drops, 2. Price stalls, 3. Price significantly increases. Pattern for Supply Zone: 1. Price rises, 2. Price stalls, 3. Price drops significantly.",
-                        chartType: "supply-demand"
-                    },
-                    {
-                        id: 3,
-                        title: "L3: Theory Behind Supply and Demand (Institutional Logic)",
-                        p1: "Supply and demand identifies areas where large numbers of buyers and sellers await price entry. Market moving entities such as large banks and hedge funds calculate intrinsic value and wait for price drops to purchase.",
-                        p2: "Because banks cannot purchase all shares at once without driving up prices, they accumulate over time within acceptable price ranges, successfully forming institutional demand zones.",
-                        chartType: "support-resistance"
-                    }
+                    { id: 1, title: "L1: What are Supply and Demand Zones?", p1: "Supply and demand zones are areas on a price chart defined by a trader where price is likely to stall or reverse.", p2: "A demand zone is a range where buy orders execute, while supply zones execute sell orders.", chartType: "supply-demand" },
+                    { id: 2, title: "L2: Identifying Supply and Demand Zones on Charts", p1: "To identify supply and demand zones on a chart, look for price ranges where price stalled or reversed.", p2: "Pattern: Price drops, stalls, and increases significantly for demand.", chartType: "supply-demand" },
+                    { id: 3, title: "L3: Theory Behind Supply and Demand (Institutional Logic)", p1: "Institutional banks calculate intrinsic value and wait for price drops to purchase.", p2: "Accumulation forms institutional demand zones.", chartType: "support-resistance" }
                 ]
             },
             {
                 id: 2,
                 title: "Module 2: Complete Support & Resistance Levels",
                 lessons: [
-                    {
-                        id: 4,
-                        title: "L4: Horizontal Support & Resistance",
-                        p1: "Support is a price level where downward momentum pauses due to concentrated institutional demand. Resistance is a ceiling level where upward movement faces heavy selling pressure.",
-                        p2: "These historical pivot zones represent psychological price barriers where institutional participants frequently execute pending limit and stop orders.",
-                        chartType: "support-resistance"
-                    },
-                    {
-                        id: 5,
-                        title: "L5: Dynamic S/R & Moving Averages",
-                        p1: "Dynamic support and resistance levels shift continuously with price action. Moving Averages such as EMA 20, 50, and 200 act as rolling barriers during strong trending phases.",
-                        p2: "During impulsive market phases, prices frequently retrace to touch these moving averages before resuming the primary institutional trend.",
-                        chartType: "general"
-                    },
-                    {
-                        id: 6,
-                        title: "L6: Breakout & Retest Confirmation",
-                        p1: "A breakout occurs when price forcefully breaches a key support or resistance level. Waiting for a retest of the broken level provides high-probability confirmation.",
-                        p2: "During a retest, previous resistance successfully flips into new support, providing a clean risk-to-reward entry structure for institutional traders.",
-                        chartType: "support-resistance"
-                    }
+                    { id: 4, title: "L4: Horizontal Support & Resistance", p1: "Support pauses downward momentum; resistance halts upward pressure.", p2: "Psychological price barriers for pending orders.", chartType: "support-resistance" },
+                    { id: 5, title: "L5: Dynamic S/R & Moving Averages", p1: "EMA 20, 50, and 200 act as rolling barriers.", p2: "Prices retrace to moving averages during trends.", chartType: "general" }
                 ]
             },
             {
                 id: 3,
-                title: "Module 3: Candlestick Patterns & Formations",
+                title: "Module 3: Smart Money Concepts (SMC) & Order Blocks",
                 lessons: [
-                    {
-                        id: 7,
-                        title: "L7: Single Candlestick Patterns (Pin Bar, Doji)",
-                        p1: "A Pin Bar features a long rejection wick and a small body, signaling intense rejection of higher or lower prices by institutional market makers.",
-                        p2: "A Doji represents market equilibrium where open and close prices are virtually identical, signaling indecision and impending volatility expansion.",
-                        chartType: "general"
-                    },
-                    {
-                        id: 8,
-                        title: "L8: Double Candlesticks (Engulfing Patterns)",
-                        p1: "A Bullish Engulfing pattern forms when a large green candle completely engulfs the body of the preceding red candle, signaling strong buyer momentum.",
-                        p2: "It confirms aggressive accumulation by large institutions and frequently marks the start of a sustained bullish expansion phase.",
-                        chartType: "general"
-                    },
-                    {
-                        id: 9,
-                        title: "L9: Triple Patterns (Morning/Evening Star)",
-                        p1: "Morning Star is a three-candle bullish reversal pattern comprising a large bearish candle, a small indecision body, and a strong bullish recovery candle.",
-                        p2: "Conversely, the Evening Star pattern forms at market tops, signaling exhaustion among buyers and an incoming bearish reversal.",
-                        chartType: "general"
-                    }
-                ]
-            },
-            {
-                id: 4,
-                title: "Module 4: Smart Money Concepts (SMC) Fundamentals",
-                lessons: [
-                    {
-                        id: 10,
-                        title: "L10: Institutional vs Retail Traders",
-                        p1: "Retail traders account for a tiny fraction of global volume. Institutional banks, central banks, and hedge funds command the vast majority of liquidity.",
-                        p2: "Smart Money entities intentionally engineer liquidity traps against retail participants, making it imperative to trade alongside institutional order flow.",
-                        chartType: "supply-demand"
-                    },
-                    {
-                        id: 11,
-                        title: "L11: Liquidity Concept (BSL & SSL)",
-                        p1: "Buy-side Liquidity resides above equal highs where retail short-sellers cluster their stop losses. Sell-side Liquidity sits below equal lows.",
-                        p2: "Institutions systematically target these liquidity pools to fill their massive buy or sell orders before initiating primary market expansions.",
-                        chartType: "supply-demand"
-                    },
-                    {
-                        id: 12,
-                        title: "L12: Liquidity Sweeps (Stop Hunt)",
-                        p1: "A Liquidity Sweep occurs when price spikes past a swing high or low to trigger retail stop losses, immediately reversing in the true direction.",
-                        p2: "Recognizing liquidity sweeps allows SMC traders to enter trades immediately after the stop hunt concludes, riding the institutional impulse.",
-                        chartType: "general"
-                    }
-                ]
-            },
-            {
-                id: 5,
-                title: "Module 5: Market Structure Shift & CHoCH",
-                lessons: [
-                    {
-                        id: 13,
-                        title: "L13: Change of Character (CHoCH)",
-                        p1: "Change of Character (CHoCH) represents the first structural warning sign that an ongoing trend is about to reverse direction.",
-                        p2: "During a CHoCH, price breaks a key internal swing point against the prevailing trend direction, shifting market control to opposing participants.",
-                        chartType: "support-resistance"
-                    },
-                    {
-                        id: 14,
-                        title: "L14: Market Structure Shift (MSS)",
-                        p1: "Market Structure Shift (MSS) confirms a robust directional change, often breaking critical higher timeframe structural levels with conviction.",
-                        p2: "Once an MSS is confirmed, SMC traders look for high-confluence mitigation entries such as Order Blocks and Fair Value Gaps.",
-                        chartType: "support-resistance"
-                    },
-                    {
-                        id: 15,
-                        title: "L15: Multi-Timeframe Structural Mapping",
-                        p1: "Multi-timeframe mapping requires aligning higher timeframe bias (Daily/4H) with execution timeframes (15M/5M) for precision entries.",
-                        p2: "This disciplined alignment ensures traders operate in harmony with institutional momentum rather than fighting major market cycles.",
-                        chartType: "general"
-                    }
-                ]
-            },
-            {
-                id: 6,
-                title: "Module 6: Order Blocks & Breaker Blocks",
-                lessons: [
-                    {
-                        id: 16,
-                        title: "L16: Institutional Order Block (OB)",
-                        p1: "An Order Block represents the last opposing candle before an institutional impulsive expansion that breaks market structure.",
-                        p2: "Institutions leave residual resting limit orders in these zones, causing price to react strongly upon mitigation retracement.",
-                        chartType: "supply-demand"
-                    },
-                    {
-                        id: 17,
-                        title: "L17: High-Probability Order Block Selection",
-                        p1: "High-probability Order Blocks are validated by concurrent Fair Value Gaps, prior liquidity sweeps, and decisive market structure breaks.",
-                        p2: "Filtering order blocks using institutional confluences drastically improves win rate and reward-to-risk profiles.",
-                        chartType: "supply-demand"
-                    },
-                    {
-                        id: 18,
-                        title: "L18: Breaker Blocks & Mitigation Blocks",
-                        p1: "A Breaker Block forms when a previously respected Order Block fails and is decisively breached, subsequently flipping roles.",
-                        p2: "Traders utilize breaker blocks as secondary mitigation zones when primary order blocks fail during aggressive market shifts.",
-                        chartType: "general"
-                    }
-                ]
-            },
-            {
-                id: 7,
-                title: "Module 7: Fair Value Gap & Imbalance",
-                lessons: [
-                    {
-                        id: 19,
-                        title: "L19: Understanding Inefficiency & FVG",
-                        p1: "A Fair Value Gap (FVG) represents price inefficiency where aggressive institutional buying or selling leaves an unfilled price void.",
-                        p2: "Market dynamics dictate that price frequently retraces to equilibrium, filling these imbalances before continuing the primary trend.",
-                        chartType: "supply-demand"
-                    },
-                    {
-                        id: 20,
-                        title: "L20: FVG Fill & Mitigation Entry",
-                        p1: "Entering trades upon mitigation of an FVG (typically at the 50% equilibrium level or the outer boundary) offers high-precision entries.",
-                        p2: "Placing stop losses just beyond the inefficiency boundary protects capital while yielding exceptional risk-to-reward ratios.",
-                        chartType: "supply-demand"
-                    },
-                    {
-                        id: 21,
-                        title: "L21: Confluence of OB + FVG",
-                        p1: "When an Order Block and a Fair Value Gap overlap, they form a powerful confluence zone with exceptional reaction probability.",
-                        p2: "Institutional algorithms frequently respect these overlapping zones, making them premier targets for high-leverage execution.",
-                        chartType: "general"
-                    }
-                ]
-            },
-            {
-                id: 8,
-                title: "Module 8: Premium vs Discount Arrays",
-                lessons: [
-                    {
-                        id: 22,
-                        title: "L22: Fibonacci Retracement Array (50% Equilibrium)",
-                        p1: "Price ranges divide naturally into Premium (expensive pricing above 50%) and Discount (bargain pricing below 50%) relative to equilibrium.",
-                        p2: "Institutional participants strictly buy in Discount zones and sell in Premium zones to maximize delivery efficiency.",
-                        chartType: "support-resistance"
-                    },
-                    {
-                        id: 23,
-                        title: "L23: Optimal Trade Entry (OTE) Zone",
-                        p1: "Optimal Trade Entry (OTE) spans the 61.8% to 78.6% Fibonacci retracement levels, representing deep discount institutional entry points.",
-                        p2: "Algorithmic delivery models frequently retrace precisely into the OTE zone before launching explosive impulsive continuations.",
-                        chartType: "general"
-                    }
-                ]
-            },
-            {
-                id: 9,
-                title: "Module 9: Inducement & Liquidity Traps",
-                lessons: [
-                    {
-                        id: 24,
-                        title: "L24: Minor Liquidity vs Major Liquidity",
-                        p1: "Inducement serves as premature liquidity designed to entice retail traders into entering breakouts before proper mitigation occurs.",
-                        p2: "Identifying inducement prevents traders from entering prematurely and falling victim to institutional stop hunts.",
-                        chartType: "general"
-                    },
-                    {
-                        id: 25,
-                        title: "L25: Trendline Liquidity Sweeps",
-                        p1: "Retail trendlines accumulate massive resting liquidity as numerous participants align stops along visible diagonal barriers.",
-                        p2: "Smart money operators routinely target and sweep trendline liquidity pools to fuel their primary position building.",
-                        chartType: "general"
-                    }
-                ]
-            },
-            {
-                id: 10,
-                title: "Module 10: Kill Zones & Session Timing",
-                lessons: [
-                    {
-                        id: 26,
-                        title: "L26: Asian Session Accumulation",
-                        p1: "The Asian session typically establishes a narrow consolidation range, setting the accumulation stage for upcoming volatility.",
-                        p2: "Traders monitor Asian high and low boundaries anticipating liquidity sweeps during the subsequent London session open.",
-                        chartType: "supply-demand"
-                    },
-                    {
-                        id: 27,
-                        title: "L27: London Kill Zone (Judas Swing)",
-                        p1: "The London Kill Zone frequently initiates with a Judas Swing—a deceptive false breakout designed to trap early breakout traders.",
-                        p2: "Once retail participants are trapped, institutional algorithms drive price rapidly in the true intended direction.",
-                        chartType: "supply-demand"
-                    },
-                    {
-                        id: 28,
-                        title: "L28: New York Kill Zone & Reversal",
-                        p1: "The New York Kill Zone brings peak daily volume, frequently overlapping with London afternoon hours and high-impact economic news.",
-                        p2: "Executing SMC setups during NY open offers lightning-fast target delivery and expansive daily trend ranges.",
-                        chartType: "general"
-                    }
-                ]
-            },
-            {
-                id: 11,
-                title: "Module 11: Top-Down Multi-Timeframe Analysis",
-                lessons: [
-                    {
-                        id: 29,
-                        title: "L29: Daily / 4H Higher Timeframe Bias",
-                        p1: "Establishing higher timeframe bias on Daily and 4H charts ensures traders align with dominant market intentions.",
-                        p2: "Trading counter-bias on lower timeframes without higher timeframe backing dramatically increases loss probability.",
-                        chartType: "support-resistance"
-                    },
-                    {
-                        id: 30,
-                        title: "L30: 15M / 5M Refinement & Entry Confirmations",
-                        p1: "Refining 4H/Daily zones down to 15M or 5M order blocks allows for extremely tight stop losses and massive reward ratios.",
-                        p2: "This precision refinement is the hallmark of professional institutional trading methodology.",
-                        chartType: "general"
-                    }
-                ]
-            },
-            {
-                id: 12,
-                title: "Module 12: Advanced Chart Patterns",
-                lessons: [
-                    {
-                        id: 31,
-                        title: "L31: Head & Shoulders & Inverse H&S",
-                        p1: "Head and Shoulders patterns indicate trend exhaustion, featuring a central peak flanked by two lower highs.",
-                        p2: "A decisive break of the neckline triggers strong institutional momentum toward projected measured move targets.",
-                        chartType: "support-resistance"
-                    },
-                    {
-                        id: 32,
-                        title: "L32: Double Top & Double Bottom",
-                        p1: "Double Tops and Bottoms represent equal high/low liquidity clusters where institutions test barrier resilience twice.",
-                        p2: "Retail traders often trap themselves by entering prematurely, allowing smart money to sweep them before reversing.",
-                        chartType: "support-resistance"
-                    },
-                    {
-                        id: 33,
-                        title: "L33: Triangles & Flags (Continuation Patterns)",
-                        p1: "Bullish Flags and Pennants form brief consolidation channels following strong impulse legs, offering continuation entries.",
-                        p2: "Trading flag breakouts provides high-probability trend continuation entries with minimal drawdown risk.",
-                        chartType: "general"
-                    }
-                ]
-            },
-            {
-                id: 13,
-                title: "Module 13: Risk Management & Position Sizing",
-                lessons: [
-                    {
-                        id: 34,
-                        title: "L34: 1% - 2% Account Risk Rule",
-                        p1: "Risking no more than 1% to 2% of total capital per trade ensures long-term survival through inevitable losing streaks.",
-                        p2: "Professional traders prioritize risk mitigation above all else, treating capital preservation as their core mandate.",
-                        chartType: "general"
-                    },
-                    {
-                        id: 35,
-                        title: "L35: Risk to Reward Ratio (RRR 1:3+)",
-                        p1: "Maintaining a minimum 1:3 Risk-to-Reward Ratio ensures profitability even with modest win rates around 40%.",
-                        p2: "Institutional setups naturally yield high RRR due to tight structural stop losses and expansive liquidity targets.",
-                        chartType: "general"
-                    },
-                    {
-                        id: 36,
-                        title: "L36: Dynamic Lot Size Calculation",
-                        p1: "Accurately calculating lot size based on stop loss pips and account equity prevents over-leveraging and emotional stress.",
-                        p2: "Always utilize position size calculators prior to executing live orders to maintain strict financial discipline.",
-                        chartType: "general"
-                    }
-                ]
-            },
-            {
-                id: 14,
-                title: "Module 14: Trading Psychology & Discipline",
-                lessons: [
-                    {
-                        id: 37,
-                        title: "L37: Overcoming FOMO & Greed",
-                        p1: "FOMO and greed destroy trading accounts. Cultivating patience to wait for A+ setups is the hallmark of a professional trader.",
-                        p2: "The market will remain open tomorrow; preserving capital is always superior to chasing erratic price action.",
-                        chartType: "general"
-                    },
-                    {
-                        id: 38,
-                        title: "L38: Trade Journaling & Execution Plan",
-                        p1: "Maintaining a meticulous trade journal documenting entries, exits, emotions, and screenshots accelerates mastery.",
-                        p2: "Regularly reviewing journal data uncovers psychological leaks and strategy inefficiencies for continuous improvement.",
-                        chartType: "general"
-                    }
-                ]
-            },
-            {
-                id: 15,
-                title: "Module 15: Live Model Execution & Strategy Blueprint",
-                lessons: [
-                    {
-                        id: 39,
-                        title: "L39: Model 1: London Liquidity Sweep Entry",
-                        p1: "Model 1 Execution: Wait for London session to sweep Asian range liquidity, confirm a 15M CHoCH, and mitigate at an aligned FVG/OB.",
-                        p2: "This model boasts high win rates on major forex pairs and gold (XAUUSD) during London morning hours.",
-                        chartType: "supply-demand"
-                    },
-                    {
-                        id: 40,
-                        title: "L40: Model 2: NY Continuation FVG Entry",
-                        p1: "Model 2 Execution: During New York open, identify continuation impulses and enter upon mitigation of fresh session FVG arrays.",
-                        p2: "Captures rapid afternoon expansion legs with exceptional risk-to-reward efficiency.",
-                        chartType: "supply-demand"
-                    },
-                    {
-                        id: 41,
-                        title: "L41: Full Institutional Blueprint Checklist",
-                        p1: "The 5-Step Institutional Checklist: 1. Higher Timeframe Bias, 2. Liquidity Sweep, 3. Structural Shift, 4. OB/FVG Confluence, 5. 1:3+ RRR.",
-                        p2: "Strict adherence to this checklist eliminates impulsive trading and guarantees institutional alignment.",
-                        chartType: "support-resistance"
-                    },
-                    {
-                        id: 42,
-                        title: "L42 - L50: Case Studies & Real Market Backtesting",
-                        p1: "Final Modules 42-50: Comprehensive live market case studies, historical backtesting sessions, and psychology drills.",
-                        p2: "Mastering these real-world examples completes your transition into a fully confident institutional price action trader.",
-                        chartType: "general"
-                    }
+                    { id: 6, title: "L6: What is an Order Block?", p1: "Order blocks represent institutional accumulation zones prior to explosive price expansions.", p2: "Trading alongside order blocks guarantees higher risk-to-reward ratios.", chartType: "general" }
                 ]
             }
         ];
@@ -627,35 +218,41 @@
                 let lessonsHTML = '';
                 mod.lessons.forEach(l => {
                     const isDone = completedLessons.includes(l.id);
-                    const svgMarkup = getSVGChart(l.chartType);
-
-                    lessonsHTML += `
-                        <div class="p-6 bg-gray-900/40 border-t border-gray-800/60 space-y-4">
-                            <div class="flex items-start justify-between gap-4">
-                                <div class="flex-1">
-                                    <h4 class="text-base font-bold text-white flex items-center gap-2">
-                                        <i data-lucide="play-circle" class="w-5 h-5 text-amber-400"></i>
-                                        ${l.title}
-                                    </h4>
-                                    <div class="mt-3 space-y-2 text-sm text-gray-300 leading-relaxed">
-                                        <p>${l.p1}</p>
-                                        <p>${l.p2}</p>
+                    
+                    if (currentUser && currentUser.vip) {
+                        lessonsHTML += `
+                            <div class="p-6 bg-gray-900/40 border-t border-gray-800/60 space-y-4">
+                                <div class="flex items-start justify-between gap-4">
+                                    <div class="flex-1">
+                                        <h4 class="text-base font-bold text-white flex items-center gap-2">
+                                            <i data-lucide="play-circle" class="w-5 h-5 text-amber-400"></i>
+                                            ${l.title}
+                                        </h4>
+                                        <div class="mt-3 space-y-2 text-sm text-gray-300 leading-relaxed">
+                                            <p>${l.p1}</p>
+                                            <p>${l.p2}</p>
+                                        </div>
                                     </div>
+                                    <button onclick="toggleLesson(${l.id})" class="px-4 py-2 rounded-xl text-xs font-bold transition whitespace-nowrap ${isDone ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-gray-800 text-gray-300 hover:text-white border border-gray-700'}">
+                                        ${isDone ? '✓ Completed' : 'Mark Done'}
+                                    </button>
                                 </div>
-                                <button onclick="toggleLesson(${l.id})" class="px-4 py-2 rounded-xl text-xs font-bold transition whitespace-nowrap ${isDone ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-gray-800 text-gray-300 hover:text-white border border-gray-700'}">
-                                    ${isDone ? '✓ Completed' : 'Mark Done'}
-                                </button>
-                            </div>
-                            <!-- Institutional SVG Chart & Candlestick Diagram -->
-                            <div class="mt-4 rounded-xl overflow-hidden border border-gray-800 bg-black/40 p-2">
-                                <div class="flex items-center justify-between px-3 py-1.5 text-[11px] text-amber-400 font-semibold border-b border-gray-800/80 mb-2">
-                                    <span>📊 Institutional Chart & Price Action Setup</span>
-                                    <span>Timeframe: 15M / 4H</span>
+                                <div class="mt-4 rounded-xl overflow-hidden border border-gray-800 bg-black/40 p-2">
+                                    ${getSVGChart(l.chartType)}
                                 </div>
-                                ${svgMarkup}
                             </div>
-                        </div>
-                    `;
+                        `;
+                    } else {
+                        lessonsHTML += `
+                            <div class="p-4 bg-gray-900/40 border-t border-gray-800/60 flex items-center justify-between">
+                                <h4 class="text-sm font-bold text-gray-300 flex items-center gap-2">
+                                    <i data-lucide="lock" class="w-4 h-4 text-amber-400"></i>
+                                    ${l.title}
+                                </h4>
+                                <span class="text-[10px] text-amber-400 bg-amber-500/10 border border-amber-500/30 px-2 py-1 rounded font-bold">VIP Locked</span>
+                            </div>
+                        `;
+                    }
                 });
 
                 moduleEl.innerHTML = `
@@ -707,6 +304,7 @@
                 document.getElementById('userNav').classList.add('hidden');
                 document.getElementById('dashboardSection').classList.add('hidden');
             }
+            renderModules();
         }
 
         function completeRegistration() {
