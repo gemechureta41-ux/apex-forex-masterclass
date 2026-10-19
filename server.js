@@ -106,20 +106,23 @@ bot.on('callback_query', (query) => {
     }
 
     if (data.startsWith('APPROVE_')) {
-      // Generate 6-Digit Verification OTP Code
-      const code = Math.floor(100000 + Math.random() * 900000).toString();
-      verifiedCodes.set(code, { email: pendingData.email, verified: false });
+      // Generate Real 6-Digit Random Verification OTP Code
+      const generatedCode = String(Math.floor(100000 + Math.random() * 900000));
+      verifiedCodes.set(generatedCode, { email: pendingData.email, verified: false });
 
-      // Notify Student with Verification Code
+      // Build English Approval Message with Real Code
+      const studentMessage = "🎉 *Payment Approved by Admin!*\n\nYour payment has been successfully verified.\n\n🔑 *Your Verification OTP Code:* `" + generatedCode + "`\n\nEnter this code on the website to instantly unlock VIP Masterclass Access!";
+
+      // Notify Student with Real OTP Code
       bot.sendMessage(
         pendingData.userChatId,
-        `🎉 **Payment Approved by Admin!**\n\nYour payment has been successfully verified.\n\n🔑 **Your Verification OTP Code:** \`\${code}\`\n\nEnter this code on the website to instantly unlock VIP Masterclass Access!`,
+        studentMessage,
         { parse_mode: 'Markdown' }
       );
 
-      // Edit Admin Message
+      // Edit Admin Message Caption
       bot.editMessageCaption(
-        `✅ **APPROVED PAYMENT**\n\n• **Student Email:** ${pendingData.email}\n• **Method:** ${pendingData.method}\n• **Generated OTP:** \`\${code}\`\n• **User ID:** ${pendingData.userChatId}`,
+        `✅ **APPROVED PAYMENT**\n\n• **Student Email:** ${pendingData.email}\n• **Method:** ${pendingData.method}\n• **Generated OTP:** \`\${generatedCode}\`\n• **User ID:** ${pendingData.userChatId}`,
         { chat_id: chatId, message_id: query.message.message_id, parse_mode: 'Markdown' }
       );
 
