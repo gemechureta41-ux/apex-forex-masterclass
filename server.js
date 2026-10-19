@@ -11,108 +11,119 @@ app.use(express.json());
 // Serve Static Files from 'public' folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Telegram Bot Configuration with New Token
-const BOT_TOKEN = process.env.BOT_TOKEN || '8736595383:AAFw60FperXsx1q7DGgDTmYvuCcvTpj2ckE';
+// Environment Variables with New Token
+const BOT_TOKEN = process.env.BOT_TOKEN || '8871819505:AAHQyfyXvSFVoQpROkjFuueX7sgw_4Fgn58';
 const ADMIN_CHAT_ID = process.env.ADMIN_CHAT_ID || '6741214107';
 
-const bot = new TelegramBot(BOT_TOKEN, { polling: true });
+let bot;
+
+if (BOT_TOKEN) {
+  bot = new TelegramBot(BOT_TOKEN, { polling: true });
+
+  // Handle Polling Errors Gracefully
+  bot.on('polling_error', (error) => {
+    console.error(`⚠️ Telegram Bot Polling Error [${error.code}]: ${error.message}`);
+  });
+
+  console.log(`🚀 Apex Forex Bot (@gadaafx_bot) Initialized. Admin Chat ID: ${ADMIN_CHAT_ID}`);
+} else {
+  console.warn('⚠️ BOT_TOKEN is missing in environment variables!');
+}
 
 // In-memory verification storage
 const pendingUsers = new Map();
 const verifiedCodes = new Map();
 
-console.log(`🚀 Apex Forex Bot Server Running with New Token... Admin Chat ID: ${ADMIN_CHAT_ID}`);
+// ---------------- TELEGRAM BOT FLOW ----------------
+if (bot) {
+  bot.onText(/\/start/, (msg) => {
+    const chatId = msg.chat.id;
+    bot.sendMessage(
+      chatId,
+      `👋 **Welcome to Apex Forex Academy Verification Bot (@gadaafx_bot)!**\n\nTo unlock access to the VIP Masterclass (Price Action + SMC), payment verification and your email address are required.\n\nPlease send your Email address:`,
+      { parse_mode: 'Markdown' }
+    );
+    pendingUsers.set(chatId, { step: 'AWAITING_EMAIL' });
+  });
 
-// ---------------- TELEGRAM BOT FLOW (ENGLISH) ----------------
+  bot.on('message', (msg) => {
+    const chatId = msg.chat.id;
+    const text = msg.text;
 
-bot.onText(/\/start/, (msg) => {
-  const chatId = msg.chat.id;
-  bot.sendMessage(
-    chatId,
-    `👋 **Welcome to Apex Forex Academy Verification Bot!**\n\nTo unlock access to the VIP Masterclass (Price Action + SMC), payment verification and your email address are required.\n\nPlease send your Email address:`,
-    { parse_mode: 'Markdown' }
-  );
-  pendingUsers.set(chatId, { step: 'AWAITING_EMAIL' });
-});
+    if (!text || text === '/start') return;
 
-bot.on('message', (msg) => {
-  const chatId = msg.chat.id;
-  const text = msg.text;
+    const userState = pendingUsers.get(chatId);
 
-  if (!text || text === '/start') return;
-
-  const userState = pendingUsers.get(chatId);
-
-  if (userState && userState.step === 'AWAITING_EMAIL') {
-    if (!text.includes('@')) {
-      return bot.sendMessage(chatId, '❌ Please enter a valid Email address!');
-    }
-
-    userState.email = text.trim();
-    userState.step = 'AWAITING_PAYMENT_METHOD';
-
-    const opts = {
-      reply_markup: {
-        inline_keyboard: [
-          [{ text: '📱 Telebirr', callback_data: 'PAY_TELEBIRR' }],
-          [{ text: '💸 M-Pesa', callback_data: 'PAY_MPESA' }]
-        ]
+    if (userState && userState.step === 'AWAITING_EMAIL') {
+      if (!text.includes('@')) {
+        return bot.sendMessage(chatId, '❌ Please enter a valid Email address!');
       }
-    };
 
-    bot.sendMessage(chatId, `✅ Email: *${userState.email}* registered successfully.\n\nPlease select your payment method:`, { parse_mode: 'Markdown', ...opts });
-  }
-});
+      userState.email = text.trim();
+      userState.step = 'AWAITING_PAYMENT_METHOD';
 
-bot.on('callback_query', (query) => {
-  const chatId = query.message.chat.id;
-  const data = query.data;
-  const userState = pendingUsers.get(chatId) || {};
+      const opts = {
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: '📱 Telebirr', callback_data: 'PAY_TELEBIRR' }],
+            [{ text: '💸 M-Pesa', callback_data: 'PAY_MPESA' }]
+          ]
+        }
+      };
 
-  if (data === 'PAY_TELEBIRR') {
-    userState.method = 'Telebirr';
-    userState.step = 'AWAITING_RECEIPT';
-    bot.sendMessage(
-      chatId,
-      `📲 **Telebirr Payment Details:**\n• Account Number: **0917091612**\n• Account Name: **Gemechu**\n• Course Fee: **10,000 ETB**\n\nAfter completing your payment, please send the **Transaction ID** and **Receipt Screenshot** here!`,
-      { parse_mode: 'Markdown' }
-    );
-  } else if (data === 'PAY_MPESA') {
-    userState.method = 'M-Pesa';
-    userState.step = 'AWAITING_RECEIPT';
-    bot.sendMessage(
-      chatId,
-      `💸 **M-Pesa Payment Details:**\n• Account Number: **0717120607**\n• Account Name: **Gemechu**\n• Course Fee: **10,000 ETB**\n\nAfter completing your payment, please send the **Transaction ID** and **Receipt Screenshot** here!`,
-      { parse_mode: 'Markdown' }
-    );
-  }
-});
-
-bot.on('photo', (msg) => {
-  const chatId = msg.chat.id;
-  const userState = pendingUsers.get(chatId);
-
-  if (userState && userState.step === 'AWAITING_RECEIPT') {
-    const code = Math.floor(100000 + Math.random() * 900000).toString();
-    verifiedCodes.set(code, { email: userState.email, verified: false });
-
-    if (ADMIN_CHAT_ID) {
-      bot.sendPhoto(ADMIN_CHAT_ID, msg.photo[msg.photo.length - 1].file_id, {
-        caption: `🚨 **NEW PAYMENT SUBMITTED!**\n\n• **Student Email:** ${userState.email}\n• **Method:** ${userState.method}\n• **Generated OTP Code:** \`\${code}\`\n• **User Telegram ID:** ${chatId}`,
-        parse_mode: 'Markdown'
-      });
+      bot.sendMessage(chatId, `✅ Email: *${userState.email}* registered successfully.\n\nPlease select your payment method:`, { parse_mode: 'Markdown', ...opts });
     }
+  });
 
-    bot.sendMessage(
-      chatId,
-      `⏳ **Payment Received — Status: Pending Review**\n\nWe have received your payment receipt screenshot. Please wait patiently while the Admin reviews and approves your transaction.\n\n🔑 **Your Verification OTP Code:** \`\${code}\`\n\nOnce approved, you can enter this code on the website to unlock full VIP Access.`,
-      { parse_mode: 'Markdown' }
-    );
-  }
-});
+  bot.on('callback_query', (query) => {
+    const chatId = query.message.chat.id;
+    const data = query.data;
+    const userState = pendingUsers.get(chatId) || {};
+
+    if (data === 'PAY_TELEBIRR') {
+      userState.method = 'Telebirr';
+      userState.step = 'AWAITING_RECEIPT';
+      bot.sendMessage(
+        chatId,
+        `📲 **Telebirr Payment Details:**\n• Account Number: **0917091612**\n• Account Name: **Gemechu**\n• Course Fee: **10,000 ETB**\n\nAfter completing your payment, please send the **Transaction ID** and **Receipt Screenshot** here!`,
+        { parse_mode: 'Markdown' }
+      );
+    } else if (data === 'PAY_MPESA') {
+      userState.method = 'M-Pesa';
+      userState.step = 'AWAITING_RECEIPT';
+      bot.sendMessage(
+        chatId,
+        `💸 **M-Pesa Payment Details:**\n• Account Number: **0717120607**\n• Account Name: **Gemechu**\n• Course Fee: **10,000 ETB**\n\nAfter completing your payment, please send the **Transaction ID** and **Receipt Screenshot** here!`,
+        { parse_mode: 'Markdown' }
+      );
+    }
+  });
+
+  bot.on('photo', (msg) => {
+    const chatId = msg.chat.id;
+    const userState = pendingUsers.get(chatId);
+
+    if (userState && userState.step === 'AWAITING_RECEIPT') {
+      const code = Math.floor(100000 + Math.random() * 900000).toString();
+      verifiedCodes.set(code, { email: userState.email, verified: false });
+
+      if (ADMIN_CHAT_ID) {
+        bot.sendPhoto(ADMIN_CHAT_ID, msg.photo[msg.photo.length - 1].file_id, {
+          caption: `🚨 **NEW PAYMENT SUBMITTED!**\n\n• **Student Email:** ${userState.email}\n• **Method:** ${userState.method}\n• **Generated OTP Code:** \`\${code}\`\n• **User Telegram ID:** ${chatId}`,
+          parse_mode: 'Markdown'
+        });
+      }
+
+      bot.sendMessage(
+        chatId,
+        `⏳ **Payment Received — Status: Pending Review**\n\nWe have received your payment receipt screenshot. Please wait patiently while the Admin reviews and approves your transaction.\n\n🔑 **Your Verification OTP Code:** \`\${code}\`\n\nOnce approved, you can enter this code on the website to unlock full VIP Access.`,
+        { parse_mode: 'Markdown' }
+      );
+    }
+  });
+}
 
 // ---------------- REST API FOR WEBSITE VERIFICATION ----------------
-
 app.post('/api/verify-code', (req, res) => {
   const { code } = req.body;
 
