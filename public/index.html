@@ -1,363 +1,1003 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apex Forex Academy | SMC & Price Action Masterclass</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://unpkg.com/lucide@latest"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0B0F19; color: #F3F4F6; overflow-x: hidden; }
-        .gold-gradient-text { background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 50%, #D97706 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .gold-bg-gradient { background: linear-gradient(135deg, #D97706 0%, #F59E0B 100%); }
-        .glass-card { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: #111827; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #374151; border-radius: 4px; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Apex Forex Academy | SMC & Price Action Masterclass</title>
+<meta name="description" content="15 modules and 50 lessons on Forex, Supply & Demand, Smart Money Concepts, price action, risk management and trading psychology, with a chart for every lesson.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23f59e0b'/%3E%3Ctext x='32' y='45' font-size='38' font-weight='900' text-anchor='middle' fill='%23000' font-family='Arial'%3EA%3C/text%3E%3C/svg%3E">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:#070a13;color:#F3F4F6;overflow-x:hidden}
+.gold-gradient-text{background:linear-gradient(135deg,#F59E0B 0%,#FBBF24 50%,#D97706 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.gold-bg-gradient{background:linear-gradient(135deg,#D97706 0%,#F59E0B 100%)}
+.glass-card{background:rgba(15,21,36,.72);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.08)}
+.custom-scrollbar::-webkit-scrollbar{width:8px}
+.custom-scrollbar::-webkit-scrollbar-track{background:#0b1120}
+.custom-scrollbar::-webkit-scrollbar-thumb{background:#374151;border-radius:4px}
+/* ---------- Animated background ---------- */
+#bg{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;
+ background:radial-gradient(1100px 600px at 12% -8%,rgba(245,158,11,.16),transparent 60%),
+ radial-gradient(900px 600px at 98% 8%,rgba(56,189,248,.11),transparent 60%),
+ radial-gradient(900px 700px at 50% 110%,rgba(16,185,129,.10),transparent 60%),
+ linear-gradient(180deg,#070a13 0%,#0b1120 55%,#070a13 100%)}
+#bg .grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:56px 56px;-webkit-mask-image:radial-gradient(ellipse at 50% 25%,#000 25%,transparent 78%);mask-image:radial-gradient(ellipse at 50% 25%,#000 25%,transparent 78%)}
+#bg .orb{position:absolute;border-radius:9999px;filter:blur(90px);opacity:.30;animation:floaty 20s ease-in-out infinite}
+#bg .o1{width:420px;height:420px;background:#f59e0b;top:-120px;left:-100px}
+#bg .o2{width:360px;height:360px;background:#38bdf8;top:30%;right:-120px;animation-delay:-6s}
+#bg .o3{width:380px;height:380px;background:#10b981;bottom:-140px;left:25%;animation-delay:-12s}
+#bg svg{position:absolute;left:0;bottom:0;width:100%;height:60%}
+#bg .trace{stroke-dasharray:2400;stroke-dashoffset:2400;animation:draw 18s ease-in-out infinite alternate}
+@keyframes floaty{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(50px,-40px) scale(1.12)}}
+@keyframes draw{to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){#bg .orb,#bg .trace{animation:none}#bg .trace{stroke-dashoffset:0}html{scroll-behavior:auto}}
+.lesson-p{line-height:1.85}
+.module-open .chev{transform:rotate(180deg)}
+.chev{transition:transform .25s}
+.fade-in{animation:fin .35s ease both}
+@keyframes fin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+</style>
 </head>
 <body class="custom-scrollbar">
 
-    <!-- Top Navigation -->
-    <header class="sticky top-0 z-40 glass-card border-b border-gray-800">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl gold-bg-gradient flex items-center justify-center font-black text-black text-xl shadow-lg shadow-amber-500/20">A</div>
-                <div>
-                    <span class="text-lg sm:text-xl font-bold tracking-tight text-white block leading-none">APEX <span class="gold-gradient-text">FOREX</span></span>
-                    <span class="text-[9px] sm:text-[10px] text-gray-400 tracking-wider font-semibold uppercase">Trading Academy</span>
-                </div>
-            </div>
+<div id="bg" aria-hidden="true">
+  <div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
+  <div class="grid"></div>
+  <svg id="bgChart" viewBox="0 0 1440 500" preserveAspectRatio="none"></svg>
+</div>
 
-            <div class="flex items-center gap-2 sm:gap-4">
-                <div class="hidden md:flex bg-gray-800 text-xs text-amber-400 font-semibold border border-amber-500/30 rounded-lg px-3 py-2 items-center gap-2">
-                    <i data-lucide="globe" class="w-3.5 h-3.5"></i> English
-                </div>
-
-                <div id="guestNav" class="flex items-center gap-2">
-                    <button onclick="openModal('loginModal')" class="text-xs font-semibold px-3 sm:px-4 py-2 text-gray-300 hover:text-white transition">Log In</button>
-                    <button onclick="openModal('registerModal')" class="text-xs font-semibold px-3 sm:px-4 py-2 rounded-lg gold-bg-gradient text-black hover:opacity-90 transition shadow-md shadow-amber-500/20">Register VIP</button>
-                </div>
-
-                <div id="userNav" class="hidden flex items-center gap-2 sm:gap-3">
-                    <button onclick="toggleDashboard()" class="flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-lg bg-gray-800 border border-amber-500/30 hover:border-amber-500 transition">
-                        <i data-lucide="user" class="w-4 h-4 text-amber-400"></i>
-                        <span id="navUserName" class="text-xs font-bold text-gray-200 hidden sm:inline">User</span>
-                        <span class="bg-amber-500/20 text-amber-400 text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded font-bold">VIP</span>
-                    </button>
-                    <button onclick="logoutUser()" class="text-xs text-red-400 hover:text-red-300 font-semibold">Sign Out</button>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <!-- Student Dashboard (Hidden for guests) -->
-    <section id="dashboardSection" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div class="glass-card rounded-2xl p-4 sm:p-6 border border-amber-500/20">
-            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-6 border-b border-gray-800">
-                <div>
-                    <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
-                        <i data-lucide="layout-dashboard" class="w-6 h-6 text-amber-400"></i>
-                        Student Dashboard
-                    </h2>
-                    <p class="text-xs text-gray-400 mt-1">Welcome back! Track your masterclass learning progress here.</p>
-                </div>
-                <div class="bg-gray-800 px-4 py-2 rounded-xl border border-gray-700 w-full md:w-auto flex items-center justify-between md:block">
-                    <span class="text-[10px] text-gray-400 block uppercase font-bold">Overall Procedure</span>
-                    <span id="dashProgressPercent" class="text-lg font-black text-amber-400">0%</span>
-                </div>
-            </div>
-            <div class="mt-6">
-                <div class="flex justify-between text-xs text-gray-400 mb-2">
-                    <span>Completion of Modules and Lessons</span>
-                    <span id="dashCompletedCount" class="font-bold text-amber-400">0 / 50 Lessons</span>
-                </div>
-                <div class="w-full bg-gray-800 h-3 rounded-full overflow-hidden border border-gray-700">
-                    <div id="dashProgressBar" class="bg-gradient-to-r from-amber-500 to-yellow-300 h-full w-0 transition-all duration-500"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Hero Banner -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 text-center">
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold mb-6">
-            <i data-lucide="zap" class="w-4 h-4"></i>
-            <span>Full Price Action and Smart Money Concepts Masterclass</span>
-        </div>
-        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight max-w-4xl mx-auto leading-tight">
-            Forex Market, Supply & Demand<br>
-            <span class="gold-gradient-text">Concepts Full Guide and Strategy</span>
-        </h1>
-        <p class="mt-6 text-gray-400 max-w-2xl mx-auto text-xs sm:text-base leading-relaxed px-2">
-            Master institutional trading with 15 modules, 50 comprehensive lessons, multi-paragraph explanations, and professional SVG Supply & Demand chart diagrams.
-        </p>
-        <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4 px-4 sm:px-0">
-            <button onclick="openModal('registerModal')" class="w-full sm:w-auto px-8 py-3.5 rounded-xl gold-bg-gradient text-black font-bold text-sm hover:opacity-90 transition shadow-lg shadow-amber-500/20">Register & Unlock VIP</button>
-            <button onclick="scrollToCurriculum()" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-white font-bold text-sm border border-gray-700 transition">Preview Course Headings</button>
-        </div>
-    </section>
-
-    <!-- Curriculum Section -->
-    <section id="curriculum" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div class="text-center mb-10">
-            <h2 class="text-2xl sm:text-3xl font-black text-white">15 Modules & 50 Course Headings Preview</h2>
-            <p class="text-xs text-gray-400 mt-2 px-4">Explore curriculum modules below. Complete payment & register via Telegram Bot to unlock full lessons & charts.</p>
-        </div>
-        <div id="modulesContainer" class="space-y-4"></div>
-    </section>
-
-    <!-- Registration Modal -->
-    <div id="registerModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-        <div class="glass-card rounded-2xl max-w-md w-full p-6 border border-amber-500/30 relative max-h-[90vh] overflow-y-auto">
-            <button onclick="closeModal('registerModal')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
-            <h3 class="text-xl font-bold text-white mb-2">VIP Masterclass Registration</h3>
-            <p class="text-xs text-gray-400 mb-4">Send payment receipt (10,000 ETB - Gemechu) via Telegram Bot (`@gadaafx_bot`) to get your verification code.</p>
-            <div class="space-y-3">
-                <a href="https://t.me/gadaafx_bot" target="_blank" class="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs transition">
-                    <i data-lucide="send" class="w-4 h-4"></i>
-                    <span>1. Open Telegram Bot (@gadaafx_bot)</span>
-                </a>
-                <div class="border-t border-gray-800 my-4 pt-3">
-                    <label class="text-xs text-gray-400 block mb-1">Full Name</label>
-                    <input type="text" id="regName" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-amber-500">
-                    <label class="text-xs text-gray-400 block mb-1 mt-3">Email</label>
-                    <input type="email" id="regEmail" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-amber-500">
-                    <label class="text-xs text-gray-400 block mb-1 mt-3">Verification Code (6-Digit Bot OTP)</label>
-                    <input type="text" id="regCode" placeholder="e.g. 482910" class="w-full bg-gray-900 border border-amber-500/50 rounded-lg px-3 py-2 text-amber-400 font-bold text-sm outline-none focus:border-amber-500">
-                    <button onclick="completeRegistration()" class="w-full mt-4 py-3 rounded-xl gold-bg-gradient text-black font-bold text-sm hover:opacity-90 transition">Verify Code & Complete Registration</button>
-                </div>
-            </div>
-        </div>
+<!-- Header -->
+<header class="sticky top-0 z-40 glass-card border-b border-gray-800">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+    <a href="#top" class="flex items-center gap-3">
+      <div class="w-10 h-10 rounded-xl gold-bg-gradient flex items-center justify-center font-black text-black text-xl shadow-lg shadow-amber-500/20">A</div>
+      <div>
+        <span class="text-lg sm:text-xl font-bold tracking-tight text-white block leading-none">APEX <span class="gold-gradient-text">FOREX</span></span>
+        <span class="text-[9px] sm:text-[10px] text-gray-400 tracking-wider font-semibold uppercase">Trading Academy</span>
+      </div>
+    </a>
+    <div class="flex items-center gap-2 sm:gap-4">
+      <div id="guestNav" class="flex items-center gap-2">
+        <button onclick="openModal('loginModal')" class="text-xs font-semibold px-3 sm:px-4 py-2 text-gray-300 hover:text-white transition">Log In</button>
+        <button onclick="openModal('registerModal')" class="text-xs font-semibold px-3 sm:px-4 py-2 rounded-lg gold-bg-gradient text-black hover:opacity-90 transition shadow-md shadow-amber-500/20">Register VIP</button>
+      </div>
+      <div id="userNav" class="hidden items-center gap-2 sm:gap-3">
+        <button onclick="scrollToDashboard()" class="flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-lg bg-gray-800 border border-amber-500/30 hover:border-amber-500 transition">
+          <i data-lucide="user" class="w-4 h-4 text-amber-400"></i>
+          <span id="navUserName" class="text-xs font-bold text-gray-200 hidden sm:inline max-w-[120px] truncate">User</span>
+          <span class="bg-amber-500/20 text-amber-400 text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded font-bold">VIP</span>
+        </button>
+        <button onclick="logoutUser()" class="text-xs text-red-400 hover:text-red-300 font-semibold">Sign Out</button>
+      </div>
     </div>
+  </div>
+</header>
 
-    <!-- Login Modal -->
-    <div id="loginModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden flex items-center justify-center p-4">
-        <div class="glass-card rounded-2xl max-w-md w-full p-6 border border-gray-800 relative max-h-[90vh] overflow-y-auto">
-            <button onclick="closeModal('loginModal')" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
-            <h3 class="text-xl font-bold text-white mb-2">Log In VIP Account</h3>
-            <div class="space-y-3 mt-4">
-                <div>
-                    <label class="text-xs text-gray-400 block mb-1">Email</label>
-                    <input type="email" id="loginEmail" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-amber-500">
-                </div>
-                <div>
-                    <label class="text-xs text-gray-400 block mb-1">Verification Code</label>
-                    <input type="text" id="loginCode" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-amber-500">
-                </div>
-                <button onclick="loginUser()" class="w-full py-3 rounded-xl gold-bg-gradient text-black font-bold text-sm hover:opacity-90 transition mt-4">Sign In</button>
-            </div>
+<main id="top">
+
+<!-- Dashboard -->
+<section id="dashboardSection" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+  <div class="glass-card rounded-2xl p-4 sm:p-6 border border-amber-500/20">
+    <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-6 border-b border-gray-800">
+      <div>
+        <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2"><i data-lucide="layout-dashboard" class="w-6 h-6 text-amber-400"></i> Student Dashboard</h2>
+        <p class="text-xs text-gray-400 mt-1">Welcome back, <span id="dashName" class="text-amber-300 font-semibold"></span>! Track your masterclass progress here.</p>
+      </div>
+      <div class="flex gap-3 w-full md:w-auto">
+        <div class="bg-gray-800/80 px-4 py-2 rounded-xl border border-gray-700 flex-1 md:flex-none">
+          <span class="text-[10px] text-gray-400 block uppercase font-bold">Overall Progress</span>
+          <span id="dashProgressPercent" class="text-lg font-black text-amber-400">0%</span>
         </div>
+        <button id="continueBtn" onclick="continueLearning()" class="px-4 py-2 rounded-xl gold-bg-gradient text-black text-xs font-bold hover:opacity-90 transition flex items-center gap-2"><span id="continueLabel">Start Learning</span><i data-lucide="arrow-right" class="w-4 h-4"></i></button>
+      </div>
     </div>
+    <div class="mt-6">
+      <div class="flex justify-between text-xs text-gray-400 mb-2"><span>Completion of Modules and Lessons</span><span id="dashCompletedCount" class="font-bold text-amber-400">0 / 50 Lessons</span></div>
+      <div class="w-full bg-gray-800 h-3 rounded-full overflow-hidden border border-gray-700"><div id="dashProgressBar" class="bg-gradient-to-r from-amber-500 to-yellow-300 h-full w-0 transition-all duration-500"></div></div>
+    </div>
+    <div id="dashModules" class="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
+  </div>
+</section>
 
-    <script>
-        function getSVGChart(type) {
-            return `<svg viewBox="0 0 700 280" class="w-full h-48 sm:h-56 rounded-lg bg-[#0b0f19]" xmlns="http://www.w3.org/2000/svg">
-                <rect x="0" y="0" width="700" height="280" fill="#0b0f19"/>
-                <line x1="50" y1="140" x2="650" y2="140" stroke="#374151" stroke-dasharray="5"/>
-                <line x1="100" y1="80" x2="100" y2="200" stroke="#10b981" stroke-width="2"/>
-                <rect x="92" y="100" width="16" height="70" fill="#10b981" rx="2"/>
-                <line x1="200" y1="60" x2="200" y2="180" stroke="#10b981" stroke-width="2"/>
-                <rect x="192" y="80" width="16" height="70" fill="#10b981" rx="2"/>
-                <line x1="300" y1="40" x2="300" y2="150" stroke="#ef4444" stroke-width="2"/>
-                <rect x="292" y="60" width="16" height="60" fill="#ef4444" rx="2"/>
-                <line x1="400" y1="90" x2="400" y2="220" stroke="#ef4444" stroke-width="2"/>
-                <rect x="392" y="110" width="16" height="80" fill="#ef4444" rx="2"/>
-                <line x1="500" y1="120" x2="500" y2="240" stroke="#10b981" stroke-width="2"/>
-                <rect x="492" y="140" width="16" height="70" fill="#10b981" rx="2"/>
-                <text x="180" y="30" fill="#f59e0b" font-size="13" font-weight="bold">APEX INSTITUTIONAL PRICE ACTION MODEL</text>
-            </svg>`;
-        }
+<!-- Hero -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-20 text-center">
+  <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs font-semibold mb-6">
+    <i data-lucide="zap" class="w-4 h-4"></i><span>Full Price Action and Smart Money Concepts Masterclass</span>
+  </div>
+  <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black text-white tracking-tight max-w-4xl mx-auto leading-tight">
+    Forex Market, Supply &amp; Demand<br><span class="gold-gradient-text">Concepts Full Guide and Strategy</span>
+  </h1>
+  <p class="mt-6 text-gray-400 max-w-2xl mx-auto text-sm sm:text-base leading-relaxed px-2">
+    Learn how institutional price delivery works: 15 modules, 50 step-by-step lessons, in-depth explanations and a professional chart diagram for every single lesson.
+  </p>
+  <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4 px-4 sm:px-0">
+    <button onclick="openModal('registerModal')" class="w-full sm:w-auto px-8 py-3.5 rounded-xl gold-bg-gradient text-black font-bold text-sm hover:opacity-90 transition shadow-lg shadow-amber-500/20">Register &amp; Unlock VIP</button>
+    <button onclick="openLesson(1)" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gray-800/80 hover:bg-gray-700 text-white font-bold text-sm border border-gray-700 transition">Try Free Lesson 1</button>
+  </div>
+  <div class="mt-12 grid grid-cols-2 md:grid-cols-4 gap-3 max-w-3xl mx-auto">
+    <div class="glass-card rounded-xl py-4"><div class="text-2xl font-black text-amber-400">15</div><div class="text-[11px] text-gray-400 uppercase tracking-wide">Modules</div></div>
+    <div class="glass-card rounded-xl py-4"><div class="text-2xl font-black text-amber-400">50</div><div class="text-[11px] text-gray-400 uppercase tracking-wide">Lessons</div></div>
+    <div class="glass-card rounded-xl py-4"><div class="text-2xl font-black text-amber-400">50</div><div class="text-[11px] text-gray-400 uppercase tracking-wide">Chart Diagrams</div></div>
+    <div class="glass-card rounded-xl py-4"><div class="text-2xl font-black text-amber-400">1</div><div class="text-[11px] text-gray-400 uppercase tracking-wide">Free Preview</div></div>
+  </div>
+</section>
 
-        const modulesData = [
-            {
-                id: 1,
-                title: "Module 1: Introduction to Forex & Supply and Demand Zones",
-                lessons: [
-                    { id: 1, title: "L1: What are Supply and Demand Zones?", p1: "Supply and demand zones are areas on a price chart defined by a trader where price is likely to stall or reverse.", p2: "A demand zone is a range where buy orders execute, while supply zones execute sell orders.", chartType: "supply-demand" },
-                    { id: 2, title: "L2: Identifying Supply and Demand Zones on Charts", p1: "To identify supply and demand zones on a chart, look for price ranges where price stalled or reversed.", p2: "Pattern: Price drops, stalls, and increases significantly for demand.", chartType: "supply-demand" },
-                    { id: 3, title: "L3: Theory Behind Supply and Demand (Institutional Logic)", p1: "Institutional banks calculate intrinsic value and wait for price drops to purchase.", p2: "Accumulation forms institutional demand zones.", chartType: "support-resistance" }
-                ]
-            },
-            {
-                id: 2,
-                title: "Module 2: Complete Support & Resistance Levels",
-                lessons: [
-                    { id: 4, title: "L4: Horizontal Support & Resistance", p1: "Support pauses downward momentum; resistance halts upward pressure.", p2: "Psychological price barriers for pending orders.", chartType: "support-resistance" },
-                    { id: 5, title: "L5: Dynamic S/R & Moving Averages", p1: "EMA 20, 50, and 200 act as rolling barriers.", p2: "Prices retrace to moving averages during trends.", chartType: "general" }
-                ]
-            },
-            {
-                id: 3,
-                title: "Module 3: Smart Money Concepts (SMC) & Order Blocks",
-                lessons: [
-                    { id: 6, title: "L6: What is an Order Block?", p1: "Order blocks represent institutional accumulation zones prior to explosive price expansions.", p2: "Trading alongside order blocks guarantees higher risk-to-reward ratios.", chartType: "general" }
-                ]
-            }
-        ];
+<!-- Features -->
+<section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-6">
+  <div class="grid md:grid-cols-3 gap-4">
+    <div class="glass-card rounded-2xl p-5"><div class="w-10 h-10 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center mb-3"><i data-lucide="bar-chart-3" class="w-5 h-5 text-amber-400"></i></div><h3 class="font-bold text-white text-sm">A chart for every lesson</h3><p class="text-xs text-gray-400 mt-1 leading-relaxed">Each concept is drawn on annotated candlestick diagrams: zones, structure, liquidity and trade plans.</p></div>
+    <div class="glass-card rounded-2xl p-5"><div class="w-10 h-10 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center mb-3"><i data-lucide="book-open" class="w-5 h-5 text-emerald-400"></i></div><h3 class="font-bold text-white text-sm">From zero to a full strategy</h3><p class="text-xs text-gray-400 mt-1 leading-relaxed">Foundations, structure, zones, order blocks, liquidity, entries, risk, psychology and a complete trading plan.</p></div>
+    <div class="glass-card rounded-2xl p-5"><div class="w-10 h-10 rounded-lg bg-sky-500/10 border border-sky-500/20 flex items-center justify-center mb-3"><i data-lucide="shield-check" class="w-5 h-5 text-sky-400"></i></div><h3 class="font-bold text-white text-sm">Risk comes first</h3><p class="text-xs text-gray-400 mt-1 leading-relaxed">Four full lessons on position sizing, risk-reward and drawdown, because survival beats prediction.</p></div>
+  </div>
+</section>
 
-        let currentUser = JSON.parse(localStorage.getItem('apex_user')) || null;
-        let completedLessons = JSON.parse(localStorage.getItem('apex_completed_lessons')) || [];
+<!-- Curriculum -->
+<section id="curriculum" class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+  <div class="text-center mb-8">
+    <h2 class="text-2xl sm:text-3xl font-black text-white">15 Modules &amp; 50 Lessons</h2>
+    <p class="text-xs sm:text-sm text-gray-400 mt-2 px-4">Preview every lesson title. Lesson 1 is free. Register via the Telegram bot to unlock the rest.</p>
+  </div>
+  <div class="relative mb-5">
+    <i data-lucide="search" class="w-4 h-4 text-gray-500 absolute left-3 top-1/2 -translate-y-1/2"></i>
+    <input id="searchBox" type="search" placeholder="Search lessons (e.g. order block, liquidity, risk)..." class="w-full bg-gray-900/70 border border-gray-700 rounded-xl pl-10 pr-3 py-3 text-sm text-white outline-none focus:border-amber-500" oninput="renderModules()">
+  </div>
+  <div id="modulesContainer" class="space-y-4"></div>
+  <p id="noResults" class="hidden text-center text-sm text-gray-500 py-8">No lessons match your search.</p>
+</section>
 
-        document.addEventListener('DOMContentLoaded', () => {
-            updateAuthUI();
-            renderModules();
-            updateProgress();
-            lucide.createIcons();
-        });
+</main>
 
-        function renderModules() {
-            const container = document.getElementById('modulesContainer');
-            container.innerHTML = '';
+<footer class="border-t border-gray-800 mt-8 py-10 px-4">
+  <div class="max-w-5xl mx-auto text-center">
+    <div class="text-sm font-bold text-white">APEX <span class="gold-gradient-text">FOREX</span> Academy</div>
+    <p class="text-[11px] text-gray-500 mt-4 max-w-3xl mx-auto leading-relaxed"><strong class="text-gray-400">Risk warning:</strong> Trading forex and leveraged products carries a high level of risk and may result in the loss of more than your initial deposit. All content is for educational purposes only and is not financial advice. Past performance does not guarantee future results. Chart diagrams are simplified illustrations, not real trade records. Never trade money you cannot afford to lose.</p>
+    <a href="https://t.me/gadaafx_bot" target="_blank" rel="noopener" class="inline-flex items-center gap-2 mt-5 text-xs text-sky-400 hover:text-sky-300 font-semibold"><i data-lucide="send" class="w-4 h-4"></i> Contact on Telegram</a>
+  </div>
+</footer>
 
-            modulesData.forEach((mod) => {
-                const moduleEl = document.createElement('div');
-                moduleEl.className = 'glass-card rounded-2xl border border-gray-800 overflow-hidden';
-                
-                let lessonsHTML = '';
-                mod.lessons.forEach(l => {
-                    const isDone = completedLessons.includes(l.id);
-                    
-                    if (currentUser && currentUser.vip) {
-                        lessonsHTML += `
-                            <div class="p-4 sm:p-6 bg-gray-900/40 border-t border-gray-800/60 space-y-4">
-                                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                                    <div class="flex-1">
-                                        <h4 class="text-sm sm:text-base font-bold text-white flex items-center gap-2">
-                                            <i data-lucide="play-circle" class="w-5 h-5 text-amber-400 shrink-0"></i>
-                                            <span>${l.title}</span>
-                                        </h4>
-                                        <div class="mt-3 space-y-2 text-xs sm:text-sm text-gray-300 leading-relaxed">
-                                            <p>${l.p1}</p>
-                                            <p>${l.p2}</p>
-                                        </div>
-                                    </div>
-                                    <button onclick="toggleLesson(${l.id})" class="w-full sm:w-auto px-4 py-2 rounded-xl text-xs font-bold transition whitespace-nowrap ${isDone ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-gray-800 text-gray-300 hover:text-white border border-gray-700'}">
-                                        ${isDone ? '✓ Completed' : 'Mark Done'}
-                                    </button>
-                                </div>
-                                <div class="mt-4 rounded-xl overflow-hidden border border-gray-800 bg-black/40 p-2">
-                                    ${getSVGChart(l.chartType)}
-                                </div>
-                            </div>
-                        `;
-                    } else {
-                        lessonsHTML += `
-                            <div class="p-4 bg-gray-900/40 border-t border-gray-800/60 flex items-center justify-between gap-2">
-                                <h4 class="text-xs sm:text-sm font-bold text-gray-300 flex items-center gap-2 truncate">
-                                    <i data-lucide="lock" class="w-4 h-4 text-amber-400 shrink-0"></i>
-                                    <span class="truncate">${l.title}</span>
-                                </h4>
-                                <span class="text-[9px] sm:text-[10px] text-amber-400 bg-amber-500/10 border border-amber-500/30 px-2 py-1 rounded font-bold shrink-0">VIP Locked</span>
-                            </div>
-                        `;
-                    }
-                });
+<!-- Register Modal -->
+<div id="registerModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="regTitle">
+  <div class="glass-card rounded-2xl max-w-md w-full p-6 border border-amber-500/30 relative max-h-[90vh] overflow-y-auto">
+    <button onclick="closeModal('registerModal')" aria-label="Close" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+    <h3 id="regTitle" class="text-xl font-bold text-white mb-2">VIP Masterclass Registration</h3>
+    <p class="text-xs text-gray-400 mb-4">Send payment receipt (10,000 ETB - Gemechu) via Telegram Bot (@gadaafx_bot) to get your 6-digit verification code.</p>
+    <a href="https://t.me/gadaafx_bot" target="_blank" rel="noopener" class="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-sky-600 hover:bg-sky-500 text-white font-bold text-xs transition"><i data-lucide="send" class="w-4 h-4"></i><span>1. Open Telegram Bot (@gadaafx_bot)</span></a>
+    <div class="border-t border-gray-800 my-4 pt-3">
+      <label for="regName" class="text-xs text-gray-400 block mb-1">Full Name</label>
+      <input type="text" id="regName" autocomplete="name" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-amber-500">
+      <label for="regEmail" class="text-xs text-gray-400 block mb-1 mt-3">Email</label>
+      <input type="email" id="regEmail" autocomplete="email" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-amber-500">
+      <label for="regCode" class="text-xs text-gray-400 block mb-1 mt-3">Verification Code (6-digit Bot OTP)</label>
+      <input type="text" id="regCode" inputmode="numeric" maxlength="6" placeholder="e.g. 482910" class="w-full bg-gray-900 border border-amber-500/50 rounded-lg px-3 py-2 text-amber-400 font-bold text-sm outline-none focus:border-amber-500">
+      <p id="regMsg" class="text-xs mt-3 hidden"></p>
+      <button id="regBtn" onclick="completeRegistration()" class="w-full mt-4 py-3 rounded-xl gold-bg-gradient text-black font-bold text-sm hover:opacity-90 transition">Verify Code &amp; Complete Registration</button>
+      <p class="text-[11px] text-gray-500 mt-3 text-center">Already registered? <button onclick="closeModal('registerModal');openModal('loginModal')" class="text-amber-400 font-semibold">Log in</button></p>
+    </div>
+  </div>
+</div>
 
-                moduleEl.innerHTML = `
-                    <button onclick="toggleAccordion('mod-${mod.id}')" class="w-full p-4 sm:p-5 text-left flex items-center justify-between bg-gray-900/80 hover:bg-gray-800/80 transition">
-                        <span class="text-xs sm:text-base font-bold text-white flex items-center gap-3 truncate">
-                            <span class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs sm:text-sm flex items-center justify-center font-bold shrink-0">${mod.id}</span>
-                            <span class="truncate">${mod.title}</span>
-                        </span>
-                        <i data-lucide="chevron-down" class="w-5 h-5 text-gray-400 shrink-0"></i>
-                    </button>
-                    <div id="mod-${mod.id}" class="hidden">${lessonsHTML}</div>
-                `;
-                container.appendChild(moduleEl);
-            });
-            lucide.createIcons();
-        }
+<!-- Login Modal -->
+<div id="loginModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="logTitle">
+  <div class="glass-card rounded-2xl max-w-md w-full p-6 border border-gray-800 relative max-h-[90vh] overflow-y-auto">
+    <button onclick="closeModal('loginModal')" aria-label="Close" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+    <h3 id="logTitle" class="text-xl font-bold text-white mb-2">Log In VIP Account</h3>
+    <p class="text-xs text-gray-400">Use the email and verification code you registered with.</p>
+    <div class="space-y-3 mt-4">
+      <div><label for="loginEmail" class="text-xs text-gray-400 block mb-1">Email</label><input type="email" id="loginEmail" autocomplete="email" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-amber-500"></div>
+      <div><label for="loginCode" class="text-xs text-gray-400 block mb-1">Verification Code</label><input type="text" id="loginCode" inputmode="numeric" maxlength="6" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-amber-500"></div>
+      <p id="logMsg" class="text-xs hidden"></p>
+      <button id="logBtn" onclick="loginUser()" class="w-full py-3 rounded-xl gold-bg-gradient text-black font-bold text-sm hover:opacity-90 transition mt-2">Sign In</button>
+    </div>
+  </div>
+</div>
 
-        function toggleAccordion(id) { document.getElementById(id).classList.toggle('hidden'); }
+<!-- Lesson Reader -->
+<div id="reader" class="fixed inset-0 z-[60] hidden bg-black/85 backdrop-blur-md overflow-y-auto custom-scrollbar" role="dialog" aria-modal="true" aria-label="Lesson">
+  <div class="min-h-full flex items-start justify-center p-3 sm:p-6">
+    <article id="readerBody" class="glass-card rounded-2xl w-full max-w-3xl p-5 sm:p-8 border border-amber-500/20 my-4 fade-in"></article>
+  </div>
+</div>
 
-        function toggleLesson(id) {
-            if (!currentUser) { openModal('loginModal'); return; }
-            if (completedLessons.includes(id)) {
-                completedLessons = completedLessons.filter(item => item !== id);
-            } else {
-                completedLessons.push(id);
-            }
-            localStorage.setItem('apex_completed_lessons', JSON.stringify(completedLessons));
-            renderModules();
-            updateProgress();
-        }
+<script>
+/* =====================================================================
+   CONFIG
+   ===================================================================== */
+var CONFIG = {
+  VERIFY_ENDPOINT: '/api/verify-code',   // POST {email, code} -> {success:true|false}
+  ALLOW_OFFLINE_DEMO: false,             // true = accept any 6-digit code when the server is unreachable (testing only!)
+  FREE_PREVIEW_IDS: [1]                  // lessons visible without VIP
+};
 
-        function updateProgress() {
-            const total = 50;
-            const count = completedLessons.length;
-            const percent = Math.round((count / total) * 100);
-            document.getElementById('dashProgressPercent').innerText = `${percent}%`;
-            document.getElementById('dashCompletedCount').innerText = `${count} / ${total} Lessons`;
-            document.getElementById('dashProgressBar').style.width = `${percent}%`;
-        }
+/* =====================================================================
+   CHART ENGINE (annotated candlestick diagrams, pure SVG)
+   ===================================================================== */
+var G='#10b981', RD='#ef4444', AM='#f59e0b', BL='#38bdf8', PU='#a78bfa', GR='#9ca3af', WH='#e5e7eb';
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+function txt(x,y,t,col,anchor,size,w){
+  return '<text x="'+x.toFixed(1)+'" y="'+y.toFixed(1)+'" fill="'+col+'" font-size="'+(size||11)+'" font-weight="'+(w||700)+'" text-anchor="'+(anchor||'middle')+'" stroke="#0a0e1a" stroke-width="3" stroke-linejoin="round" paint-order="stroke" font-family="Plus Jakarta Sans,sans-serif">'+esc(t)+'</text>';
+}
+function Z(i1,i2,p1,p2,label,color){return {type:'zone',i1:i1,i2:i2,p1:p1,p2:p2,label:label,color:color||G};}
+function Ln(p,label,color,i1,i2){return {type:'line',p:p,label:label,color:color||AM,i1:i1,i2:i2};}
+function Tx(i,p,text,color){return {type:'text',i:i,p:p,text:text,color:color||WH};}
+function Ar(i,p,dir,label,color){return {type:'arrow',i:i,p:p,dir:dir,label:label,color:color||G};}
+function Pa(pts,label,color,o){var a={type:'path',pts:pts,label:label,color:color||WH};if(o){for(var k in o)a[k]=o[k];}return a;}
+function RRb(i1,i2,entry,sl,tp){return {type:'rr',i1:i1,i2:i2,entry:entry,sl:sl,tp:tp};}
+function VB(i1,i2,label,color){return {type:'vband',i1:i1,i2:i2,label:label,color:color||AM};}
+function Bars(vals,base,sc){return {type:'bars',vals:vals,base:base,sc:sc};}
 
-        function updateAuthUI() {
-            if (currentUser) {
-                document.getElementById('guestNav').classList.add('hidden');
-                document.getElementById('userNav').classList.remove('hidden');
-                document.getElementById('navUserName').innerText = currentUser.name || 'User';
-                document.getElementById('dashboardSection').classList.remove('hidden');
-            } else {
-                document.getElementById('guestNav').classList.remove('hidden');
-                document.getElementById('userNav').classList.add('hidden');
-                document.getElementById('dashboardSection').classList.add('hidden');
-            }
-            renderModules();
-        }
+function flipC(c){return c.map(function(k){return [100-k[0],100-k[2],100-k[1],100-k[3]];});}
+function flipA(list,ren){
+  ren=ren||{};
+  return list.map(function(a){
+    var b={};for(var k in a)b[k]=a[k];
+    ['p','p1','p2','entry','sl','tp'].forEach(function(k){if(typeof b[k]==='number')b[k]=100-b[k];});
+    if(b.pts)b.pts=b.pts.map(function(q){return [q[0],100-q[1]];});
+    if(b.dir)b.dir=b.dir==='up'?'down':'up';
+    if(b.label&&ren[b.label])b.label=ren[b.label];
+    if(b.text&&ren[b.text])b.text=ren[b.text];
+    if(b.color===G)b.color=RD;else if(b.color===RD)b.color=G;
+    return b;
+  });
+}
 
-        function completeRegistration() {
-            const name = document.getElementById('regName').value;
-            const email = document.getElementById('regEmail').value;
-            const code = document.getElementById('regCode').value;
+function chartSVG(cfg){
+  var W=720,H=300,L=14,RR=14,T=38,BT=18;
+  var cand=cfg.candles||[], n=cfg.n||cand.length, step=(W-L-RR)/n;
+  function cx(i){return L+(i+0.5)*step;}
+  function y(p){return H-BT-(p/100)*(H-T-BT);}
+  function clampX(x,len){var h=len*3.4;return Math.min(Math.max(x,L+h),W-RR-h);}
+  var o='<svg viewBox="0 0 '+W+' '+H+'" class="w-full h-auto rounded-xl" role="img" aria-label="'+esc(cfg.title)+'" xmlns="http://www.w3.org/2000/svg"><rect width="'+W+'" height="'+H+'" rx="10" fill="#0a0e1a"/>';
+  for(var g=20;g<=80;g+=20)o+='<line x1="'+L+'" x2="'+(W-RR)+'" y1="'+y(g).toFixed(1)+'" y2="'+y(g).toFixed(1)+'" stroke="#1a2233" stroke-width="1"/>';
+  var ann=cfg.ann||[];
+  var backT={zone:1,vband:1,rr:1};
 
-            if (!name || !email || !code) return alert('Please fill in all fields!');
+  function back(a){
+    var s='';
+    if(a.type==='zone'){
+      var x1=cx(a.i1)-step/2, x2=(a.i2==null)?(W-RR):cx(a.i2)+step/2;
+      var yt=y(Math.max(a.p1,a.p2)), yb=y(Math.min(a.p1,a.p2));
+      s+='<rect x="'+x1.toFixed(1)+'" y="'+yt.toFixed(1)+'" width="'+(x2-x1).toFixed(1)+'" height="'+(yb-yt).toFixed(1)+'" fill="'+a.color+'" fill-opacity=".16" stroke="'+a.color+'" stroke-opacity=".65" stroke-dasharray="4 3"/>';
+      if(a.label){var lx=Math.min(x1+5,W-RR-a.label.length*6.4-4);s+=txt(Math.max(lx,L+2),yt+13,a.label,a.color,'start',10.5);}
+    }else if(a.type==='vband'){
+      var vx1=cx(a.i1)-step/2, vx2=cx(a.i2)+step/2;
+      s+='<rect x="'+vx1.toFixed(1)+'" y="'+T+'" width="'+(vx2-vx1).toFixed(1)+'" height="'+(H-BT-T)+'" fill="'+a.color+'" fill-opacity=".14"/>';
+      if(a.label)s+=txt(clampX(cx(a.i1),a.label.length),T+12,a.label,a.color,'middle',10.5);
+    }else if(a.type==='rr'){
+      var rx1=cx(a.i1)-step/2, rx2=(a.i2==null)?(W-RR):cx(a.i2)+step/2, w=rx2-rx1;
+      var yE=y(a.entry), yT=y(a.tp), yS=y(a.sl);
+      s+='<rect x="'+rx1.toFixed(1)+'" y="'+Math.min(yE,yT).toFixed(1)+'" width="'+w.toFixed(1)+'" height="'+Math.abs(yE-yT).toFixed(1)+'" fill="'+G+'" fill-opacity=".14"/>';
+      s+='<rect x="'+rx1.toFixed(1)+'" y="'+Math.min(yE,yS).toFixed(1)+'" width="'+w.toFixed(1)+'" height="'+Math.abs(yE-yS).toFixed(1)+'" fill="'+RD+'" fill-opacity=".16"/>';
+      s+='<line x1="'+rx1.toFixed(1)+'" x2="'+rx2.toFixed(1)+'" y1="'+yE.toFixed(1)+'" y2="'+yE.toFixed(1)+'" stroke="'+WH+'" stroke-dasharray="4 3"/>';
+      var rr=(Math.abs(a.tp-a.entry)/Math.abs(a.entry-a.sl)).toFixed(1);
+      s+=txt(rx2-4,yT+12,'TP',G,'end',10.5)+txt(rx2-4,yS-5,'SL',RD,'end',10.5)+txt(rx2-4,yE-4,'ENTRY  |  RR 1:'+rr,WH,'end',10.5);
+    }
+    return s;
+  }
 
-            fetch('/api/verify-code', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ code })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.success) {
-                    currentUser = { name, email, vip: true };
-                    localStorage.setItem('apex_user', JSON.stringify(currentUser));
-                    updateAuthUI();
-                    closeModal('registerModal');
-                    alert('🎉 Success! VIP Access Unlocked.');
-                } else {
-                    alert('❌ Invalid Verification Code!');
-                }
-            })
-            .catch(() => {
-                currentUser = { name, email, vip: true };
-                localStorage.setItem('apex_user', JSON.stringify(currentUser));
-                updateAuthUI();
-                closeModal('registerModal');
-                alert('🎉 VIP Access verified locally!');
-            });
-        }
+  function front(a){
+    var s='',x,yy,k;
+    if(a.type==='line'){
+      var lx1=(a.i1==null)?L:cx(a.i1), lx2=(a.i2==null)?(W-RR):cx(a.i2);
+      yy=y(a.p);
+      s+='<line x1="'+lx1.toFixed(1)+'" x2="'+lx2.toFixed(1)+'" y1="'+yy.toFixed(1)+'" y2="'+yy.toFixed(1)+'" stroke="'+a.color+'" stroke-width="1.6" stroke-dasharray="6 4"/>';
+      if(a.label){
+        if(a.i2==null)s+=txt(W-RR-4,yy-5,a.label,a.color,'end',10.5);
+        else s+=txt(lx1+4,yy-5,a.label,a.color,'start',10.5);
+      }
+    }else if(a.type==='text'){
+      s+=txt(clampX(cx(a.i),a.text.length),y(a.p),a.text,a.color,'middle',11);
+    }else if(a.type==='arrow'){
+      x=cx(a.i);yy=y(a.p);
+      if(a.dir==='up'){
+        s+='<polygon points="'+x.toFixed(1)+','+yy.toFixed(1)+' '+(x-6).toFixed(1)+','+(yy+11).toFixed(1)+' '+(x+6).toFixed(1)+','+(yy+11).toFixed(1)+'" fill="'+a.color+'"/>';
+        if(a.label)s+=txt(clampX(x,a.label.length),yy+24,a.label,a.color,'middle',10.5);
+      }else{
+        s+='<polygon points="'+x.toFixed(1)+','+yy.toFixed(1)+' '+(x-6).toFixed(1)+','+(yy-11).toFixed(1)+' '+(x+6).toFixed(1)+','+(yy-11).toFixed(1)+'" fill="'+a.color+'"/>';
+        if(a.label)s+=txt(clampX(x,a.label.length),yy-16,a.label,a.color,'middle',10.5);
+      }
+    }else if(a.type==='path'){
+      var pts=a.pts.map(function(q){return cx(q[0]).toFixed(1)+','+y(q[1]).toFixed(1);}).join(' ');
+      s+='<polyline points="'+pts+'" fill="none" stroke="'+a.color+'" stroke-width="'+(a.w||2.4)+'" stroke-linejoin="round" stroke-linecap="round"'+(a.dash?' stroke-dasharray="6 4"':'')+'/>';
+      if(a.label){
+        var q=a.pts[(a.lk==null)?a.pts.length-1:a.lk];
+        s+=txt(a.anc==='start'?cx(q[0])+8:cx(q[0])-8,y(q[1])+(a.dy==null?-10:a.dy),a.label,a.color,a.anc||'end',10.5);
+      }
+    }else if(a.type==='bars'){
+      s+='<line x1="'+L+'" x2="'+(W-RR)+'" y1="'+y(a.base).toFixed(1)+'" y2="'+y(a.base).toFixed(1)+'" stroke="#374151"/>';
+      a.vals.forEach(function(v,i){
+        var top=y(a.base+Math.max(v,0)*a.sc), bot=y(a.base+Math.min(v,0)*a.sc);
+        var bw=step*0.6, bx=cx(i)-bw/2, col=v>=0?G:RD;
+        s+='<rect x="'+bx.toFixed(1)+'" y="'+top.toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+Math.max(bot-top,1).toFixed(1)+'" fill="'+col+'" rx="3"/>';
+        s+=txt(cx(i),v>=0?top-5:bot+13,(v>0?'+':'')+v+'R',col,'middle',10.5);
+      });
+    }
+    return s;
+  }
 
-        function loginUser() {
-            const email = document.getElementById('loginEmail').value;
-            currentUser = { name: email.split('@')[0], email, vip: true };
-            localStorage.setItem('apex_user', JSON.stringify(currentUser));
-            updateAuthUI();
-            closeModal('loginModal');
-        }
+  ann.forEach(function(a){if(backT[a.type])o+=back(a);});
+  var bw=Math.min(step*0.55,20);
+  cand.forEach(function(c,i){
+    var col=c[3]>=c[0]?G:RD, x=cx(i);
+    var bt=y(Math.max(c[0],c[3])), bb=y(Math.min(c[0],c[3]));
+    o+='<line x1="'+x.toFixed(1)+'" x2="'+x.toFixed(1)+'" y1="'+y(c[1]).toFixed(1)+'" y2="'+y(c[2]).toFixed(1)+'" stroke="'+col+'" stroke-width="2"/>';
+    o+='<rect x="'+(x-bw/2).toFixed(1)+'" y="'+bt.toFixed(1)+'" width="'+bw.toFixed(1)+'" height="'+Math.max(bb-bt,1.5).toFixed(1)+'" fill="'+col+'" rx="2"/>';
+  });
+  ann.forEach(function(a){if(!backT[a.type])o+=front(a);});
+  o+='<text x="'+L+'" y="22" fill="'+AM+'" font-size="13" font-weight="800" font-family="Plus Jakarta Sans,sans-serif">'+esc(cfg.title)+'</text>';
+  o+='<text x="'+(W-RR)+'" y="'+(H-5)+'" fill="#4b5563" font-size="9" text-anchor="end" font-family="Plus Jakarta Sans,sans-serif">APEX FOREX ACADEMY - illustrative diagram</text>';
+  return o+'</svg>';
+}
 
-        function logoutUser() {
-            localStorage.removeItem('apex_user');
-            currentUser = null;
-            updateAuthUI();
-        }
+/* ---------- custom (non-candle) diagrams ---------- */
+function svgWrap(title,inner){
+  return '<svg viewBox="0 0 720 300" class="w-full h-auto rounded-xl" role="img" aria-label="'+esc(title)+'" xmlns="http://www.w3.org/2000/svg"><rect width="720" height="300" rx="10" fill="#0a0e1a"/><text x="14" y="22" fill="'+AM+'" font-size="13" font-weight="800" font-family="Plus Jakarta Sans,sans-serif">'+esc(title)+'</text>'+inner+'<text x="706" y="295" fill="#4b5563" font-size="9" text-anchor="end" font-family="Plus Jakarta Sans,sans-serif">APEX FOREX ACADEMY - illustrative diagram</text></svg>';
+}
+function chartAnatomy(){
+  var s='';
+  function candle(x,bull){
+    var col=bull?G:RD, top=100, bot=200;
+    var r='<line x1="'+x+'" x2="'+x+'" y1="55" y2="250" stroke="'+col+'" stroke-width="3"/><rect x="'+(x-26)+'" y="'+top+'" width="52" height="'+(bot-top)+'" rx="4" fill="'+col+'"/>';
+    var hi=55, lo=250, cl=bull?top:bot, op=bull?bot:top;
+    function lead(yv,label,sub){return '<line x1="'+(x+30)+'" x2="'+(x+84)+'" y1="'+yv+'" y2="'+yv+'" stroke="#6b7280" stroke-dasharray="3 3"/>'+txt(x+90,yv+4,label,WH,'start',12)+txt(x+90,yv+18,sub,GR,'start',9.5,500);}
+    r+=lead(hi,'High','top of upper wick')+lead(cl,'Close','where the period ended')+lead(op,'Open','where the period began')+lead(lo,'Low','bottom of lower wick');
+    r+=txt(x,278,bull?'BULLISH (close > open)':'BEARISH (close < open)',col,'middle',11);
+    r+='<text x="'+(x-34)+'" y="155" fill="#9ca3af" font-size="10" text-anchor="end" font-family="Plus Jakarta Sans,sans-serif">Body</text>';
+    return r;
+  }
+  s+=candle(120,true)+candle(430,false);
+  s+='<text x="'+(120-34)+'" y="75" fill="#9ca3af" font-size="10" text-anchor="end" font-family="Plus Jakarta Sans,sans-serif">Wick</text><text x="'+(430-34)+'" y="75" fill="#9ca3af" font-size="10" text-anchor="end" font-family="Plus Jakarta Sans,sans-serif">Wick</text>';
+  return svgWrap('Anatomy of a candlestick',s);
+}
+function chartSessions(){
+  var s='',X0=96,X1=700,sc=(X1-X0)/24;
+  function xh(h){return X0+h*sc;}
+  var rows=[['Sydney',[[22,24],[0,7]],BL],['Tokyo',[[0,9]],PU],['London',[[8,17]],G],['New York',[[13,22]],AM]];
+  for(var h=0;h<=24;h+=3){s+='<line x1="'+xh(h)+'" x2="'+xh(h)+'" y1="40" y2="262" stroke="#1a2233"/>'+txt(xh(h),276,(h<10?'0':'')+h+':00',GR,'middle',9.5,500);}
+  rows.forEach(function(r,i){
+    var yy=52+i*50;
+    s+=txt(12,yy+22,r[0],WH,'start',12);
+    r[1].forEach(function(b){s+='<rect x="'+xh(b[0]).toFixed(1)+'" y="'+yy+'" width="'+((b[1]-b[0])*sc).toFixed(1)+'" height="32" rx="6" fill="'+r[2]+'" fill-opacity=".75"/>';});
+  });
+  s+='<rect x="'+xh(13).toFixed(1)+'" y="46" width="'+(4*sc).toFixed(1)+'" height="204" fill="'+AM+'" fill-opacity=".12" stroke="'+AM+'" stroke-dasharray="4 3"/>';
+  s+=txt(xh(15),258,'London + New York overlap = highest volume',AM,'middle',10.5);
+  return svgWrap('Forex sessions (UTC) - convert to your local time',s);
+}
+function chartLots(){
+  var items=[['Standard lot','1.00','100,000 units','~ $10 per pip',G,150],['Mini lot','0.10','10,000 units','~ $1 per pip',BL,100],['Micro lot','0.01','1,000 units','~ $0.10 per pip',PU,60]],s='';
+  items.forEach(function(it,i){
+    var x=22+i*232;
+    s+='<rect x="'+x+'" y="44" width="216" height="190" rx="12" fill="#111827" stroke="'+it[4]+'" stroke-opacity=".6"/>';
+    s+=txt(x+108,72,it[0],it[4],'middle',14)+txt(x+108,110,it[1],WH,'middle',30,800)+txt(x+108,134,it[2],GR,'middle',12,600)+txt(x+108,156,it[3],AM,'middle',13);
+    s+='<rect x="'+(x+18)+'" y="178" width="180" height="10" rx="5" fill="#1f2937"/><rect x="'+(x+18)+'" y="178" width="'+(it[5]*1.2)+'" height="10" rx="5" fill="'+it[4]+'"/>';
+    s+=txt(x+108,212,'Relative position size',GR,'middle',9.5,500);
+  });
+  s+=txt(360,262,'1 pip = 0.0001 (0.01 for JPY pairs). Pip values shown for USD-quoted pairs such as EUR/USD.',GR,'middle',10.5,500);
+  return svgWrap('Lot sizes and pip value',s);
+}
+function chartCalc(){
+  var boxes=[['Account','$1,000'],['Risk 1%','$10'],['Stop loss','20 pips'],['Pip value','$10 / lot']],s='';
+  boxes.forEach(function(b,i){
+    var x=20+i*174;
+    s+='<rect x="'+x+'" y="52" width="150" height="70" rx="10" fill="#111827" stroke="#374151"/>'+txt(x+75,78,b[0],GR,'middle',11,600)+txt(x+75,106,b[1],WH,'middle',19,800);
+    if(i<3)s+=txt(x+162,92,'>',AM,'middle',20);
+  });
+  s+='<rect x="60" y="150" width="600" height="64" rx="12" fill="'+G+'" fill-opacity=".14" stroke="'+G+'"/>';
+  s+=txt(360,176,'Lot size = Risk $ / (Stop pips x Pip value)',AM,'middle',14);
+  s+=txt(360,201,'= 10 / (20 x 10) = 0.05 lots',G,'middle',17,800);
+  s+=txt(360,246,'The chart decides the stop. The stop decides the lot size. Never the other way round.',GR,'middle',11,500);
+  return svgWrap('Position sizing formula (worked example)',s);
+}
+function barH(title,items,foot,max){
+  var s='',x0=130,wMax=500;
+  items.forEach(function(it,i){
+    var yy=48+i*40, w=Math.max(4,it[1]/max*wMax);
+    s+=txt(x0-10,yy+19,it[0],WH,'end',12);
+    s+='<rect x="'+x0+'" y="'+yy+'" width="'+w.toFixed(1)+'" height="26" rx="6" fill="'+it[2]+'" fill-opacity=".85"/>';
+    s+=txt(x0+w+8,yy+18,it[3],WH,'start',12);
+  });
+  s+=txt(360,282,foot,GR,'middle',10.5,500);
+  return svgWrap(title,s);
+}
+function checklist(title,items){
+  var s='',cols=items.length>6?2:1, per=Math.ceil(items.length/cols);
+  items.forEach(function(it,i){
+    var c=Math.floor(i/per), r=i%per, x=26+c*350, yy=50+r*(cols===2?42:34);
+    s+='<rect x="'+x+'" y="'+yy+'" width="22" height="22" rx="5" fill="'+G+'" fill-opacity=".18" stroke="'+G+'"/>';
+    s+='<polyline points="'+(x+5)+','+(yy+11)+' '+(x+10)+','+(yy+16)+' '+(x+17)+','+(yy+6)+'" fill="none" stroke="'+G+'" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>';
+    s+=txt(x+34,yy+16,it,WH,'start',12.5,600);
+  });
+  return svgWrap(title,s);
+}
 
-        function toggleDashboard() { document.getElementById('dashboardSection').classList.toggle('hidden'); }
-        function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
-        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
-        function scrollToCurriculum() { document.getElementById('curriculum').scrollIntoView({ behavior: 'smooth' }); }
-    </script>
+/* ---------- candle datasets ---------- */
+var DEM=[[70,72,64,65],[65,66,57,58],[58,59,48,50],[50,52,40,42],[42,44,32,34],[34,36,30,33],[33,35,30,32],[32,34,29,33],[33,45,32,44],[44,56,43,55],[55,64,54,62],[62,66,58,60],[60,61,50,52],[52,53,36,38],[38,50,31,48]];
+var DEM2=DEM.concat([[48,58,47,56],[56,66,55,64],[64,70,62,68],[68,76,66,74],[74,82,72,80]]);
+var TREND=[[30,36,28,34],[34,44,33,43],[43,50,42,48],[48,49,38,40],[40,41,34,36],[36,48,35,47],[47,58,46,57],[57,62,55,60],[60,61,48,50],[50,52,42,44],[44,56,43,55],[55,68,54,67],[67,72,65,70]];
+var OB=[[60,62,56,57],[57,58,50,51],[51,53,46,48],[48,50,43,44],[44,46,40,42],[42,58,41,57],[57,68,56,66],[66,74,65,72],[72,73,64,66],[66,67,57,58],[58,59,47,48],[48,49,41,46],[46,60,45,59],[59,70,58,69],[69,80,68,78]];
+var FVGC=[[40,44,38,42],[42,46,40,44],[44,48,42,46],[46,62,45,60],[60,66,54,64],[64,70,62,68],[68,72,64,66],[66,67,58,60],[60,61,50,52],[52,64,50,62],[62,72,60,70],[70,78,68,76]];
+var EQH=[[40,48,38,46],[46,60,45,58],[58,70,56,62],[62,63,52,54],[54,56,46,48],[48,60,47,58],[58,70,57,64],[64,65,54,56],[56,57,48,50]];
+var PREM=[[30,36,28,34],[34,50,33,48],[48,62,46,60],[60,72,58,70],[70,80,68,78],[78,79,68,70],[70,71,60,62],[62,63,52,54],[54,55,44,46]];
+
+var CH={};
+CH.anatomy=chartAnatomy; CH.sessions=chartSessions; CH.lots=chartLots; CH.calc=chartCalc;
+CH.drawdown=function(){return barH('Gain needed to recover from a loss',[['-10% loss',11.1,AM,'+11.1%'],['-20% loss',25,AM,'+25%'],['-30% loss',42.9,'#f97316','+42.9%'],['-50% loss',100,RD,'+100%'],['-70% loss',233.3,RD,'+233%']],'Losses compound against you: protect capital first.',240);};
+CH.streak=function(){return barH('Account left after 10 losses in a row',[['0.5% risk',95.1,G,'95.1%'],['1% risk',90.4,G,'90.4%'],['2% risk',81.7,AM,'81.7%'],['5% risk',59.9,'#f97316','59.9%'],['10% risk',34.9,RD,'34.9%']],'Small risk per trade turns a bad streak into a bruise, not a disaster.',100);};
+CH.disc=function(){return checklist('Pre-trade discipline checklist',['Higher-timeframe bias is clear','Price is at a valid zone + liquidity taken','Entry trigger confirmed (not guessed)','Risk is 1% or less and stop is set','Reward-to-risk is at least 1:2','No high-impact news in the next 30 min','I feel calm, not rushed or revengeful']);};
+CH.plan=function(){return checklist('Your trading plan must define',['Markets and sessions you trade','Bias process (higher timeframe)','List of valid setups','Entry trigger rules','Stop-loss and target rules','Risk per trade (%)','Daily / weekly loss limit','Weekly review routine']);};
+CH.final=function(){return checklist('Complete strategy checklist: A to Z',['1. HTF bias from market structure','2. Mark HTF zones, OBs and liquidity','3. Is price in premium / discount?','4. Wait for a liquidity sweep','5. LTF change of character (CHoCH)','6. Enter at OB / FVG retrace','7. Stop beyond the structure','8. Target next liquidity, RR 1:2+','9. Risk 1% max, screenshot, journal']);};
+
+CH.demand={title:'Demand zone: drop - base - rally',candles:DEM,ann:[Z(5,null,29,36,'DEMAND ZONE',G),Tx(6,23,'Base',AM),Tx(10,70,'Strong rally',G),Ar(14,27,'up','Retest = reaction',G)]};
+CH.supply={title:'Supply zone: rally - base - drop',candles:flipC(DEM),ann:flipA(CH.demand.ann,{'DEMAND ZONE':'SUPPLY ZONE','Strong rally':'Strong drop','Retest = reaction':'Retest = rejection'})};
+CH.tested={title:'Zone strength fades with every touch',candles:[[70,72,64,65],[65,66,57,58],[58,59,48,50],[50,52,40,42],[42,44,32,34],[34,36,30,33],[33,35,30,32],[32,34,29,33],[33,48,32,46],[46,62,45,60],[60,61,46,48],[48,49,30,34],[34,50,33,48],[48,52,38,40],[40,42,29,33],[33,42,31,40],[40,41,30,32],[32,33,24,26]],ann:[Z(5,null,29,36,'DEMAND ZONE',G),Tx(11,23,'Touch 1: strong',G),Tx(14,22,'Touch 2: weaker',AM),Tx(17,17,'Zone fails',RD)]};
+CH.mtf={title:'Top-down: H4 zone, M15 entry',candles:DEM2,n:20,ann:[Z(5,null,29,36,'H4 DEMAND ZONE',G),Z(13,null,29,32,null,BL),Tx(15,22,'M15 entry zone (tiny stop)',BL)]};
+CH.entry={title:'Entry after rejection inside the zone',candles:DEM2,n:20,ann:[Z(5,null,29,36,'DEMAND ZONE',G),RRb(14,null,40,27,79),Tx(11,90,'Wait for rejection / CHoCH, then enter',AM)]};
+CH.sr={title:'Support and resistance',candles:[[40,45,36,43],[43,55,42,53],[53,66,52,64],[64,71,60,62],[62,63,50,52],[52,53,38,40],[40,41,30,32],[32,38,29,36],[36,50,35,48],[48,62,47,60],[60,70,58,68],[68,72,60,63],[63,64,45,47],[47,48,31,33]],ann:[Ln(71,'Resistance',RD),Ln(30,'Support',G),Ar(7,26,'up','Bounce',G),Ar(11,75,'down','Rejection',RD)]};
+CH.flip={title:'Role reversal: resistance becomes support',candles:[[40,46,38,44],[44,52,43,50],[50,60,49,58],[58,61,52,54],[54,56,44,46],[46,54,45,52],[52,60,50,59],[59,72,58,70],[70,76,68,74],[74,75,64,66],[66,67,59,60],[60,70,58,68],[68,80,67,78]],ann:[Ln(60,'Old resistance = new support',AM,2),Tx(7,80,'Breakout',BL),Ar(10,55,'up','Retest holds',G)]};
+CH.ma={title:'Dynamic support: moving averages in a trend',candles:[[30,34,28,33],[33,38,32,37],[37,42,36,41],[41,43,37,38],[38,39,34,35],[35,42,34,41],[41,48,40,47],[47,53,46,52],[52,54,48,49],[49,50,45,46],[46,54,45,53],[53,60,52,59],[59,66,58,65],[65,67,61,62],[62,63,58,59],[59,68,58,67]],ann:[Pa([[0,31],[2,36],[4,38],[6,41],[8,46],[10,48],[12,55],[14,60],[15,62]],'EMA 20',AM,{lk:8,dy:18,anc:'start'}),Pa([[0,26],[4,31],[8,38],[12,46],[15,53]],'EMA 50',BL,{lk:2,dy:20,anc:'start'}),Ar(9,41,'up','Pullback to EMA',G)]};
+CH.trend={title:'Uptrend: higher highs and higher lows',candles:TREND,ann:[Tx(2,54,'High',GR),Tx(7,66,'HH',G),Tx(12,76,'HH',G),Tx(0,23,'Low',GR),Tx(4,30,'HL',G),Tx(9,37,'HL',G)]};
+CH.bos={title:'Break of structure (BOS)',candles:TREND,ann:[Ln(62,'BOS: close above previous high',BL,7,12),Tx(4,30,'HL',G),Tx(9,37,'HL',G),Tx(7,66,'Previous high',GR)]};
+CH.choch={title:'Change of character (CHoCH)',candles:[[30,36,28,34],[34,46,33,45],[45,52,44,50],[50,51,40,42],[42,43,36,38],[38,50,37,49],[49,60,48,58],[58,64,56,62],[62,63,50,52],[52,53,42,44],[44,45,32,34],[34,42,33,40],[40,44,34,36],[36,37,24,26]],ann:[Ln(36,'CHoCH: close below last HL',RD,4,11),Tx(7,68,'HH',G),Tx(4,31,'HL',G),Tx(12,49,'LH',RD),Tx(13,19,'LL',RD)]};
+CH.ob={title:'Bullish order block',candles:OB,ann:[Z(4,null,40,46,'BULLISH ORDER BLOCK',G),Ln(62,'Structure high broken',BL,0,7),Tx(6,72,'Displacement',G),Ar(12,38,'up','Reaction',G)]};
+CH.obbear={title:'Bearish order block',candles:flipC(OB),ann:flipA(CH.ob.ann,{'BULLISH ORDER BLOCK':'BEARISH ORDER BLOCK','Structure high broken':'Structure low broken'})};
+CH.obtrade={title:'Trading a bullish order block',candles:OB,ann:[Z(4,null,40,46,'ORDER BLOCK',G),RRb(11,null,46,39,67)]};
+CH.breaker={title:'Failed order block becomes a breaker',candles:[[50,52,44,45],[45,46,38,40],[40,56,39,55],[55,64,54,62],[62,66,58,60],[60,61,50,52],[52,53,42,44],[44,45,32,34],[34,40,30,38],[38,46,36,44],[44,45,34,36],[36,37,24,26],[26,30,20,22]],ann:[Z(1,7,38,46,'Original bullish OB',G),Z(7,null,38,46,'BREAKER (resistance)',RD),Tx(7,26,'Close below = OB fails',RD),Ar(10,50,'down','Retest, then drop',RD)]};
+CH.liq={title:'Liquidity pools above highs and below lows',candles:[[50,56,46,54],[54,66,52,64],[64,70,60,62],[62,63,50,52],[52,54,40,42],[42,50,38,48],[48,62,46,60],[60,70,57,63],[63,64,50,52],[52,54,39,41],[41,48,38,46],[46,58,44,56]],ann:[Ln(70,'Buy-side liquidity: stops above highs',PU),Ln(38,'Sell-side liquidity: stops below lows',BL)]};
+CH.eqh={title:'Equal highs: a magnet for stops',candles:EQH.concat([[50,62,49,60],[60,70,58,66],[66,67,56,58]]),ann:[Ln(70,'Equal highs = resting buy stops',PU),Tx(2,74,'tap 1',GR),Tx(6,74,'tap 2',GR),Tx(10,74,'tap 3',GR)]};
+CH.sweep={title:'Liquidity sweep (stop hunt) then reversal',candles:EQH.concat([[50,62,49,60],[60,70,58,68],[68,78,62,64],[64,65,50,52],[52,53,38,40],[40,41,30,32]]),ann:[Ln(70,'Equal highs',PU,2),Tx(11,84,'Sweep: wick takes stops',RD),Ar(13,57,'down','Reversal',RD)]};
+CH.induce={title:'Inducement: the trap before the real zone',candles:[[40,44,38,43],[43,56,42,55],[55,66,54,64],[64,70,62,68],[68,69,60,62],[62,63,56,58],[58,66,57,64],[64,65,58,60],[60,61,50,52],[52,53,42,44],[44,46,40,45],[45,60,44,59],[59,74,58,72],[72,82,70,80]],ann:[Z(0,null,38,43,'Demand zone / OB',G),Ln(56,'Inducement: minor low',AM,5,9),Tx(8,45,'Swept: early buyers trapped',AM),Ar(10,35,'up','Real entry',G)]};
+CH.fvg={title:'Bullish fair value gap (FVG)',candles:FVGC,ann:[Z(2,null,48,54,'BULLISH FVG',G),Tx(3,67,'Displacement',G),Ar(9,46,'up','Gap filled, trend continues',G)]};
+CH.fvgtrade={title:'Trading a fair value gap',candles:FVGC,ann:[Z(2,null,48,54,'FVG',G),RRb(8,null,51,46,66)]};
+CH.fvgbear={title:'Bearish fair value gap',candles:flipC(FVGC),ann:flipA(CH.fvg.ann,{'BULLISH FVG':'BEARISH FVG','Gap filled, trend continues':'Rallies into gap, then drops'})};
+CH.premium={title:'Premium and discount (dealing range)',candles:PREM.concat([[46,50,40,42],[42,52,41,50],[50,60,48,58]]),ann:[Z(0,null,55,82,'PREMIUM: sell area',RD),Z(0,null,28,55,'DISCOUNT: buy area',G),Ln(55,'Equilibrium (50%)',AM)]};
+var FIBC=PREM.concat([[46,50,40,42],[42,60,41,58],[58,70,56,68]]);
+CH.fib={title:'Fibonacci retracement and the OTE zone',candles:FIBC,ann:[Z(8,null,40.5,49.1,'OTE 62% - 79%',G),Ln(80,'Swing high (100%)',BL,4),Ln(55,'50%',AM),Ln(30,'Swing low (0%)',BL,0)]};
+CH.confluence={title:'Confluence: stack the reasons',candles:FIBC,ann:[Z(8,null,40.5,49.1,'OTE 62% - 79%',G),Z(9,null,40,45,null,AM),Ln(55,'50% equilibrium',GR),Tx(9,33,'Demand zone + OTE + discount = confluence',AM)]};
+CH.patterns={title:'Pin bar, engulfing and inside bar',candles:[[70,72,64,65],[65,66,56,57],[57,58,48,50],[48,49,30,47],[47,60,46,58],[58,62,54,56],[56,57,48,50],[49,62,47,61],[61,64,58,62],[62,63,56,58],[58,60,57,59]],ann:[Tx(3,24,'Pin bar',BL),Tx(7,42,'Bullish engulfing',G),Tx(10,50,'Inside bar',AM)]};
+CH.doubletop={title:'Double top and neckline break',candles:[[30,38,28,36],[36,52,35,50],[50,64,48,62],[62,70,60,66],[66,67,54,56],[56,57,46,48],[48,60,47,58],[58,68,56,66],[66,71,62,64],[64,65,52,54],[54,55,44,45],[45,48,36,38],[38,40,28,30]],ann:[Ln(46,'Neckline',AM,5),Tx(3,75,'Top 1',RD),Tx(8,76,'Top 2',RD),Tx(10,38,'Neckline break',RD)]};
+CH.hns={title:'Head and shoulders reversal',candles:[[40,46,38,44],[44,58,43,56],[56,62,54,58],[58,59,46,48],[48,50,44,48],[48,64,47,62],[62,78,60,74],[74,82,72,76],[76,77,58,60],[60,62,44,46],[46,62,45,60],[60,66,58,62],[62,63,50,52],[52,53,40,42],[42,44,30,32]],ann:[Ln(44,'Neckline',AM,4),Tx(2,67,'Left shoulder',BL),Tx(7,87,'Head',RD),Tx(11,71,'Right shoulder',BL),Tx(13,34,'Neckline break',RD)]};
+CH.equity={title:'Same strategy, different risk (illustrative)',n:20,candles:[],ann:[Pa([[0,30],[2,34],[4,33],[6,40],[8,44],[10,43],[12,50],[14,56],[16,55],[18,62],[19,66]],'1% risk: survives and compounds',G,{dy:-10}),Pa([[0,30],[2,40],[4,52],[6,38],[8,55],[10,34],[12,20],[14,12],[16,8],[18,5],[19,3]],'10% risk: account blown',RD,{dy:-10})]};
+CH.rrbox={title:'Risk-to-reward: 1 unit risked, 3 units targeted',candles:[[38,42,36,40],[40,41,34,36],[36,37,30,31],[31,40,30,39],[39,48,38,46],[46,56,45,54],[54,64,53,62],[62,70,60,68],[68,72,64,66],[66,74,65,72]],ann:[RRb(4,null,40,33,61)]};
+CH.cycle={title:'Emotional cycle of a market',n:14,candles:[],ann:[Pa([[0,35],[2,42],[4,55],[6,72],[7,80],[9,60],[11,36],[12,25],[13,32]],null,WH),Tx(0,28,'Hope',BL),Tx(4,61,'Optimism',G),Tx(7,87,'Euphoria / Greed',AM),Tx(9,66,'Anxiety',AM),Tx(12,18,'Fear / Capitulation',RD)]};
+CH.journal={title:'Journal results in R-multiples (net +12R)',n:10,candles:[],ann:[Bars([2,-1,3,-1,-1,2,4,-1,2,3],50,9)]};
+CH.curve={title:'Backtest equity curve: drawdowns are normal (illustrative)',n:20,candles:[],ann:[Pa([[0,30],[2,36],[4,42],[5,38],[6,33],[8,41],[10,50],[12,58],[13,54],[14,50],[16,60],[18,68],[19,74]],'Equity',G,{dy:-10}),Tx(6,26,'Drawdown',RD),Tx(14,44,'Drawdown',RD)]};
+CH.news={title:'High-impact news: volatility spike',candles:[[50,52,48,51],[51,53,49,50],[50,52,48,49],[49,51,47,50],[50,51,48,49],[49,50,47,48],[48,66,38,40],[40,50,36,48],[48,58,46,56],[56,60,52,54],[54,58,50,57],[57,62,54,60]],ann:[VB(6,6,'RELEASE',AM),Tx(3,42,'Quiet before the news',GR),Tx(6,72,'Spike + slippage',RD)]};
+CH.newsfade={title:'Spike, sweep, then reversal',candles:[[50,52,48,51],[51,53,49,50],[50,52,48,49],[49,51,47,50],[50,51,48,49],[49,50,47,48],[50,70,48,66],[66,68,52,54],[54,56,44,46],[46,50,40,42],[42,46,38,44],[44,50,42,48]],ann:[VB(6,6,'RELEASE',AM),Tx(6,76,'Spike takes liquidity',RD),Tx(9,34,'Trade the structure after the dust settles',AM)]};
+CH.rates={title:'Currency tends to follow rate expectations (illustrative)',n:16,candles:[],ann:[Pa([[0,30],[3,38],[6,50],[9,60],[12,66],[15,72]],'Interest-rate gap (US - EU)',AM,{dy:-12}),Pa([[0,25],[2,34],[4,30],[6,45],[8,55],[10,52],[12,64],[14,60],[15,70]],'Currency pair price',BL,{dy:20})]};
+CH.setup={title:'Full setup: sweep, CHoCH, order block, entry',candles:[[80,82,74,75],[75,76,66,68],[68,70,62,64],[64,68,60,66],[66,67,56,58],[58,60,50,52],[52,58,50,56],[56,57,44,52],[52,62,51,60],[60,68,58,66],[66,67,58,60],[60,61,52,54],[54,64,50,62],[62,74,60,72],[72,82,70,80]],ann:[Ln(50,'Sell-side liquidity',BL,5,8),Tx(7,38,'1. Sweep',RD),Ln(58,'2. CHoCH level',AM,6,9),Z(7,null,44,52,'3. Demand / OB',G),RRb(11,null,53,43,83)]};
+
+function getChart(k){var c=CH[k];if(!c)return '';var v=(typeof c==='function')?c():c;return (typeof v==='string')?v:chartSVG(v);}
+
+/* =====================================================================
+   COURSE CONTENT : 15 modules, 50 lessons
+   L(title, chartKey, [paragraphs], [key points], common mistake)
+   ===================================================================== */
+function L(t,c,p,k,x){return {t:t,c:c,p:p,k:k,x:x||''};}
+var MODULES=[
+{t:'Forex Foundations',d:'How the market works, pairs, pips, lots, leverage and sessions.',l:[
+ L('What Is the Forex Market?','trend',[
+  'The foreign exchange (forex) market is where national currencies are exchanged. It is the largest financial market in the world, with trillions of dollars changing hands every day, and it trades around the clock from Monday to Friday. Prices move because buyers and sellers constantly disagree about what one currency is worth in terms of another.',
+  'Currencies are always traded in pairs, such as EUR/USD. The first currency is the base and the second is the quote. If EUR/USD is 1.1000, one euro costs 1.10 US dollars. Buying the pair means you expect the base to strengthen against the quote; selling means you expect the opposite.',
+  'Unlike stocks, forex has no central exchange. Banks, hedge funds, corporations, central banks and retail traders deal through a network of liquidity providers. Large institutions move the market, and learning to read the footprints they leave on a chart is the foundation of this entire course.'],
+  ['Forex means exchanging one currency for another, always in pairs','The base currency is first, the quote currency is second','Institutions drive price; retail traders learn to follow their footprints'],
+  'Believing forex is a get-rich-quick game. Most beginners lose because they skip education and risk management.'),
+ L('Pairs, Pips, Lots and Leverage','lots',[
+  'A pip is the standard unit of price movement. For most pairs it is the fourth decimal place (0.0001), and for JPY pairs the second decimal place (0.01). A move in EUR/USD from 1.1000 to 1.1025 is 25 pips.',
+  'Lot size decides how much each pip is worth. A standard lot is 100,000 units (about $10 per pip on USD-quoted pairs), a mini lot is 10,000 units (about $1 per pip) and a micro lot is 1,000 units (about $0.10 per pip).',
+  'Leverage lets you control a large position with a small deposit, for example 1:100. It magnifies profits and losses equally. Treat leverage as a tool that increases risk, not as free money: position size should always be set by your stop loss and risk percentage, never by the maximum leverage your broker offers.'],
+  ['1 pip = 0.0001 (0.01 for JPY pairs)','Standard, mini and micro lots = 1.0, 0.1 and 0.01','Leverage magnifies both gains and losses'],
+  'Opening the largest position the broker allows. Over-leverage is the number one account killer.'),
+ L('Trading Sessions and Liquidity','sessions',[
+  'The forex day is split into four major sessions: Sydney, Tokyo, London and New York. Each has different volume, volatility and character. Asia is usually quieter and tends to build ranges, while London and New York bring large directional moves.',
+  'The London open (roughly 07:00-08:00 UTC) often sweeps the Asian high or low before moving in the real direction of the day. The overlap of London and New York (about 13:00-17:00 UTC) delivers the highest volume of the day.',
+  'Choose the sessions that fit your schedule and trade them consistently. Convert the session times to your own time zone and write them in your plan. Fewer, better-timed trades beat constant screen time.'],
+  ['Four major sessions: Sydney, Tokyo, London, New York','The London-New York overlap has the highest volume','The Asian range is often swept at the London open'],
+  'Trading during dead hours with no plan. Low-liquidity periods produce choppy, unreliable moves.')
+]},
+{t:'Candlesticks & Market Structure',d:'Read price like a professional: candles, swings, BOS and CHoCH.',l:[
+ L('Reading Candlesticks','anatomy',[
+  'Each candlestick summarizes price action over a chosen time period and shows four values: open, high, low and close. The thick body spans from open to close, and the thin wicks (shadows) reach the high and the low.',
+  'A bullish candle closes above its open and a bearish candle closes below it. Long bodies show conviction and strong participation; long wicks show rejection, meaning price visited a level and was pushed away.',
+  'Always read a candle in context, not alone. A long lower wick inside a demand zone tells a very different story than the same candle in the middle of nowhere. Ask: where did this candle form, and what did it reject?'],
+  ['A candle shows open, high, low and close','Bodies show conviction, wicks show rejection','Location matters more than the candle shape itself'],
+  'Memorizing dozens of candle names instead of understanding what buyers and sellers actually did.'),
+ L('Trends, Swings and Market Structure','trend',[
+  'Market structure is the sequence of swing highs and swing lows. An uptrend makes higher highs (HH) and higher lows (HL); a downtrend makes lower highs (LH) and lower lows (LL). Everything in this course is built on this skeleton.',
+  'A swing high is a candle with lower highs on both sides; a swing low is the mirror image. Mark them on a higher timeframe first so that you see the real structure and not intraday noise.',
+  'Trade in the direction of structure whenever possible. In an uptrend look for buys at discounted prices after pullbacks to a HL; in a downtrend look for sells at premium prices. When structure is unclear, the best trade is often no trade.'],
+  ['Uptrend = HH + HL, downtrend = LH + LL','Mark swings on the higher timeframe first','Unclear structure means stay out'],
+  'Trading against the trend because price looks too high or too low.'),
+ L('Break of Structure (BOS)','bos',[
+  'A break of structure happens when price closes beyond the previous swing high in an uptrend (or the previous swing low in a downtrend). It confirms the current trend is continuing and the dominant side is still in control.',
+  'Use candle closes, not just wicks, to confirm a BOS. A wick that pokes through a level and snaps back is often a liquidity sweep rather than a real break.',
+  'After a BOS, price commonly pulls back before continuing. The pullback toward the origin of the move (an order block, an FVG or a demand zone) is where continuation traders look for entries.'],
+  ['BOS = a close beyond the previous swing point in trend direction','Closes confirm, wicks can deceive','Pullbacks after a BOS offer continuation entries'],
+  'Calling every wick through a level a break.'),
+ L('Change of Character (CHoCH)','choch',[
+  'A change of character is the first break against the prevailing trend: in an uptrend, a close below the most recent higher low. It is an early warning that control may be shifting from buyers to sellers.',
+  'A CHoCH is not a confirmed reversal on its own. Price may simply form a range. The strongest reversals combine a CHoCH with a sweep of liquidity and a reaction from a higher-timeframe zone.',
+  'After a CHoCH, wait for the new structure to confirm: a lower high followed by a BOS to the downside. Entering on the retest of the broken level gives a tight stop and clean invalidation.'],
+  ['CHoCH = first break against the trend','Needs confluence: sweep + HTF zone','Wait for the new structure to confirm'],
+  'Treating the first CHoCH as a guaranteed reversal and entering without a zone or confirmation.')
+]},
+{t:'Supply & Demand Zones',d:'Find, draw and grade the zones where large orders sit.',l:[
+ L('What Are Supply and Demand Zones?','demand',[
+  'Supply and demand zones are price areas where large unfilled orders caused price to leave quickly. A demand zone is where buyers overwhelmed sellers, and a supply zone is where sellers overwhelmed buyers.',
+  'The classic demand pattern is drop - base - rally: price falls, pauses in a tight base (consolidation), then explodes upward. The supply pattern is rally - base - drop. The strength of the departure from the base shows how aggressive the orders were.',
+  'When price returns to the zone later, any remaining orders can trigger another reaction. Zones are areas of probability, not exact lines. They can fail, which is why a stop loss is always required.'],
+  ['Demand = buyers took control, supply = sellers took control','Pattern: drop-base-rally or rally-base-drop','Zones are probabilities, always use a stop'],
+  'Drawing zones everywhere. Only zones with a strong, impulsive departure deserve attention.'),
+ L('Drawing Zones Correctly','supply',[
+  'Start by finding a strong move away from a base. Mark the base consolidation: for a supply zone, draw from the highest wick of the base down to the base candle bodies. Choose one method (wicks or bodies) and apply it consistently.',
+  'Good zones have a clear base of one to three small candles, a strong impulsive exit that breaks structure, and little time spent inside the zone. Zones created by news spikes or wide, messy bases are lower quality.',
+  'Draw zones on the higher timeframes (H4, Daily) and refine them on lower timeframes (M15, H1). Extend the zone to the right until price mitigates it or the zone fails.'],
+  ['Base of 1-3 candles with a strong exit','Higher-timeframe zones are more reliable','Be consistent: wicks or bodies, never mix'],
+  'Making zones too wide, which forces a large stop and ruins risk-to-reward.'),
+ L('Institutional Logic Behind Supply and Demand','demand',[
+  'Large institutions cannot enter an enormous position at once without pushing price against themselves. They accumulate in stages, placing orders within a range. This accumulation is what we see as the base of a demand zone.',
+  'When price leaves the zone fast, many institutional orders may remain unfilled. They wait for price to return so the rest of the position can be filled, which creates the reaction at retests.',
+  'This is a model of how markets tend to behave, not a law. It explains why untouched (fresh) zones are valued more, and why price often travels from one pool of liquidity to another: big orders need counterparties.'],
+  ['Big players accumulate in a range, not at one price','Unfilled orders can cause a reaction on return','Treat it as a model, confirm with price action'],
+  'Assuming every zone will hold because institutions are involved.'),
+ L('Fresh vs Tested Zones','tested',[
+  'A fresh zone has not been revisited since it formed, so its pending orders are likely still intact. Each time price returns, some orders get filled, leaving less fuel for the next reaction.',
+  'Count the touches. The first retest of a strong zone usually gives the best reaction; a second touch is weaker; by the third, the zone is often exhausted and price may break through, as shown in the chart.',
+  'Also check how price approached the zone. A slow, grinding approach with many candles tends to eat the orders, while a sharp, fast return often leaves more reaction power.'],
+  ['Fresh zones carry the highest probability','Reactions weaken with every touch','Fast approach is better than a slow grind'],
+  'Trading the same zone a fourth or fifth time and expecting the original reaction.')
+]},
+{t:'Support & Resistance',d:'Horizontal levels, role reversal and dynamic moving averages.',l:[
+ L('Horizontal Support and Resistance','sr',[
+  'Support is a price level where buying has repeatedly stopped declines; resistance is where selling has repeatedly stopped advances. The more often a level is respected, the more traders are watching it.',
+  'Draw levels as zones, not hairlines. Price rarely reverses at the exact tick, so use the wick-to-body area of the swing points. Prefer higher timeframes: Daily and Weekly levels are stronger than M5 levels.',
+  'Many traders place stops and pending orders around these levels, which is why they produce both reactions and fake-outs. Combine them with candle confirmation and zones for better entries.'],
+  ['Support stops falls, resistance stops rises','Use zones, not exact lines','Higher timeframe levels carry more weight'],
+  'Drawing dozens of lines on a lower timeframe until the chart looks like a spider web.'),
+ L('Role Reversal: Broken Levels Flip','flip',[
+  'When resistance breaks convincingly, it often becomes support, and vice versa. This role reversal happens because traders who missed the breakout place orders at the retest, and trapped sellers buy back to exit.',
+  'The break needs a strong close beyond the level. Then wait for the retest and look for rejection (a wick, an engulfing candle). Entering at the retest gives a tight stop just beyond the level.',
+  'If price slices back through the level and closes on the other side, the flip has failed. That is useful information and a signal to exit or flip your bias.'],
+  ['Broken resistance often becomes support','Enter on the retest, not the breakout candle','A close back through the level means failure'],
+  'Chasing the breakout candle instead of waiting for the retest.'),
+ L('Dynamic Support: Moving Averages','ma',[
+  'Moving averages act as dynamic, sloping support and resistance. Popular choices are the 20, 50 and 200 EMA. In a healthy trend, price pulls back to them and continues.',
+  'The slope and order of the averages describe trend strength: 20 above 50 above 200, all rising, is a strong uptrend. Flat, tangled averages describe a range where MA bounces are unreliable.',
+  'Do not trade moving averages in isolation. Use them as confluence with a demand zone or order block sitting at the same price. Moving averages lag, so they confirm rather than predict.'],
+  ['EMA 20/50/200 are common dynamic levels','Slope and order show trend strength','Use as confluence, never alone'],
+  'Buying every touch of an EMA in a sideways market.')
+]},
+{t:'Smart Money Concepts & Order Blocks',d:'The last opposite candle, how to validate it and how to trade it.',l:[
+ L('What Is an Order Block?','ob',[
+  'An order block (OB) is the last opposite-colored candle before a strong impulsive move that breaks structure. A bullish OB is the last bearish candle before a sharp rally; a bearish OB is the last bullish candle before a sharp drop.',
+  'The idea is that this candle marks where institutions placed a cluster of orders before the displacement. When price returns to that candle, pending orders may defend the area again.',
+  'An OB is a refined, smaller version of a supply or demand zone. Mark the candle range and treat it as an area of interest, not a guaranteed turning point. Probabilities improve when the move that created it broke structure.'],
+  ['OB = last opposite candle before displacement','It must be followed by a structure break','An area of interest, not a guarantee'],
+  'Using any random opposite candle as an OB without a structure break.'),
+ L('What Makes an Order Block Valid?','obbear',[
+  'Not all order blocks are equal. A high-quality OB is followed by displacement: large, fast candles with little overlap that break a swing point and often leave a fair value gap.',
+  'Check three things: did it take liquidity before forming (a sweep of a prior high or low), did it cause a BOS or CHoCH, and is it in the correct area. Bullish OBs belong in discount, bearish OBs in premium.',
+  'Prefer OBs from higher timeframes and OBs that have not yet been mitigated. Skip those sitting in the middle of a range or created by low-momentum drifting.'],
+  ['Displacement + structure break + FVG = strong OB','Bullish OBs in discount, bearish OBs in premium','Skip mid-range, low-momentum blocks'],
+  'Trading every OB on the chart instead of only the A+ ones.'),
+ L('Mitigation and Breaker Blocks','breaker',[
+  'An OB is mitigated when price returns and trades into it. Once mitigated, it has usually used up much of its power, so mitigated blocks should be treated with more caution.',
+  'A breaker block forms when an OB fails: price closes through it and structure shifts. A failed bullish OB becomes a bearish breaker that often acts as resistance on the retest, as shown in the chart.',
+  'Breakers are trap-based setups. Traders who bought the failed OB are now underwater and sell at breakeven on the retest, adding fuel. Always require a clear close beyond the original block.'],
+  ['Mitigated blocks are weaker','Failed OB + structure shift = breaker','Require a clear close beyond the block'],
+  'Calling it a breaker after a mere wick through the block.'),
+ L('Trading an Order Block','obtrade',[
+  'A simple OB plan: identify the higher-timeframe trend, mark an unmitigated OB in discount (for buys), wait for price to reach it, then enter either at the block edge with a limit order or after lower-timeframe confirmation.',
+  'Place the stop just beyond the whole block with a small buffer for spread. Target the nearest liquidity or opposing zone, and aim for at least 1:2 reward-to-risk before taking the trade.',
+  'If price closes through the block, the idea is invalid. Accept the small loss and move on. Never move a stop further away to give a failing trade more room.'],
+  ['Trend first, then an unmitigated OB in the right area','Stop beyond the block, target the next liquidity','Invalid close = accept the loss'],
+  'Moving the stop loss further away to avoid being stopped out.')
+]},
+{t:'Liquidity: Where Price Is Drawn',d:'Stops, equal highs, sweeps and inducement.',l:[
+ L('Liquidity: Buy-Side and Sell-Side','liq',[
+  'Liquidity is simply resting orders. Stop-losses and breakout orders cluster above swing highs (buy-side liquidity, BSL) and below swing lows (sell-side liquidity, SSL).',
+  'Large players need many counterparties to fill their orders. These clusters of stops provide them. That is why price often travels toward obvious highs and lows before reversing.',
+  'Think of the chart as a map of targets: the obvious high or low is where price is drawn. Your job is to anticipate which pool will be taken and what happens afterward.'],
+  ['BSL sits above highs, SSL below lows','Price is drawn toward obvious pools','Use pools as targets and as warnings'],
+  'Placing stops exactly at obvious highs and lows, right where everyone else does.'),
+ L('Equal Highs, Equal Lows and Trendline Liquidity','eqh',[
+  'Equal highs or equal lows (two or more swing points at nearly the same price) are especially attractive targets because many traders see them as strong resistance or support and place stops just beyond them.',
+  'Trendline touches, previous day or week highs and lows, and session highs and lows are other common liquidity pools. Mark them in advance each day so you know where price may be drawn.',
+  'When you see equal highs, do not assume resistance will hold. The more obvious the level, the more likely it will be run before any real move begins.'],
+  ['Equal highs/lows are prime targets','Daily, weekly and session extremes also hold stops','The more obvious, the more likely it is taken'],
+  'Selling right under equal highs expecting a perfect rejection.'),
+ L('Liquidity Sweeps and Stop Hunts','sweep',[
+  'A liquidity sweep is a quick spike beyond a prior high or low that takes the stops and then closes back inside the range. The long wick shows the orders were collected and price was rejected.',
+  'A sweep alone is not an entry. It becomes powerful when it happens at a higher-timeframe zone, is followed by a CHoCH on a lower timeframe, and then returns to an OB or FVG for your entry.',
+  'Accept that price will often take your safe-looking stop level. Place stops beyond obvious liquidity pools rather than exactly at them, and use position size to keep the risk small.'],
+  ['Sweep = wick beyond a level, close back inside','Needs HTF zone + CHoCH for an entry','Stops beyond pools, small size'],
+  'Entering on the sweep candle itself without waiting for confirmation.'),
+ L('Inducement: The Trap Before the Zone','induce',[
+  'Inducement is a minor swing high or low placed before a key zone that lures traders into early entries. The market takes out that minor level, trapping them, before it reaches the real zone.',
+  'In the chart the minor low induces early buyers. Price sweeps it, falls into the demand zone, then reverses. Early buyers are stopped out while patient traders enter at the true zone.',
+  'The rule: the first small reaction in a pullback is not a safe entry. Wait for the inducement to be swept before the zone, then require confirmation.'],
+  ['Minor highs/lows ahead of a zone bait early traders','Patience beats the first reaction','Sweep the inducement, then confirm'],
+  'Buying the first bounce on the way down into the zone.')
+]},
+{t:'Fair Value Gaps & Imbalances',d:'Three-candle gaps that show one-sided order flow.',l:[
+ L('Fair Value Gaps (FVG)','fvg',[
+  'A fair value gap is a three-candle pattern in which the wicks of the first and third candles do not overlap, leaving a gap inside the middle candle range. It marks aggressive, one-sided order flow.',
+  'A bullish FVG appears in an up move: the gap lies between the high of candle one and the low of candle three. Price often retraces into this gap to rebalance before continuing.',
+  'FVGs on higher timeframes are more meaningful. The best ones appear with displacement that breaks structure. Gaps that appear inside tight sideways ranges have little significance.'],
+  ['FVG = gap between candle 1 wick and candle 3 wick','Shows aggressive one-sided delivery','HTF + displacement = higher quality'],
+  'Marking every tiny gap on an M1 chart.'),
+ L('Trading the Fair Value Gap','fvgtrade',[
+  'Wait for price to retrace into an FVG that formed with a structure break and sits in the correct premium or discount area. Entries can be taken at the 50% midpoint of the gap or at its edge, according to rules you have tested.',
+  'The stop goes beyond the gap or beyond the candle that created it. In the chart the risk is small relative to the target, giving a 1:3 trade. Targets are the previous high or the next liquidity pool.',
+  'If a candle body closes fully through the gap, the FVG has failed. Do not average down; the market has told you the idea is wrong.'],
+  ['Retrace into an FVG that broke structure','Stop beyond the gap, target next liquidity','A full body close through = invalid'],
+  'Averaging down on a gap that has already failed.'),
+ L('Bearish FVGs, Inverse FVGs and Imbalances','fvgbear',[
+  'Bearish FVGs mirror bullish ones: they form during aggressive selling, and price often rallies back into them before dropping further. Use them as sell entries in a downtrend, in premium.',
+  'An inverse FVG forms when price closes through an FVG and flips it. A failed bullish FVG can become resistance, similar to a breaker block. This flip often gives high-quality retest entries.',
+  'Any inefficient price delivery can be called an imbalance. Always think in terms of where price was efficient and where it left unfinished business that it may revisit.'],
+  ['Bearish FVG = sell-side imbalance in a downtrend','A failed FVG can flip into the opposite role','Imbalance = unfinished business'],
+  'Ignoring the higher-timeframe trend and selling every bearish FVG in an uptrend.')
+]},
+{t:'Premium, Discount & Fibonacci',d:'Buy cheap, sell expensive: measure value inside a range.',l:[
+ L('Premium and Discount','premium',[
+  'Measure the current dealing range from the most recent significant swing low to the swing high. The 50% level is equilibrium. Above it is premium (expensive), below it is discount (cheap).',
+  'In an uptrend look for buys in discount; in a downtrend look for sells in premium. This keeps you from buying at the top of a range or selling at the bottom of it.',
+  'Whether or not you accept the institutional theory, the discipline improves reward-to-risk because your stop is closer to the range extreme and your target is farther away.'],
+  ['50% of the range = equilibrium','Buy in discount, sell in premium','Improves reward-to-risk by location'],
+  'Buying in premium just because the trend is up.'),
+ L('Fibonacci Retracement and the OTE Zone','fib',[
+  'Fibonacci retracement levels help measure pullback depth. Draw from swing low to swing high in an uptrend. Common levels are 50%, 61.8%, 70.5% and 79%.',
+  'The optimal trade entry (OTE) zone is the 62% to 79% retracement area. In the chart the OTE sits in discount, exactly where demand zones and order blocks often form, giving tight stops.',
+  'Fibonacci is a measuring tool, not a magic indicator. Its value comes from confluence with structure, zones and liquidity, never from the levels alone.'],
+  ['Draw low-to-high in uptrends, high-to-low in downtrends','OTE = 62%-79% retracement','Only valuable with confluence'],
+  'Redrawing the fib on different swings until one fits.'),
+ L('Confluence: Stacking the Odds','confluence',[
+  'Confluence means several independent reasons agreeing at the same price: a demand zone, an OTE zone, a sweep of liquidity and trend alignment. The more that line up, the higher the probability.',
+  'Build a scoring checklist: higher-timeframe trend, correct premium or discount, liquidity taken, valid zone and confirmation. Only trade setups that meet your minimum score.',
+  'Do not confuse quantity with quality. Ten indicators that all measure momentum are not real confluence. Seek different types of reasons: structure, location, liquidity and timing.'],
+  ['Stack independent reasons at one price','Use a scoring checklist','Different types of evidence, not copies'],
+  'Adding more indicators and calling it confluence.')
+]},
+{t:'Entry Models',d:'Turn zones into precise, repeatable entries.',l:[
+ L('Zone Entry with Confirmation','entry',[
+  'Entering blindly at a zone edge is a gamble. Confirmation means waiting for a lower-timeframe sign that price is respecting the zone: a CHoCH, a bullish engulfing candle or a strong rejection wick.',
+  'Confirmation costs you part of the reward but filters out many losing trades. In the chart the entry is taken after the rejection, with the stop below the zone and the target at a previous high.',
+  'Pick one confirmation method, test it over at least 50 trades and only then adjust it. Constantly switching methods ruins your data and your confidence.'],
+  ['Confirm on a lower timeframe before entering','Trade a bit of reward for a better win rate','One method, 50+ trades of testing'],
+  'Switching confirmation methods after two losses.'),
+ L('The CHoCH Entry Model','choch',[
+  'Steps: identify a higher-timeframe zone, wait for price to enter it, then drop to a lower timeframe. When price makes a CHoCH away from the zone, mark the origin of that move and wait for a retrace into it.',
+  'Enter at the OB or FVG left by the CHoCH impulse. The stop goes beyond the swing that was created, and targets are the opposing higher-timeframe liquidity.',
+  'The model strength is a tight stop. Its weakness is false CHoCHs inside a strong trend. Always check higher-timeframe direction first and skip counter-trend attempts without a strong zone.'],
+  ['HTF zone, then LTF CHoCH, then retrace entry','Stop beyond the new swing, target HTF liquidity','Weakness: false CHoCH inside strong trends'],
+  'Taking a CHoCH entry far away from any higher-timeframe zone.'),
+ L('The Sweep + Order Block Model','sweep',[
+  'Combine two ideas: a liquidity sweep and an order block. Wait for a clear sweep of equal highs or lows, or of a session extreme, then look for the OB that caused the reversal.',
+  'Entry is on the retest of that OB or FVG, the stop goes beyond the sweep wick, and the target is the opposite side of the range. It is among the most popular SMC setups because the invalidation level is obvious.',
+  'Record every sweep: note the session, timeframe and result. Patterns in your journal will show which sessions and pairs work best for you.'],
+  ['Sweep first, then the OB or FVG that caused the reversal','Stop beyond the sweep wick','Journal the session and pair of each sweep'],
+  'Entering before the sweep has actually closed back inside the range.'),
+ L('Top-Down Multi-Timeframe Analysis','mtf',[
+  'Top-down analysis starts on the highest timeframe to find trend and key zones, then moves down to refine the entry. A common sequence is Daily or H4 for bias, H1 for structure and M15 or M5 for the entry.',
+  'In the chart a large H4 demand zone is marked and, inside it, a small M15 zone gives the actual entry. The stop is tiny compared with the H4 zone, which creates a high reward-to-risk setup.',
+  'Keep a maximum of three timeframes. Too many produce conflicting signals and analysis paralysis. When timeframes conflict, the higher timeframe wins.'],
+  ['Bias on HTF, structure on MTF, entry on LTF','Refining the zone shrinks the stop','Maximum three timeframes'],
+  'Using five timeframes and finding a reason to take any trade.')
+]},
+{t:'Price Action Patterns',d:'Candle patterns and classic reversal formations in context.',l:[
+ L('Pin Bar, Engulfing and Inside Bar','patterns',[
+  'A pin bar has a long wick and a small body, showing rejection. An engulfing candle has a body that fully covers the previous candle body, showing a strong shift of control.',
+  'An inside bar is contained within the previous candle range and signals compression. A break of the mother bar high or low often triggers a move.',
+  'These patterns matter only at meaningful locations: zones, support and resistance and liquidity sweeps. The same pin bar in the middle of a range has little edge.'],
+  ['Pin bar = rejection, engulfing = shift of control','Inside bar = compression before expansion','Location is everything'],
+  'Trading every pin bar regardless of where it forms.'),
+ L('Double Top and Double Bottom','doubletop',[
+  'A double top forms when price tests the same high twice and fails, creating an M shape. The neckline is the low between the two peaks, and a close below it confirms the pattern.',
+  'The target is usually the height of the pattern projected down from the neckline. Enter on the neckline break or on its retest, with the stop above the second top.',
+  'Double tops are also equal highs, which means liquidity. Beware of a sweep above the second top that traps sellers before the real decline; confirm with a close below the neckline.'],
+  ['Two failed tests of the same level form the pattern','Neckline close confirms it','Beware the sweep above the second top'],
+  'Selling the second top before the neckline breaks.'),
+ L('Head and Shoulders','hns',[
+  'Head and shoulders is a reversal pattern with three peaks: the middle one (the head) is the highest, flanked by two lower shoulders. The neckline connects the lows between the peaks.',
+  'A close below the neckline confirms the reversal. The measured target equals the distance from the head to the neckline projected downward. Momentum usually fades on the right shoulder.',
+  'Read it as a structure story: the head makes a final higher high, the right shoulder fails to make a new high (a lower high), and the neckline break is the CHoCH. The inverse pattern works for bottoms.'],
+  ['Three peaks with the head highest','Neckline break confirms, target = head height','Inverse pattern signals bottoms'],
+  'Anticipating the pattern before the right shoulder has formed.')
+]},
+{t:'Risk Management',d:'Position sizing, risk-reward, expectancy and drawdown control.',l:[
+ L('Risk Per Trade','equity',[
+  'Professional traders risk a small, fixed percentage of the account per trade, commonly 0.5% to 2%. This protects the account during the inevitable losing streaks.',
+  'The chart compares two traders using the same strategy: the one risking 1% survives drawdowns and compounds, while the one risking 10% is wiped out by a normal sequence of losses. It is an illustrative example.',
+  'Decide your risk percentage before you look at any chart, and keep it the same. Never increase size to win back losses.'],
+  ['Risk 0.5%-2% per trade','Survival comes before profit','Never size up to recover losses'],
+  'Risking more after a loss to get back to even.'),
+ L('Position Sizing Step by Step','calc',[
+  'Position size = (account balance x risk %) divided by (stop-loss in pips x pip value per lot). The stop is chosen by the chart and the lot size adapts, not the other way around.',
+  'Example: a $1,000 account with 1% risk means $10 at risk. A 20-pip stop on a USD-quoted pair at about $10 per pip for a standard lot gives 10 / (20 x 10) = 0.05 lots.',
+  'Always include spread and slippage in your stop distance, and double-check with your broker calculator. Pip values differ for pairs that are not quoted in USD.'],
+  ['Lot size = risk $ / (stop pips x pip value)','Chart sets the stop, stop sets the size','Include spread and slippage'],
+  'Choosing the lot size first and then placing the stop wherever it fits.'),
+ L('Risk-to-Reward and Win Rate','rrbox',[
+  'Risk-to-reward (RR) compares potential profit with potential loss. If you risk 10 pips to make 30, the RR is 1:3. With a 1:3 RR you only need to win more than 25% of your trades to break even.',
+  'The break-even win rate equals 1 divided by (1 + RR). For 1:2 it is about 33%; for 1:1 it is 50%. Spreads and fees raise these numbers slightly.',
+  'High RR is no free lunch: far targets are hit less often. Choose targets at real liquidity or structure, not at arbitrary multiples.'],
+  ['RR 1:3 breaks even at a 25% win rate','Break-even win rate = 1 / (1 + RR)','Targets belong at real structure'],
+  'Forcing a 1:5 target that price has no reason to reach.'),
+ L('Drawdown and Expectancy','drawdown',[
+  'A drawdown is the decline from an account peak. Losses hurt more than the percentage suggests because recovery needs a larger gain: a 50% loss needs a 100% gain to break even.',
+  'Expectancy = (win rate x average win) - (loss rate x average loss). A strategy is worth trading only if its expectancy is positive after costs over a large sample of trades.',
+  'Set a maximum daily and weekly loss (for example 3% and 6%) and stop trading when it is reached. That rule alone protects you from emotional spirals.'],
+  ['A 50% loss needs a 100% gain','Positive expectancy over a large sample','Daily and weekly loss limits'],
+  'Trading harder after hitting the daily loss limit.')
+]},
+{t:'Trading Psychology',d:'Discipline, emotions and surviving losing streaks.',l:[
+ L('Discipline and Routine','disc',[
+  'Technical skill is only half of trading. The other half is following your rules when it is uncomfortable. Discipline means taking valid setups, skipping invalid ones and respecting your stop.',
+  'Use a pre-trade checklist so that decisions are made calmly before entry, not emotionally during the trade. Checklists dramatically reduce impulsive trades.',
+  'Build routines: the same time, the same pairs and the same analysis process. Consistency produces data, and data reveals what actually works for you.'],
+  ['Rules matter most when they are uncomfortable','Checklist before every entry','Routine produces useful data'],
+  'Making exceptions to the rules just this once.'),
+ L('Fear, Greed and FOMO','cycle',[
+  'Markets move through emotional cycles: optimism, excitement, greed, then anxiety, fear and capitulation. Retail traders often buy near the excitement peak and sell near the fear bottom.',
+  'FOMO (fear of missing out) makes you chase candles that have already moved. Revenge trading makes you take poor trades to recover a loss. Both break your rules.',
+  'A missed trade costs nothing; a chased trade can cost a lot. Another setup will come. After a loss, take a break, review and return only with a plan.'],
+  ['Crowds buy euphoria and sell panic','FOMO and revenge trading break rules','A missed trade costs nothing'],
+  'Entering late because the move looks too good to miss.'),
+ L('Handling Losing Streaks','streak',[
+  'Even a strategy with a 60% win rate will have streaks of several losses in a row. That is statistics, not proof that the strategy is broken.',
+  'The chart shows the balance left after 10 consecutive losses at different risk levels. At 1% risk you keep about 90% of the account; at 10% you keep only about 35%.',
+  'Reduce risk after a drawdown, review your journal for rule violations and judge the strategy over at least 50 to 100 trades, not five.'],
+  ['Losing streaks are normal statistics','Small risk makes streaks survivable','Judge over 50-100 trades'],
+  'Abandoning a tested strategy after five losses.')
+]},
+{t:'Trading Plan, Journal & Backtesting',d:'Build the business: plan, track and test your edge.',l:[
+ L('Building Your Trading Plan','plan',[
+  'A trading plan is a written document defining what you trade, when you trade, how you analyze, how you enter and exit and how much you risk. It is the business plan of your trading.',
+  'Include: markets and sessions, bias process, valid setups, entry triggers, stop and target rules, risk per trade, daily loss limit and a review routine.',
+  'Write it, print it and follow it. If you want to change a rule, do it on the weekend after reviewing data, never in the middle of a trade.'],
+  ['Write down every rule','Include risk limits and a review routine','Change rules only after reviewing data'],
+  'Having a plan in your head that changes every day.'),
+ L('Keeping a Trading Journal','journal',[
+  'A journal records every trade: date, pair, setup, screenshot, entry, stop, target, result in R and your emotional state. It turns experience into measurable data.',
+  'Measure results in R multiples (profit divided by initial risk), as in the chart. A trader with many -1R losses and a few +3R winners can still be clearly profitable.',
+  'Review weekly: which setups, sessions and pairs perform best? Cut what does not work and do more of what does.'],
+  ['Record screenshots, R-results and emotions','R-multiples make trades comparable','Weekly review drives improvement'],
+  'Only journaling winning trades.'),
+ L('Backtesting Your Strategy','curve',[
+  'Backtesting means applying your rules to historical charts to see how they would have performed. Scroll the chart bar by bar, record each setup honestly and do not peek ahead.',
+  'Test at least 100 trades across different market conditions: trending, ranging and news-driven. Record the win rate, average RR, maximum drawdown and longest losing streak.',
+  'After backtesting, forward-test on a demo account or with minimal risk for a month. Live results usually deteriorate slightly because of emotions and costs, so confirm the strategy still holds.'],
+  ['100+ trades across different conditions','Record drawdown and losing streak','Forward-test before going live'],
+  'Cherry-picking the best looking setups in hindsight.')
+]},
+{t:'Fundamentals & News Trading',d:'Calendar events, central banks and how to handle volatility.',l:[
+ L('The Economic Calendar','news',[
+  'The economic calendar lists scheduled releases such as inflation (CPI), employment (NFP), GDP and central bank decisions, each with an expected impact level: low, medium or high.',
+  'High-impact releases can move price dozens or even hundreds of pips in seconds, widen spreads and cause slippage. Mark them on your chart every morning.',
+  'Compare the actual result with the forecast. The surprise, not the number itself, moves the market.'],
+  ['Check the calendar every morning','High impact = big spreads and slippage','The surprise moves price'],
+  'Holding a full-size trade into a high-impact release without realizing it.'),
+ L('Central Banks and Interest Rates','rates',[
+  'Central banks set interest rates and guide monetary policy. Higher rates generally attract capital to a currency and strengthen it, while lower rates tend to weaken it.',
+  'What matters is expectations. Markets price in expected decisions in advance, so a currency can fall even on a rate hike if the hike was smaller than expected.',
+  'Follow the policy stance (hawkish leans toward higher rates, dovish toward lower), the rate differential between two countries and the guidance in statements and press conferences.'],
+  ['Higher rates tend to support a currency','Expectations matter more than the decision','Watch hawkish vs dovish guidance'],
+  'Assuming a rate hike always means the currency rises.'),
+ L('Trading Around News','newsfade',[
+  'You have three options: avoid trading around high-impact news, trade after the dust settles or trade the initial spike with very small size. Beginners should choose the first or second.',
+  'Often price spikes in one direction, sweeps liquidity and then reverses, as in the chart. Waiting 15 to 30 minutes after the release and trading the structure that forms is usually safer than gambling on the number.',
+  'Reduce or close positions before news and expect slippage. Do not move a stop to breakeven just before the release without understanding the risk of spread widening.'],
+  ['Avoid, wait, or trade tiny','Spikes often sweep liquidity and reverse','Expect slippage and wide spreads'],
+  'Placing pending orders on both sides of a news release.')
+]},
+{t:'Advanced Strategy: Putting It All Together',d:'The complete A-to-Z process and a full trade walkthrough.',l:[
+ L('The Complete Strategy Checklist','final',[
+  'Here is the full process in order: (1) higher-timeframe bias from structure; (2) mark HTF zones, order blocks and liquidity; (3) wait for price to reach a zone in the correct premium or discount area; (4) look for a liquidity sweep; (5) drop to a lower timeframe and find a CHoCH; (6) enter on an OB or FVG with the stop beyond structure; (7) target the next liquidity with at least 1:2 RR.',
+  'Each step is a filter. If one is missing, the trade is lower quality. Your edge comes from patiently waiting for setups where most of the filters agree.',
+  'Print the checklist, tick every box before entry and screenshot the trade. Skipping steps is where discipline fails.'],
+  ['Follow the steps in order','Every step is a filter','Checklist + screenshot + journal'],
+  'Taking trades where only two of the steps are present.'),
+ L('Live Trade Walkthrough and Next Steps','setup',[
+  'In the chart, price trends down, then sweeps sell-side liquidity at the lows and closes back above. It breaks the last lower high (CHoCH) and then retraces into the demand zone or order block created by the sweep. Entry is at the zone, the stop sits below the sweep low and the target is the previous highs.',
+  'Notice how much patience this trade needs: waiting for the sweep, the shift in structure and the retrace. Many days will have no valid setup, and that is perfectly normal.',
+  'Next steps: practice on a demo account for one to three months, keep a journal and move to live trading with small risk only after you have consistent results. Trading involves substantial risk and no strategy wins every trade.'],
+  ['Sweep, CHoCH, retrace, entry, stop, target','No setup is also a decision','Demo first, then small live risk'],
+  'Moving to a large live account before proving consistency on demo.')
+]}
+];
+
+/* assign ids, flat list */
+var LESSONS=[];
+MODULES.forEach(function(m,mi){m.id=mi+1;m.l.forEach(function(l){l.id=LESSONS.length+1;l.m=m.id;l.mt=m.t;LESSONS.push(l);});});
+var TOTAL=LESSONS.length;
+function readMins(l){var w=(l.p.join(' ')+' '+l.k.join(' ')).split(/\s+/).length;return Math.max(2,Math.round(w/180)+1);}
+
+/* =====================================================================
+   BACKGROUND: faint candlestick landscape
+   ===================================================================== */
+function buildBg(){
+  var el=document.getElementById('bgChart');if(!el)return;
+  var seed=7;function rnd(){seed=(seed*16807)%2147483647;return (seed-1)/2147483646;}
+  var s='',p=300,n=64,w=1440/n,pts=[];
+  for(var i=0;i<n;i++){
+    var o=p,c=o+(rnd()-0.46)*34;p=Math.min(430,Math.max(120,c));
+    var hi=Math.max(o,c)+rnd()*18,lo=Math.min(o,c)-rnd()*18,col=c>=o?'#10b981':'#ef4444',x=i*w+w/2;
+    s+='<line x1="'+x+'" x2="'+x+'" y1="'+(500-hi)+'" y2="'+(500-lo)+'" stroke="'+col+'" stroke-opacity=".10" stroke-width="2"/><rect x="'+(x-5)+'" y="'+(500-Math.max(o,c))+'" width="10" height="'+Math.max(2,Math.abs(c-o))+'" fill="'+col+'" fill-opacity=".10" rx="2"/>';
+    pts.push(x+','+(500-c));
+  }
+  s='<defs><linearGradient id="tg" x1="0" x2="1"><stop offset="0" stop-color="#f59e0b" stop-opacity="0"/><stop offset=".5" stop-color="#fbbf24" stop-opacity=".55"/><stop offset="1" stop-color="#38bdf8" stop-opacity=".1"/></linearGradient></defs>'+s+'<polyline class="trace" points="'+pts.join(' ')+'" fill="none" stroke="url(#tg)" stroke-width="2.5" stroke-linejoin="round"/>';
+  el.innerHTML=s;
+}
+
+/* =====================================================================
+   STATE, STORAGE, AUTH
+   ===================================================================== */
+function load(k,d){try{var v=JSON.parse(localStorage.getItem(k));return v==null?d:v;}catch(e){return d;}}
+function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+try{localStorage.removeItem('apex_user');localStorage.removeItem('apex_completed_lessons');}catch(e){}  // old insecure keys
+var users=load('apex_users',{});
+var session=load('apex_session',null);   // {email,name}
+var completed=[];
+var currentLesson=null;
+function loadProgress(){completed=session?load('apex_progress_'+session.email,[]):[];}
+function saveProgress(){if(session)save('apex_progress_'+session.email,completed);}
+function canView(id){return !!session||CONFIG.FREE_PREVIEW_IDS.indexOf(id)>-1;}
+function $(id){return document.getElementById(id);}
+function icons(){try{if(window.lucide)lucide.createIcons();}catch(e){}}
+
+function sha(s){
+  try{
+    if(window.crypto&&crypto.subtle){
+      return crypto.subtle.digest('SHA-256',new TextEncoder().encode(s)).then(function(b){return Array.prototype.map.call(new Uint8Array(b),function(x){return ('0'+x.toString(16)).slice(-2);}).join('');});
+    }
+  }catch(e){}
+  return Promise.resolve('plain:'+s);
+}
+function verifyCode(email,code){
+  return fetch(CONFIG.VERIFY_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email,code:code})})
+    .then(function(r){if(!r.ok)throw new Error('http '+r.status);return r.json();})
+    .then(function(d){return {ok:!!(d&&d.success)};})
+    .catch(function(){
+      if(CONFIG.ALLOW_OFFLINE_DEMO&&/^\d{6}$/.test(code))return {ok:true,offline:true};
+      return {ok:false,network:true};
+    });
+}
+function setMsg(id,text,good){var m=$(id);m.textContent=text;m.className='text-xs mt-3 '+(good?'text-emerald-400':'text-red-400');}
+function busy(btnId,on,label){var b=$(btnId);b.disabled=on;b.style.opacity=on?'.6':'1';if(label)b.textContent=on?'Please wait...':label;}
+var EMAIL_RE=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function completeRegistration(){
+  var name=$('regName').value.trim(), email=$('regEmail').value.trim().toLowerCase(), code=$('regCode').value.trim();
+  if(!name||!email||!code)return setMsg('regMsg','Please fill in all fields.');
+  if(!EMAIL_RE.test(email))return setMsg('regMsg','Please enter a valid email address.');
+  if(!/^\d{6}$/.test(code))return setMsg('regMsg','The verification code must be exactly 6 digits.');
+  var lbl='Verify Code & Complete Registration';
+  busy('regBtn',true,lbl);
+  verifyCode(email,code).then(function(r){
+    if(!r.ok){busy('regBtn',false,lbl);return setMsg('regMsg',r.network?'Could not reach the verification server. Check your connection and try again, or contact us on Telegram.':'Invalid verification code. Please check the code from the Telegram bot.');}
+    return sha(email+':'+code).then(function(h){
+      users[email]={name:name,h:h};save('apex_users',users);
+      startSession(email,name);
+      busy('regBtn',false,lbl);closeModal('registerModal');
+    });
+  });
+}
+function loginUser(){
+  var email=$('loginEmail').value.trim().toLowerCase(), code=$('loginCode').value.trim();
+  if(!EMAIL_RE.test(email)||!code)return setMsg('logMsg','Enter your email and verification code.');
+  busy('logBtn',true,'Sign In');
+  sha(email+':'+code).then(function(h){
+    if(users[email]&&users[email].h===h){busy('logBtn',false,'Sign In');startSession(email,users[email].name);closeModal('loginModal');return;}
+    return verifyCode(email,code).then(function(r){
+      busy('logBtn',false,'Sign In');
+      if(!r.ok)return setMsg('logMsg',r.network?'Could not reach the server. Please try again shortly.':'Email or verification code is incorrect.');
+      var nm=(users[email]&&users[email].name)||email.split('@')[0];
+      users[email]={name:nm,h:h};save('apex_users',users);
+      startSession(email,nm);closeModal('loginModal');
+    });
+  });
+}
+function startSession(email,name){session={email:email,name:name};save('apex_session',session);loadProgress();updateAuthUI();}
+function logoutUser(){session=null;try{localStorage.removeItem('apex_session');}catch(e){}completed=[];closeReader();updateAuthUI();}
+
+/* =====================================================================
+   UI
+   ===================================================================== */
+function updateAuthUI(){
+  var on=!!session;
+  $('guestNav').classList.toggle('hidden',on);
+  $('userNav').classList.toggle('hidden',!on);$('userNav').classList.toggle('flex',on);
+  $('dashboardSection').classList.toggle('hidden',!on);
+  if(on){$('navUserName').textContent=session.name||'User';$('dashName').textContent=session.name||'student';}
+  renderModules();updateProgress();icons();
+}
+function modProgress(m){var d=m.l.filter(function(l){return completed.indexOf(l.id)>-1;}).length;return d;}
+var openMods={1:true};
+function renderModules(){
+  var q=($('searchBox').value||'').trim().toLowerCase(), box=$('modulesContainer'), any=false, h='';
+  MODULES.forEach(function(m){
+    var ls=m.l.filter(function(l){return !q||l.t.toLowerCase().indexOf(q)>-1||m.t.toLowerCase().indexOf(q)>-1||l.p.join(' ').toLowerCase().indexOf(q)>-1;});
+    if(!ls.length)return;any=true;
+    var isOpen=q?true:!!openMods[m.id], done=modProgress(m);
+    var rows=ls.map(function(l){
+      var ok=canView(l.id), isDone=completed.indexOf(l.id)>-1, free=!session&&CONFIG.FREE_PREVIEW_IDS.indexOf(l.id)>-1;
+      var ic=isDone?'<i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400 shrink-0"></i>':(ok?'<i data-lucide="play-circle" class="w-5 h-5 text-amber-400 shrink-0"></i>':'<i data-lucide="lock" class="w-4 h-4 text-gray-500 shrink-0 ml-0.5"></i>');
+      var tag=free?'<span class="text-[9px] sm:text-[10px] text-emerald-300 bg-emerald-500/10 border border-emerald-500/30 px-2 py-1 rounded font-bold shrink-0">FREE</span>':(!ok?'<span class="text-[9px] sm:text-[10px] text-amber-400 bg-amber-500/10 border border-amber-500/30 px-2 py-1 rounded font-bold shrink-0">VIP</span>':'<span class="text-[10px] text-gray-500 shrink-0 hidden sm:inline">'+readMins(l)+' min</span>');
+      return '<button onclick="openLesson('+l.id+')" class="w-full text-left p-3 sm:p-4 bg-gray-900/40 hover:bg-gray-800/60 border-t border-gray-800/60 flex items-center justify-between gap-3 transition">'+
+        '<span class="flex items-center gap-3 min-w-0">'+ic+'<span class="min-w-0"><span class="block text-xs sm:text-sm font-semibold '+(ok?'text-gray-100':'text-gray-400')+' truncate">L'+l.id+': '+esc(l.t)+'</span></span></span>'+tag+'</button>';
+    }).join('');
+    h+='<div class="glass-card rounded-2xl border border-gray-800 overflow-hidden '+(isOpen?'module-open':'')+'">'+
+      '<button onclick="toggleModule('+m.id+')" aria-expanded="'+isOpen+'" class="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-3 bg-gray-900/70 hover:bg-gray-800/70 transition">'+
+      '<span class="flex items-center gap-3 min-w-0"><span class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs sm:text-sm flex items-center justify-center font-bold shrink-0">'+m.id+'</span>'+
+      '<span class="min-w-0"><span class="block text-sm sm:text-base font-bold text-white truncate">Module '+m.id+': '+esc(m.t)+'</span><span class="block text-[11px] text-gray-400 truncate">'+esc(m.d)+'</span></span></span>'+
+      '<span class="flex items-center gap-3 shrink-0"><span class="text-[11px] text-gray-400 hidden sm:inline">'+(session?done+'/':'')+m.l.length+' lessons</span><i data-lucide="chevron-down" class="chev w-5 h-5 text-gray-400"></i></span></button>'+
+      '<div class="'+(isOpen?'':'hidden')+'">'+rows+'</div></div>';
+  });
+  box.innerHTML=h;$('noResults').classList.toggle('hidden',any);icons();
+}
+function toggleModule(id){openMods[id]=!openMods[id];renderModules();}
+
+function updateProgress(){
+  var count=completed.length, pct=Math.round(count/TOTAL*100);
+  $('dashProgressPercent').textContent=pct+'%';
+  $('dashCompletedCount').textContent=count+' / '+TOTAL+' Lessons';
+  $('dashProgressBar').style.width=pct+'%';
+  var next=null;for(var i=0;i<LESSONS.length;i++){if(completed.indexOf(LESSONS[i].id)<0){next=LESSONS[i];break;}}
+  $('continueLabel').textContent=count===0?'Start Learning':(next?'Continue: L'+next.id:'Course Complete');
+  $('dashModules').innerHTML=MODULES.map(function(m){var d=modProgress(m),p=Math.round(d/m.l.length*100);
+    return '<div class="bg-gray-900/50 border border-gray-800 rounded-xl p-3"><div class="flex justify-between text-[11px] mb-1.5"><span class="text-gray-300 font-semibold truncate pr-2">M'+m.id+'. '+esc(m.t)+'</span><span class="text-amber-400 font-bold shrink-0">'+d+'/'+m.l.length+'</span></div><div class="h-1.5 bg-gray-800 rounded-full overflow-hidden"><div class="h-full bg-amber-500 rounded-full" style="width:'+p+'%"></div></div></div>';}).join('');
+}
+function continueLearning(){
+  var next=null;for(var i=0;i<LESSONS.length;i++){if(completed.indexOf(LESSONS[i].id)<0){next=LESSONS[i];break;}}
+  if(next){openMods[next.m]=true;renderModules();openLesson(next.id);}else{scrollToCurriculum();}
+}
+
+function openLesson(id){
+  var l=LESSONS[id-1];if(!l)return;
+  if(!canView(id)){openModal('registerModal');return;}
+  currentLesson=id;
+  var done=completed.indexOf(id)>-1, prev=LESSONS[id-2], next=LESSONS[id];
+  var h='<div class="flex items-start justify-between gap-3 mb-5"><div><div class="text-[11px] text-amber-400 font-bold uppercase tracking-wide">Module '+l.m+' &middot; '+esc(l.mt)+'</div>'+
+   '<h2 class="text-xl sm:text-3xl font-black text-white mt-1 leading-tight">L'+l.id+': '+esc(l.t)+'</h2><div class="text-[11px] text-gray-400 mt-2">'+readMins(l)+' min read &middot; Lesson '+l.id+' of '+TOTAL+'</div></div>'+
+   '<button onclick="closeReader()" aria-label="Close lesson" class="text-gray-400 hover:text-white shrink-0 p-1"><i data-lucide="x" class="w-6 h-6"></i></button></div>';
+  h+='<div class="rounded-xl overflow-hidden border border-gray-800 bg-black/40 p-1.5 mb-6">'+getChart(l.c)+'</div>';
+  h+='<div class="space-y-4 text-sm sm:text-base text-gray-300 lesson-p">'+l.p.map(function(p){return '<p>'+esc(p)+'</p>';}).join('')+'</div>';
+  h+='<div class="mt-6 rounded-xl border border-emerald-500/25 bg-emerald-500/5 p-4"><div class="text-xs font-bold text-emerald-400 uppercase tracking-wide mb-2">Key takeaways</div><ul class="space-y-1.5 text-sm text-gray-200">'+l.k.map(function(k){return '<li class="flex gap-2"><span class="text-emerald-400">&#10003;</span><span>'+esc(k)+'</span></li>';}).join('')+'</ul></div>';
+  if(l.x)h+='<div class="mt-3 rounded-xl border border-red-500/25 bg-red-500/5 p-4"><div class="text-xs font-bold text-red-400 uppercase tracking-wide mb-1">Common mistake</div><p class="text-sm text-gray-200">'+esc(l.x)+'</p></div>';
+  h+='<div class="mt-7 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between border-t border-gray-800 pt-5">'+
+    (session?'<button onclick="toggleLesson('+id+')" class="px-5 py-2.5 rounded-xl text-xs font-bold transition '+(done?'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30':'gold-bg-gradient text-black hover:opacity-90')+'">'+(done?'&#10003; Completed (click to undo)':'Mark as Complete')+'</button>':'<button onclick="closeReader();openModal(\'registerModal\')" class="px-5 py-2.5 rounded-xl text-xs font-bold gold-bg-gradient text-black">Register to unlock all 50 lessons</button>')+
+    '<div class="flex gap-2">'+
+    (prev?'<button onclick="openLesson('+prev.id+')" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl text-xs font-bold bg-gray-800 border border-gray-700 hover:bg-gray-700 flex items-center justify-center gap-1.5"><i data-lucide="arrow-left" class="w-4 h-4"></i> Previous</button>':'')+
+    (next?'<button onclick="openLesson('+next.id+')" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl text-xs font-bold bg-gray-800 border border-gray-700 hover:bg-gray-700 flex items-center justify-center gap-1.5">Next <i data-lucide="arrow-right" class="w-4 h-4"></i></button>':'')+
+    '</div></div>';
+  var rd=$('reader');$('readerBody').innerHTML=h;rd.classList.remove('hidden');rd.scrollTop=0;document.body.style.overflow='hidden';icons();
+}
+function closeReader(){var rd=$('reader');if(rd)rd.classList.add('hidden');document.body.style.overflow='';currentLesson=null;}
+function toggleLesson(id){
+  if(!session){openModal('loginModal');return;}
+  var i=completed.indexOf(id);if(i>-1)completed.splice(i,1);else completed.push(id);
+  saveProgress();updateProgress();renderModules();openLesson(id);
+  var rd=$('reader');rd.scrollTop=rd.scrollHeight;
+}
+
+function openModal(id){var m=$(id);m.classList.remove('hidden');m.classList.add('flex');icons();var f=m.querySelector('input');if(f)setTimeout(function(){f.focus();},50);}
+function closeModal(id){var m=$(id);m.classList.add('hidden');m.classList.remove('flex');}
+function scrollToCurriculum(){$('curriculum').scrollIntoView({behavior:'smooth'});}
+function scrollToDashboard(){$('dashboardSection').scrollIntoView({behavior:'smooth'});}
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){closeModal('registerModal');closeModal('loginModal');closeReader();}
+  if(currentLesson&&!/INPUT|TEXTAREA/.test((document.activeElement||{}).tagName||'')){
+    if(e.key==='ArrowRight'&&LESSONS[currentLesson])openLesson(currentLesson+1);
+    if(e.key==='ArrowLeft'&&currentLesson>1)openLesson(currentLesson-1);
+  }
+});
+['registerModal','loginModal'].forEach(function(id){$(id).addEventListener('click',function(e){if(e.target===this)closeModal(id);});});
+$('reader').addEventListener('click',function(e){if(e.target===this||e.target===this.firstElementChild)closeReader();});
+
+document.addEventListener('DOMContentLoaded',function(){});
+buildBg();loadProgress();updateAuthUI();
+</script>
 </body>
 </html>
