@@ -39,6 +39,15 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:#070a13;color:#F3F4F6
 .chev{transition:transform .25s}
 .fade-in{animation:fin .35s ease both}
 @keyframes fin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+/* ---------- Content protection ---------- */
+body.protected{-webkit-user-select:none;user-select:none;-webkit-touch-callout:none}
+body.protected input,body.protected textarea{-webkit-user-select:text;user-select:text}
+img,svg,canvas{-webkit-user-drag:none;user-drag:none}
+body.blurred #readerBody,body.blurred #modulesContainer,body.blurred #dashboardSection{filter:blur(24px);transition:filter .05s}
+#wm{position:fixed;inset:0;z-index:70;pointer-events:none;background-repeat:repeat}
+#shield{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;background:#070a13;color:#fbbf24;text-align:center;padding:24px;font-weight:800;font-size:18px}
+body.shielded #shield{display:flex}
+@media print{body *{display:none!important}body::before{content:"Printing is disabled for this course.";display:block;padding:40px;font:20px sans-serif;color:#000}}
 </style>
 </head>
 <body class="custom-scrollbar">
@@ -98,6 +107,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:#070a13;color:#F3F4F6
       <div class="flex justify-between text-xs text-gray-400 mb-2"><span>Completion of Modules and Lessons</span><span id="dashCompletedCount" class="font-bold text-amber-400">0 / 50 Lessons</span></div>
       <div class="w-full bg-gray-800 h-3 rounded-full overflow-hidden border border-gray-700"><div id="dashProgressBar" class="bg-gradient-to-r from-amber-500 to-yellow-300 h-full w-0 transition-all duration-500"></div></div>
     </div>
+    <div id="certBox" class="mt-6"></div>
     <div id="dashModules" class="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-3"></div>
   </div>
 </section>
@@ -121,7 +131,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:#070a13;color:#F3F4F6
     <div class="glass-card rounded-xl py-4"><div class="text-2xl font-black text-amber-400">15</div><div class="text-[11px] text-gray-400 uppercase tracking-wide">Modules</div></div>
     <div class="glass-card rounded-xl py-4"><div class="text-2xl font-black text-amber-400">50</div><div class="text-[11px] text-gray-400 uppercase tracking-wide">Lessons</div></div>
     <div class="glass-card rounded-xl py-4"><div class="text-2xl font-black text-amber-400">50</div><div class="text-[11px] text-gray-400 uppercase tracking-wide">Chart Diagrams</div></div>
-    <div class="glass-card rounded-xl py-4"><div class="text-2xl font-black text-amber-400">1</div><div class="text-[11px] text-gray-400 uppercase tracking-wide">Free Preview</div></div>
+    <div class="glass-card rounded-xl py-4"><div class="text-2xl font-black text-amber-400">PDF</div><div class="text-[11px] text-gray-400 uppercase tracking-wide">Certificate</div></div>
   </div>
 </section>
 
@@ -155,6 +165,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:#070a13;color:#F3F4F6
     <div class="text-sm font-bold text-white">APEX <span class="gold-gradient-text">FOREX</span> Academy</div>
     <p class="text-[11px] text-gray-500 mt-4 max-w-3xl mx-auto leading-relaxed"><strong class="text-gray-400">Risk warning:</strong> Trading forex and leveraged products carries a high level of risk and may result in the loss of more than your initial deposit. All content is for educational purposes only and is not financial advice. Past performance does not guarantee future results. Chart diagrams are simplified illustrations, not real trade records. Never trade money you cannot afford to lose.</p>
     <a href="https://t.me/gadaafx_bot" target="_blank" rel="noopener" class="inline-flex items-center gap-2 mt-5 text-xs text-sky-400 hover:text-sky-300 font-semibold"><i data-lucide="send" class="w-4 h-4"></i> Contact on Telegram</a>
+    <button onclick="openModal('verifyModal')" class="inline-flex items-center gap-2 mt-5 ml-4 text-xs text-amber-400 hover:text-amber-300 font-semibold"><i data-lucide="shield-check" class="w-4 h-4"></i> Verify a certificate</button>
   </div>
 </footer>
 
@@ -168,6 +179,7 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:#070a13;color:#F3F4F6
     <div class="border-t border-gray-800 my-4 pt-3">
       <label for="regName" class="text-xs text-gray-400 block mb-1">Full Name</label>
       <input type="text" id="regName" autocomplete="name" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-amber-500">
+      <p class="text-[10px] text-amber-400/80 mt-1">Your name is printed on your certificate exactly as typed. Please write it correctly.</p>
       <label for="regEmail" class="text-xs text-gray-400 block mb-1 mt-3">Email</label>
       <input type="email" id="regEmail" autocomplete="email" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-amber-500">
       <label for="regCode" class="text-xs text-gray-400 block mb-1 mt-3">Verification Code (6-digit Bot OTP)</label>
@@ -194,6 +206,35 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:#070a13;color:#F3F4F6
   </div>
 </div>
 
+<div id="wm" aria-hidden="true"></div>
+<div id="shield" role="alert"><div>Developer tools or screen capture tools detected.<br><span style="font-weight:500;font-size:14px;color:#9ca3af">Close them to continue learning.</span></div></div>
+
+<!-- Certificate Modal -->
+<div id="certModal" class="fixed inset-0 z-[80] bg-black/85 backdrop-blur-md hidden overflow-y-auto p-3" role="dialog" aria-modal="true" aria-labelledby="certHeading">
+  <div class="glass-card rounded-2xl w-full max-w-4xl p-4 sm:p-6 border border-amber-500/30 relative m-auto">
+    <button onclick="closeModal('certModal')" aria-label="Close" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+    <h3 id="certHeading" class="text-lg sm:text-2xl font-black text-white mb-1 pr-8">Your Certificate</h3>
+    <p class="text-xs text-gray-400 mb-4">Issued in your registered name. Download it as a high-resolution PNG or a PDF.</p>
+    <canvas id="certCanvas" class="w-full h-auto rounded-lg border border-amber-500/30"></canvas>
+    <div class="mt-4 flex flex-col sm:flex-row gap-3">
+      <button onclick="downloadCert('pdf')" class="flex-1 py-3 rounded-xl gold-bg-gradient text-black font-bold text-sm hover:opacity-90 transition">Download PDF</button>
+      <button onclick="downloadCert('png')" class="flex-1 py-3 rounded-xl bg-gray-800 border border-gray-700 hover:bg-gray-700 text-white font-bold text-sm transition">Download PNG</button>
+    </div>
+  </div>
+</div>
+
+<!-- Verify Certificate Modal -->
+<div id="verifyModal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden items-center justify-center p-4" role="dialog" aria-modal="true" aria-labelledby="verTitle">
+  <div class="glass-card rounded-2xl max-w-md w-full p-6 border border-gray-800 relative">
+    <button onclick="closeModal('verifyModal')" aria-label="Close" class="absolute top-4 right-4 text-gray-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+    <h3 id="verTitle" class="text-xl font-bold text-white mb-2">Verify a Certificate</h3>
+    <p class="text-xs text-gray-400 mb-3">Enter the Certificate ID printed at the bottom of the certificate.</p>
+    <input type="text" id="verId" placeholder="AFA-2026-XXXXXXXXXX" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-amber-500 uppercase">
+    <p id="verMsg" class="text-xs mt-3"></p>
+    <button onclick="verifyCertificate()" class="w-full mt-4 py-3 rounded-xl gold-bg-gradient text-black font-bold text-sm hover:opacity-90 transition">Verify</button>
+  </div>
+</div>
+
 <!-- Lesson Reader -->
 <div id="reader" class="fixed inset-0 z-[60] hidden bg-black/85 backdrop-blur-md overflow-y-auto custom-scrollbar" role="dialog" aria-modal="true" aria-label="Lesson">
   <div class="min-h-full flex items-start justify-center p-3 sm:p-6">
@@ -208,7 +249,13 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:#070a13;color:#F3F4F6
 var CONFIG = {
   VERIFY_ENDPOINT: '/api/verify-code',   // POST {email, code} -> {success:true|false}
   ALLOW_OFFLINE_DEMO: false,             // true = accept any 6-digit code when the server is unreachable (testing only!)
-  FREE_PREVIEW_IDS: [1]                  // lessons visible without VIP
+  FREE_PREVIEW_IDS: [1],
+  MIN_LESSON_SECONDS: 45,                // minimum reading time before a lesson can be marked complete
+  INSTRUCTOR: 'Gemechu',                 // name printed on the certificate signature
+  INSTRUCTOR_TITLE: 'Lead Instructor',
+  CERT_ISSUE_ENDPOINT: '/api/certificate',        // optional: POST {id,name,email,date} to record certificates
+  CERT_VERIFY_ENDPOINT: '/api/verify-certificate' // optional: GET ?id=... -> {valid:true,name,date}
+                    // lessons visible without VIP
 };
 
 /* =====================================================================
@@ -858,7 +905,7 @@ function sha(s){
 function verifyCode(email,code){
   return fetch(CONFIG.VERIFY_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email,code:code})})
     .then(function(r){if(!r.ok)throw new Error('http '+r.status);return r.json();})
-    .then(function(d){return {ok:!!(d&&d.success)};})
+    .then(function(d){return {ok:!!(d&&d.success),name:(d&&d.name)||''};})
     .catch(function(){
       if(CONFIG.ALLOW_OFFLINE_DEMO&&/^\d{6}$/.test(code))return {ok:true,offline:true};
       return {ok:false,network:true};
@@ -871,6 +918,7 @@ var EMAIL_RE=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 function completeRegistration(){
   var name=$('regName').value.trim(), email=$('regEmail').value.trim().toLowerCase(), code=$('regCode').value.trim();
   if(!name||!email||!code)return setMsg('regMsg','Please fill in all fields.');
+  name=name.replace(/\s+/g,' ');if(name.length<3)return setMsg('regMsg','Please enter your full name (it will appear on your certificate).');
   if(!EMAIL_RE.test(email))return setMsg('regMsg','Please enter a valid email address.');
   if(!/^\d{6}$/.test(code))return setMsg('regMsg','The verification code must be exactly 6 digits.');
   var lbl='Verify Code & Complete Registration';
@@ -893,14 +941,14 @@ function loginUser(){
     return verifyCode(email,code).then(function(r){
       busy('logBtn',false,'Sign In');
       if(!r.ok)return setMsg('logMsg',r.network?'Could not reach the server. Please try again shortly.':'Email or verification code is incorrect.');
-      var nm=(users[email]&&users[email].name)||email.split('@')[0];
+      var nm=(users[email]&&users[email].name)||r.name||email.split('@')[0];
       users[email]={name:nm,h:h};save('apex_users',users);
       startSession(email,nm);closeModal('loginModal');
     });
   });
 }
-function startSession(email,name){session={email:email,name:name};save('apex_session',session);loadProgress();updateAuthUI();}
-function logoutUser(){session=null;try{localStorage.removeItem('apex_session');}catch(e){}completed=[];closeReader();updateAuthUI();}
+function startSession(email,name){session={email:email,name:name};save('apex_session',session);loadProgress();loadRead();updateAuthUI();applyWatermark();}
+function logoutUser(){session=null;try{localStorage.removeItem('apex_session');}catch(e){}completed=[];readSecs={};closeReader();updateAuthUI();applyWatermark();}
 
 /* =====================================================================
    UI
@@ -946,6 +994,7 @@ function updateProgress(){
   $('dashProgressBar').style.width=pct+'%';
   var next=null;for(var i=0;i<LESSONS.length;i++){if(completed.indexOf(LESSONS[i].id)<0){next=LESSONS[i];break;}}
   $('continueLabel').textContent=count===0?'Start Learning':(next?'Continue: L'+next.id:'Course Complete');
+  renderCertBox();
   $('dashModules').innerHTML=MODULES.map(function(m){var d=modProgress(m),p=Math.round(d/m.l.length*100);
     return '<div class="bg-gray-900/50 border border-gray-800 rounded-xl p-3"><div class="flex justify-between text-[11px] mb-1.5"><span class="text-gray-300 font-semibold truncate pr-2">M'+m.id+'. '+esc(m.t)+'</span><span class="text-amber-400 font-bold shrink-0">'+d+'/'+m.l.length+'</span></div><div class="h-1.5 bg-gray-800 rounded-full overflow-hidden"><div class="h-full bg-amber-500 rounded-full" style="width:'+p+'%"></div></div></div>';}).join('');
 }
@@ -972,13 +1021,13 @@ function openLesson(id){
     (prev?'<button onclick="openLesson('+prev.id+')" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl text-xs font-bold bg-gray-800 border border-gray-700 hover:bg-gray-700 flex items-center justify-center gap-1.5"><i data-lucide="arrow-left" class="w-4 h-4"></i> Previous</button>':'')+
     (next?'<button onclick="openLesson('+next.id+')" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl text-xs font-bold bg-gray-800 border border-gray-700 hover:bg-gray-700 flex items-center justify-center gap-1.5">Next <i data-lucide="arrow-right" class="w-4 h-4"></i></button>':'')+
     '</div></div>';
-  var rd=$('reader');$('readerBody').innerHTML=h;rd.classList.remove('hidden');rd.scrollTop=0;document.body.style.overflow='hidden';icons();
+  var rd=$('reader');$('readerBody').innerHTML=h;rd.classList.remove('hidden');rd.scrollTop=0;document.body.style.overflow='hidden';icons();gateCompleteBtn(id);
 }
 function closeReader(){var rd=$('reader');if(rd)rd.classList.add('hidden');document.body.style.overflow='';currentLesson=null;}
 function toggleLesson(id){
   if(!session){openModal('loginModal');return;}
-  var i=completed.indexOf(id);if(i>-1)completed.splice(i,1);else completed.push(id);
-  saveProgress();updateProgress();renderModules();openLesson(id);
+  var i=completed.indexOf(id);if(i<0&&(readSecs[id]||0)<CONFIG.MIN_LESSON_SECONDS)return;if(i>-1)completed.splice(i,1);else completed.push(id);
+  saveProgress();saveRead();updateProgress();renderModules();openLesson(id);if(i<0&&completed.length>=TOTAL){issueCertificate().then(function(){closeReader();showCertificate(true);});return;}
   var rd=$('reader');rd.scrollTop=rd.scrollHeight;
 }
 
@@ -997,7 +1046,182 @@ document.addEventListener('keydown',function(e){
 $('reader').addEventListener('click',function(e){if(e.target===this||e.target===this.firstElementChild)closeReader();});
 
 document.addEventListener('DOMContentLoaded',function(){});
-buildBg();loadProgress();updateAuthUI();
+/* =====================================================================
+   READ-TIME GATE (anti-skip): a lesson can only be completed after a minimum reading time
+   ===================================================================== */
+var readSecs={};
+function loadRead(){readSecs=session?load('apex_read_'+session.email,{}):{};}
+function saveRead(){if(session)save('apex_read_'+session.email,readSecs);}
+function startReadTimer(){
+  var tick=0;
+  setInterval(function(){
+    if(!session||!currentLesson||document.hidden||!document.hasFocus())return;
+    readSecs[currentLesson]=(readSecs[currentLesson]||0)+1;
+    if(++tick%5===0)saveRead();
+    gateCompleteBtn(currentLesson);
+  },1000);
+}
+function gateCompleteBtn(id){
+  var b=document.querySelector('#readerBody button[onclick^="toggleLesson"]');
+  if(!b||completed.indexOf(id)>-1)return;
+  var left=CONFIG.MIN_LESSON_SECONDS-(readSecs[id]||0);
+  if(left>0){b.disabled=true;b.style.opacity='.55';b.style.cursor='not-allowed';b.textContent='Keep reading... ('+left+'s)';}
+  else{b.disabled=false;b.style.opacity='1';b.style.cursor='pointer';b.textContent='Mark as Complete';}
+}
+
+/* =====================================================================
+   CERTIFICATE
+   ===================================================================== */
+function hash53(str){var h1=0xdeadbeef,h2=0x41c6ce57;for(var i=0,ch;i<str.length;i++){ch=str.charCodeAt(i);h1=Math.imul(h1^ch,2654435761);h2=Math.imul(h2^ch,1597334677);}h1=Math.imul(h1^(h1>>>16),2246822507)^Math.imul(h2^(h2>>>13),3266489909);h2=Math.imul(h2^(h2>>>16),2246822507)^Math.imul(h1^(h1>>>13),3266489909);return 4294967296*(2097151&h2)+(h1>>>0);}
+function niceName(n){n=(n||'').replace(/\s+/g,' ').trim();if(n===n.toLowerCase()||n===n.toUpperCase())n=n.toLowerCase().replace(/(^|\s)(\S)/g,function(m,a,b){return a+b.toUpperCase();});return n;}
+function getCert(){return session?load('apex_cert_'+session.email,null):null;}
+function issueCertificate(){
+  if(!session||completed.length<TOTAL)return Promise.resolve(null);
+  var ex=getCert();if(ex)return Promise.resolve(ex);
+  var d=new Date(), name=niceName(session.name);
+  var id='AFA-'+d.getFullYear()+'-'+hash53(session.email+'|'+name+'|'+d.getTime()).toString(36).toUpperCase().padStart(10,'0').slice(0,10);
+  var cert={id:id,name:name,date:d.toISOString()};
+  save('apex_cert_'+session.email,cert);
+  var all=load('apex_certs',{});all[id]={name:name,date:cert.date};save('apex_certs',all);
+  try{fetch(CONFIG.CERT_ISSUE_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:id,name:name,email:session.email,date:cert.date})}).catch(function(){});}catch(e){}
+  return Promise.resolve(cert);
+}
+function claimCertificate(){issueCertificate().then(function(c){if(c){renderCertBox();showCertificate(true);}});}
+function showCertificate(isNew){
+  var c=getCert();if(!c)return;
+  $('certHeading').textContent=isNew?'Congratulations! You are now certified.':'Your Certificate';
+  drawCertificate($('certCanvas'),c);
+  openModal('certModal');
+}
+function renderCertBox(){
+  var box=$('certBox');if(!box)return;
+  if(!session){box.innerHTML='';return;}
+  var done=completed.length>=TOTAL, c=getCert(), left=TOTAL-completed.length;
+  if(c){
+    box.innerHTML='<div class="rounded-xl border border-amber-500/40 bg-gradient-to-r from-amber-500/15 to-yellow-400/5 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3"><div><div class="text-sm font-bold text-amber-300">Certificate of Completion earned</div><div class="text-[11px] text-gray-400 mt-0.5">ID: '+esc(c.id)+'</div></div><button onclick="showCertificate(false)" class="px-5 py-2.5 rounded-xl gold-bg-gradient text-black text-xs font-bold hover:opacity-90">View &amp; Download</button></div>';
+  }else if(done){
+    box.innerHTML='<div class="rounded-xl border border-amber-500/40 bg-amber-500/10 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3"><div class="text-sm font-bold text-amber-300">All 50 lessons completed. Your certificate is ready!</div><button onclick="claimCertificate()" class="px-5 py-2.5 rounded-xl gold-bg-gradient text-black text-xs font-bold hover:opacity-90">Claim Certificate</button></div>';
+  }else{
+    box.innerHTML='<div class="rounded-xl border border-gray-700 bg-gray-900/50 p-4 flex items-center gap-3"><i data-lucide="lock" class="w-5 h-5 text-gray-500 shrink-0"></i><div class="text-xs text-gray-400">Complete all '+TOTAL+' lessons to automatically earn your professional certificate in the name you registered with. <span class="text-amber-400 font-bold">'+left+' lessons remaining.</span></div></div>';
+  }
+  icons();
+}
+function rrect(x,px,py,w,h,r){x.beginPath();x.moveTo(px+r,py);x.lineTo(px+w-r,py);x.quadraticCurveTo(px+w,py,px+w,py+r);x.lineTo(px+w,py+h-r);x.quadraticCurveTo(px+w,py+h,px+w-r,py+h);x.lineTo(px+r,py+h);x.quadraticCurveTo(px,py+h,px,py+h-r);x.lineTo(px,py+r);x.quadraticCurveTo(px,py,px+r,py);x.closePath();}
+function drawCertificate(cv,c){
+  var W=1600,H=1131;cv.width=W;cv.height=H;var x=cv.getContext('2d');
+  var bg=x.createLinearGradient(0,0,W,H);bg.addColorStop(0,'#0a0f1c');bg.addColorStop(1,'#14203a');x.fillStyle=bg;x.fillRect(0,0,W,H);
+  var glow=x.createRadialGradient(W/2,H*0.35,50,W/2,H*0.35,800);glow.addColorStop(0,'rgba(245,158,11,0.16)');glow.addColorStop(1,'rgba(245,158,11,0)');x.fillStyle=glow;x.fillRect(0,0,W,H);
+  var seed=11;function rnd(){seed=(seed*16807)%2147483647;return (seed-1)/2147483646;}
+  var p=900,n=40,w=(W-200)/n;
+  for(var i=0;i<n;i++){var o=p,cl=o+(rnd()-0.47)*60;p=Math.min(1000,Math.max(760,cl));var col=cl>=o?'16,185,129':'239,68,68',cxp=100+i*w+w/2;
+    x.strokeStyle='rgba('+col+',0.10)';x.lineWidth=3;x.beginPath();x.moveTo(cxp,Math.min(o,cl)-25*rnd()-10);x.lineTo(cxp,Math.max(o,cl)+25*rnd()+10);x.stroke();
+    x.fillStyle='rgba('+col+',0.10)';x.fillRect(cxp-9,Math.min(o,cl),18,Math.max(4,Math.abs(cl-o)));}
+  var gold=x.createLinearGradient(0,0,W,H);gold.addColorStop(0,'#fbbf24');gold.addColorStop(.5,'#d97706');gold.addColorStop(1,'#fbbf24');
+  x.strokeStyle=gold;x.lineWidth=10;x.strokeRect(36,36,W-72,H-72);x.lineWidth=2;x.strokeRect(62,62,W-124,H-124);
+  [[62,62,1,1],[W-62,62,-1,1],[62,H-62,1,-1],[W-62,H-62,-1,-1]].forEach(function(q){x.fillStyle=gold;x.beginPath();x.moveTo(q[0],q[1]);x.lineTo(q[0]+q[2]*52,q[1]);x.lineTo(q[0],q[1]+q[3]*52);x.closePath();x.fill();});
+  x.textAlign='center';x.textBaseline='alphabetic';
+  x.fillStyle=gold;rrect(x,W/2-34,98,68,68,16);x.fill();
+  x.fillStyle='#000';x.font='900 44px Arial, sans-serif';x.fillText('A',W/2,150);
+  x.fillStyle='#e5e7eb';x.font='700 26px Arial, sans-serif';try{x.letterSpacing='6px';}catch(e){}x.fillText('APEX FOREX ACADEMY',W/2,208);
+  x.fillStyle=gold;x.font='bold 96px Georgia, "Times New Roman", serif';try{x.letterSpacing='8px';}catch(e){}x.fillText('CERTIFICATE',W/2,330);
+  x.fillStyle='#e5e7eb';x.font='600 32px Arial, sans-serif';try{x.letterSpacing='14px';}catch(e){}x.fillText('OF COMPLETION',W/2,390);
+  try{x.letterSpacing='0px';}catch(e){}
+  x.fillStyle='#9ca3af';x.font='italic 30px Georgia, serif';x.fillText('This is to certify that',W/2,478);
+  var name=c.name,size=104;x.font='italic 700 '+size+'px Georgia, "Times New Roman", serif';
+  while(x.measureText(name).width>1150&&size>40){size-=4;x.font='italic 700 '+size+'px Georgia, "Times New Roman", serif';}
+  var nw=x.measureText(name).width;x.fillStyle=gold;x.fillText(name,W/2,600);
+  x.strokeStyle='rgba(245,158,11,0.6)';x.lineWidth=2;x.beginPath();x.moveTo(W/2-nw/2-50,632);x.lineTo(W/2+nw/2+50,632);x.stroke();
+  x.fillStyle='#d1d5db';x.font='30px Arial, sans-serif';x.fillText('has successfully completed all 15 modules and 50 lessons of the',W/2,706);
+  x.fillStyle='#ffffff';x.font='bold 40px Georgia, serif';x.fillText('Forex Supply & Demand, Smart Money Concepts',W/2,768);x.fillText('& Price Action Masterclass',W/2,820);
+  x.fillStyle='#9ca3af';x.font='24px Arial, sans-serif';x.fillText('covering market structure, liquidity, order blocks, risk management and trading psychology.',W/2,868);
+  var ds=new Date(c.date).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+  x.strokeStyle='rgba(229,231,235,0.5)';x.lineWidth=2;
+  x.beginPath();x.moveTo(190,990);x.lineTo(520,990);x.stroke();x.beginPath();x.moveTo(1080,990);x.lineTo(1410,990);x.stroke();
+  x.fillStyle='#ffffff';x.font='bold 32px Arial, sans-serif';x.fillText(ds,355,970);
+  x.fillStyle='#9ca3af';x.font='20px Arial, sans-serif';x.fillText('DATE OF ISSUE',355,1022);
+  x.fillStyle='#fbbf24';x.font='italic 60px "Brush Script MT","Segoe Script","Lucida Handwriting",cursive';x.fillText(CONFIG.INSTRUCTOR,1245,968);
+  x.fillStyle='#e5e7eb';x.font='bold 22px Arial, sans-serif';x.fillText(CONFIG.INSTRUCTOR,1245,1022);
+  x.fillStyle='#9ca3af';x.font='18px Arial, sans-serif';x.fillText(CONFIG.INSTRUCTOR_TITLE.toUpperCase(),1245,1048);
+  var sg=x.createRadialGradient(W/2-20,930,10,W/2,945,90);sg.addColorStop(0,'#fde68a');sg.addColorStop(1,'#b45309');
+  x.fillStyle=sg;x.beginPath();x.arc(W/2,945,88,0,Math.PI*2);x.fill();
+  x.strokeStyle='#78350f';x.lineWidth=3;x.beginPath();x.arc(W/2,945,74,0,Math.PI*2);x.stroke();
+  x.fillStyle='#451a03';x.font='900 52px Georgia, serif';x.fillText('A',W/2,962);x.font='bold 15px Arial, sans-serif';x.fillText('VERIFIED',W/2,985);x.fillText('APEX FOREX',W/2,917);
+  x.fillStyle='#9ca3af';x.font='22px "Courier New", monospace';x.fillText('Certificate ID: '+c.id,W/2,1078);
+  x.fillStyle='#6b7280';x.font='16px Arial, sans-serif';x.fillText('Verify this certificate on the Academy website using the ID above. Educational certificate only, not a financial licence or advice.',W/2,1104);
+}
+function saveBlob(b,name){var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},800);}
+function jpegToPdf(dataUrl,wPx,hPx){
+  var bin=atob(dataUrl.split(',')[1]),len=bin.length,img=new Uint8Array(len),i;for(i=0;i<len;i++)img[i]=bin.charCodeAt(i);
+  var W=842,H=595,parts=[],offs=[],pos=0;
+  function add(s){var a=(typeof s==='string')?new TextEncoder().encode(s):s;parts.push(a);pos+=a.length;}
+  add('%PDF-1.4\n');
+  offs[1]=pos;add('1 0 obj<</Type/Catalog/Pages 2 0 R>>endobj\n');
+  offs[2]=pos;add('2 0 obj<</Type/Pages/Kids[3 0 R]/Count 1>>endobj\n');
+  offs[3]=pos;add('3 0 obj<</Type/Page/Parent 2 0 R/MediaBox[0 0 '+W+' '+H+']/Resources<</XObject<</Im0 4 0 R>>>>/Contents 5 0 R>>endobj\n');
+  offs[4]=pos;add('4 0 obj<</Type/XObject/Subtype/Image/Width '+wPx+'/Height '+hPx+'/ColorSpace/DeviceRGB/BitsPerComponent 8/Filter/DCTDecode/Length '+len+'>>stream\n');add(img);add('\nendstream\nendobj\n');
+  var cs='q '+W+' 0 0 '+H+' 0 0 cm /Im0 Do Q';
+  offs[5]=pos;add('5 0 obj<</Length '+cs.length+'>>stream\n'+cs+'\nendstream\nendobj\n');
+  var xr=pos,x='xref\n0 6\n0000000000 65535 f \n';
+  for(i=1;i<=5;i++)x+=('0000000000'+offs[i]).slice(-10)+' 00000 n \n';
+  add(x+'trailer<</Size 6/Root 1 0 R>>\nstartxref\n'+xr+'\n%%EOF\n');
+  return new Blob(parts,{type:'application/pdf'});
+}
+function downloadCert(kind){
+  var c=getCert(),cv=$('certCanvas');if(!c)return;
+  var base='Apex-Forex-Certificate-'+c.name.replace(/[^A-Za-z0-9]+/g,'-');
+  if(kind==='png'){cv.toBlob(function(b){saveBlob(b,base+'.png');},'image/png');}
+  else{saveBlob(jpegToPdf(cv.toDataURL('image/jpeg',0.95),cv.width,cv.height),base+'.pdf');}
+}
+function verifyCertificate(){
+  var id=($('verId').value||'').trim().toUpperCase(), out=$('verMsg');
+  function show(ok,t){out.className='text-xs mt-3 '+(ok?'text-emerald-400':'text-red-400');out.textContent=t;}
+  if(!/^AFA-\d{4}-[A-Z0-9]{10}$/.test(id))return show(false,'Invalid certificate ID format.');
+  fetch(CONFIG.CERT_VERIFY_ENDPOINT+'?id='+encodeURIComponent(id))
+    .then(function(r){if(!r.ok)throw new Error('http');return r.json();})
+    .then(function(d){if(d&&d.valid)show(true,'Valid certificate: '+d.name+(d.date?' ('+new Date(d.date).toLocaleDateString('en-GB')+')':''));else show(false,'Certificate not found.');})
+    .catch(function(){var all=load('apex_certs',{});if(all[id])show(true,'Found on this device: '+all[id].name+' (server verification unavailable).');else show(false,'Could not verify: server unavailable and no local record.');});
+}
+
+/* =====================================================================
+   CONTENT PROTECTION (deterrents) + USER WATERMARK
+   Note: browsers cannot truly block screenshots or screen recording.
+   These measures make casual copying hard and make leaks traceable.
+   ===================================================================== */
+function applyWatermark(){
+  var el=$('wm');if(!el)return;
+  if(!session){el.style.backgroundImage='none';return;}
+  var t=(session.name+'  |  '+session.email).replace(/[<>&]/g,'');
+  var svg='<svg xmlns="http://www.w3.org/2000/svg" width="460" height="280"><g transform="rotate(-24 230 140)"><text x="20" y="130" fill="rgba(255,255,255,0.085)" font-size="16" font-family="Arial" font-weight="700">'+t+'</text><text x="20" y="156" fill="rgba(255,255,255,0.06)" font-size="11" font-family="Arial">APEX FOREX ACADEMY - licensed to this account only</text></g></svg>';
+  el.style.backgroundImage='url("data:image/svg+xml;utf8,'+encodeURIComponent(svg)+'")';
+}
+function inField(e){var t=e.target;return !!(t&&/^(INPUT|TEXTAREA)$/.test(t.tagName));}
+function tempBlur(ms){document.body.classList.add('blurred');setTimeout(function(){if(document.hasFocus())document.body.classList.remove('blurred');},ms||1800);}
+function wipeClipboard(){try{navigator.clipboard.writeText(' ').catch(function(){});}catch(e){}}
+function devtoolsCheck(){
+  if(/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent))return;
+  var th=170,open=(window.outerWidth-window.innerWidth>th)||(window.outerHeight-window.innerHeight>th);
+  document.body.classList.toggle('shielded',open&&(!!session||!!currentLesson));
+}
+function initProtection(){
+  document.body.classList.add('protected');
+  ['contextmenu','copy','cut','dragstart','selectstart'].forEach(function(ev){document.addEventListener(ev,function(e){if(!inField(e))e.preventDefault();});});
+  document.addEventListener('keydown',function(e){
+    var k=(e.key||'').toLowerCase(),ctrl=e.ctrlKey||e.metaKey;
+    var blockKey=(k==='printscreen')||(k==='f12')||(ctrl&&e.shiftKey&&['i','j','c','s'].indexOf(k)>-1)||(ctrl&&['u','s','p'].indexOf(k)>-1)||(e.metaKey&&e.shiftKey&&['3','4','5','#','$','%'].indexOf(k)>-1);
+    if(blockKey){e.preventDefault();tempBlur(2000);if(k==='printscreen')wipeClipboard();return false;}
+    if(ctrl&&(k==='c'||k==='a'||k==='x')&&!inField(e))e.preventDefault();
+    if(e.key==='Escape'){closeModal('certModal');closeModal('verifyModal');}
+  },true);
+  document.addEventListener('keyup',function(e){if((e.key||'')==='PrintScreen'){wipeClipboard();tempBlur(2000);}});
+  window.addEventListener('blur',function(){document.body.classList.add('blurred');});
+  window.addEventListener('focus',function(){document.body.classList.remove('blurred');});
+  document.addEventListener('visibilitychange',function(){document.body.classList.toggle('blurred',document.hidden);});
+  window.addEventListener('beforeprint',function(){document.body.classList.add('blurred');});
+  ['verifyModal','certModal'].forEach(function(id){$(id).addEventListener('click',function(e){if(e.target===this)closeModal(id);});});
+  setInterval(devtoolsCheck,1500);
+}
+
+buildBg();loadProgress();loadRead();updateAuthUI();applyWatermark();initProtection();startReadTimer();
 </script>
 </body>
 </html>
