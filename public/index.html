@@ -6,7 +6,7 @@
 <title>Apex Forex Academy | SMC & Price Action Masterclass</title>
 <meta name="description" content="15 modules and 50 lessons on Forex, Supply & Demand, Smart Money Concepts, price action, risk management and trading psychology, with a chart for every lesson.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23f59e0b'/%3E%3Ctext x='32' y='45' font-size='38' font-weight='900' text-anchor='middle' fill='%23000' font-family='Arial'%3EA%3C/text%3E%3C/svg%3E">
-<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
 <script src="https://unpkg.com/lucide@0.469.0/dist/umd/lucide.min.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
@@ -291,8 +291,10 @@ var CONFIG = {
   INSTRUCTOR: 'Gemechu',                 // name printed on the certificate signature
   INSTRUCTOR_TITLE: 'Lead Instructor',
   CERT_ISSUE_ENDPOINT: '/api/certificate',        // optional: POST {id,name,email,date} to record certificates
-  CERT_VERIFY_ENDPOINT: '/api/verify-certificate' // optional: GET ?id=... -> {valid:true,name,date}
-                    // lessons visible without VIP
+  CERT_VERIFY_ENDPOINT: '/api/verify-certificate', // optional: GET ?id=... -> {valid:true,name,date}
+  // Serverless mode (GitHub Pages or any static host): list approved students here.
+  // Admin Panel > "Approve a student" generates each line. Paste it between the brackets.
+  STUDENT_HASHES: []
 };
 
 /* =====================================================================
@@ -947,11 +949,12 @@ function sha(s){
 }
 function verifyCode(email,code){
   return fetch(CONFIG.VERIFY_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email:email,code:code})})
-    .then(function(r){if(!r.ok)throw new Error('http '+r.status);return r.json();})
+    .then(function(r){if(r.status>=500||r.status===404)throw new Error('http '+r.status);return r.json().catch(function(){return {};});})
     .then(function(d){return {ok:!!(d&&d.success),name:(d&&d.name)||''};})
     .catch(function(){
       if(CONFIG.ALLOW_OFFLINE_DEMO&&/^\d{6}$/.test(code))return {ok:true,offline:true};
-      return {ok:false,network:true};
+      if(!CONFIG.STUDENT_HASHES.length)return {ok:false,network:true};
+      return sha(email+':'+code).then(function(h){return {ok:CONFIG.STUDENT_HASHES.indexOf(h)>-1};});
     });
 }
 function setMsg(id,text,good){var m=$(id);m.textContent=text;m.className='text-xs mt-3 '+(good?'text-emerald-400':'text-red-400');}
@@ -1094,7 +1097,6 @@ document.addEventListener('keydown',function(e){
 ['registerModal','loginModal'].forEach(function(id){$(id).addEventListener('click',function(e){if(e.target===this)closeModal(id);});});
 $('reader').addEventListener('click',function(e){if(e.target===this||e.target===this.firstElementChild)closeReader();});
 
-document.addEventListener('DOMContentLoaded',function(){});
 /* =====================================================================
    READ-TIME GATE (anti-skip): a lesson can only be completed after a minimum reading time
    ===================================================================== */
@@ -1495,6 +1497,7 @@ function openAdmin(){
   var h='<div class="flex items-start justify-between gap-3 mb-5"><div><div class="text-[11px] text-amber-400 font-bold uppercase tracking-wide">Admin only</div><h2 class="text-xl sm:text-3xl font-black text-white mt-1">Admin Panel</h2></div><button onclick="closeAdmin()" aria-label="Close" class="text-gray-400 hover:text-white p-1"><i data-lucide="x" class="w-6 h-6"></i></button></div>';
   h+='<div class="grid grid-cols-3 gap-3 mb-5"><div class="rounded-xl bg-gray-900/60 border border-gray-800 p-4 text-center"><div class="text-2xl font-black text-amber-400">'+rows.length+'</div><div class="text-[11px] text-gray-400 uppercase">Students</div></div><div class="rounded-xl bg-gray-900/60 border border-gray-800 p-4 text-center"><div class="text-2xl font-black text-amber-400">'+certs+'</div><div class="text-[11px] text-gray-400 uppercase">Certificates</div></div><div class="rounded-xl bg-gray-900/60 border border-gray-800 p-4 text-center"><div class="text-2xl font-black text-amber-400">'+avg+'%</div><div class="text-[11px] text-gray-400 uppercase">Avg progress</div></div></div>';
   h+='<div class="flex flex-wrap gap-2 mb-4"><button onclick="adminPreviewCert()" class="px-4 py-2 rounded-xl text-xs font-bold bg-gray-800 border border-gray-700 hover:bg-gray-700">Preview certificate</button><button onclick="closeAdmin();openQuizIntro()" class="px-4 py-2 rounded-xl text-xs font-bold bg-gray-800 border border-gray-700 hover:bg-gray-700">Open final exam</button><button onclick="adminExportCSV()" class="px-4 py-2 rounded-xl text-xs font-bold gold-bg-gradient text-black">Export CSV</button></div>';
+  h+='<div class="rounded-xl border border-gray-800 bg-gray-900/50 p-4 mb-4"><div class="text-xs font-bold text-amber-400 uppercase tracking-wide mb-2">Approve a student (serverless mode)</div><div class="grid sm:grid-cols-3 gap-2"><input id="apEmail" type="email" placeholder="Student email" class="bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-white text-xs outline-none focus:border-amber-500"><input id="apCode" type="text" maxlength="6" inputmode="numeric" placeholder="6-digit code" class="bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-white text-xs outline-none focus:border-amber-500"><button onclick="adminMakeHash()" class="px-4 py-2 rounded-lg text-xs font-bold gold-bg-gradient text-black">Generate line</button></div><textarea id="apOut" rows="2" class="mt-2 w-full bg-black/40 border border-gray-700 rounded-lg p-2 text-[11px] text-emerald-300 font-mono" placeholder="Paste the generated line inside STUDENT_HASHES in index.html"></textarea></div>';
   if(!rows.length)h+='<p class="text-sm text-gray-400 py-6 text-center">No students have registered on this browser yet.</p>';
   else{
     h+='<div class="overflow-x-auto rounded-xl border border-gray-800"><table class="w-full text-xs"><thead class="bg-gray-900 text-gray-400 uppercase"><tr><th class="text-left p-3">Student</th><th class="text-left p-3">Progress</th><th class="text-left p-3">Exam best</th><th class="text-left p-3">Certificate</th></tr></thead><tbody>';
@@ -1505,6 +1508,12 @@ function openAdmin(){
   }
   h+='<p class="text-[11px] text-gray-500 mt-4 leading-relaxed">This list shows only the students who used this browser. To see every student on every device, connect the site to a server database.</p>';
   $('adminBody').innerHTML=h;$('adminModal').classList.remove('hidden');document.body.style.overflow='hidden';icons();
+}
+function adminMakeHash(){
+  if(!isAdmin())return;
+  var em=$('apEmail').value.trim().toLowerCase(),cd=$('apCode').value.trim();
+  if(!EMAIL_RE.test(em)||!/^\d{6}$/.test(cd)){$('apOut').value='Enter a valid email and a 6-digit code.';return;}
+  sha(em+':'+cd).then(function(h){$('apOut').value="'"+h+"',  // "+em;});
 }
 function closeAdmin(){var m=$('adminModal');if(m&&!m.classList.contains('hidden')){m.classList.add('hidden');document.body.style.overflow='';}}
 function adminExportCSV(){
