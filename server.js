@@ -31,7 +31,7 @@ const bot = new TelegramBot(BOT_TOKEN, {
 // Handle Polling Errors (Conflict 409 fix)
 bot.on('polling_error', (error) => {
   if (error.code === 'ETELEGRAM' && error.message.includes('409 Conflict')) {
-    console.error('⚠️ Conflict Error (409): Bot token is currently running on another instance/PC![cite: 1]');
+    console.error('⚠️ Conflict Error (409): Bot token is currently running on another instance/PC!');
   } else {
     console.error(`⚠️ Telegram Polling Error [${error.code}]: ${error.message}`);
   }
@@ -42,7 +42,7 @@ const pendingUsers = new Map();     // chatId -> userData
 const verifiedCodes = new Map();    // otpCode -> { email, verified, createdAt }
 const pendingApprovals = new Map(); // pendingId -> { userChatId, email, method }
 
-// 🌟 Persistent JSON File Storage (Data barattoota kaffaltii raawwatanii kuusuuf)
+// 🌟 Persistent JSON File Storage
 const APPROVED_FILE = path.join(__dirname, 'approved_users.json');
 let approvedEmails = new Set();
 
@@ -90,16 +90,30 @@ bot.onText(/\/remove (.+)/, (msg, match) => {
 
   const targetEmail = match[1].trim().toLowerCase();
 
+  // 1. Email storage irraa haquu
+  let removed = false;
   if (approvedEmails.has(targetEmail)) {
     approvedEmails.delete(targetEmail);
-    saveAllApprovedEmails();
-    bot.sendMessage(chatId, `🗑️ **Success:** Email \`\${targetEmail}\` has been removed from approved list!`, { parse_mode: 'Markdown' });
+    removed = true;
+  }
+
+  // 2. OTP active ta'an keessaas haquu
+  for (const [code, record] of verifiedCodes.entries()) {
+    if (record.email === targetEmail) {
+      verifiedCodes.delete(code);
+    }
+  }
+
+  saveAllApprovedEmails();
+
+  if (removed) {
+    bot.sendMessage(chatId, `🗑️ **Success:** Email \`\${targetEmail}\` and active OTPs have been removed!`, { parse_mode: 'Markdown' });
   } else {
     bot.sendMessage(chatId, `⚠️ Email \`\${targetEmail}\` was not found in the approved list.`, { parse_mode: 'Markdown' });
   }
 });
 
-// 🧹 2. Namoota Galmaa'an Hunda Haxaawuuf: /clearall
+// 🧹 2. Namoota Galmaa'an Hunda fi OTP Active Hunda Haxaawuuf: /clearall
 bot.onText(/\/clearall/, (msg) => {
   const chatId = String(msg.chat.id).trim();
 
@@ -107,11 +121,15 @@ bot.onText(/\/clearall/, (msg) => {
     return bot.sendMessage(chatId, "❌ You are not authorized to perform this action!");
   }
 
+  // Storage hunda guutummaatti qulqulleessuu
   approvedEmails.clear();
-  verifiedCodes.clear();
-  saveAllApprovedEmails();
+  verifiedCodes.clear();      // OTP active ta'an hunda ni dhabamsiisa
+  pendingApprovals.clear();
+  pendingUsers.clear();
 
-  bot.sendMessage(chatId, "🧹 **All approved users and active OTPs have been completely cleared!**", { parse_mode: 'Markdown' });
+  saveAllApprovedEmails(); // JSON file irratti [] save godha
+
+  bot.sendMessage(chatId, "🧹 **All approved users, active OTPs, and pending sessions have been COMPLETELY CLEARED!**", { parse_mode: 'Markdown' });
 });
 
 // ---------------- TELEGRAM BOT FLOW ----------------
