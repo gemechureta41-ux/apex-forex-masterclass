@@ -80,7 +80,7 @@ function saveAllApprovedEmails() {
 
 // ---------------- ADMIN MANAGEMENT COMMANDS ----------------
 
-// 🗑️ 1. Email Tokko Baasuuf: /remove email@gmail.com
+// 🗑️ 1. Email Tokko Baasuuf fi Koodii Isaa Expire Gochuuf: /remove email@gmail.com
 bot.onText(/\/remove (.+)/, (msg, match) => {
   const chatId = String(msg.chat.id).trim();
 
@@ -90,14 +90,14 @@ bot.onText(/\/remove (.+)/, (msg, match) => {
 
   const targetEmail = match[1].trim().toLowerCase();
 
-  // 1. Email storage irraa haquu
+  // 1. Email approved list irraa haquu
   let removed = false;
   if (approvedEmails.has(targetEmail)) {
     approvedEmails.delete(targetEmail);
     removed = true;
   }
 
-  // 2. OTP active ta'an keessaas haquu
+  // 2. Koodii OTP active ta'an hunda yeruma sana invalidate/expire gochuu
   for (const [code, record] of verifiedCodes.entries()) {
     if (record.email === targetEmail) {
       verifiedCodes.delete(code);
@@ -107,13 +107,13 @@ bot.onText(/\/remove (.+)/, (msg, match) => {
   saveAllApprovedEmails();
 
   if (removed) {
-    bot.sendMessage(chatId, `🗑️ **Success:** Email \`\${targetEmail}\` and active OTPs have been removed!`, { parse_mode: 'Markdown' });
+    bot.sendMessage(chatId, `🗑️ **Success:** Email \`\${targetEmail}\` and all associated OTP codes have been invalidated!`, { parse_mode: 'Markdown' });
   } else {
     bot.sendMessage(chatId, `⚠️ Email \`\${targetEmail}\` was not found in the approved list.`, { parse_mode: 'Markdown' });
   }
 });
 
-// 🧹 2. Namoota Galmaa'an Hunda fi OTP Active Hunda Haxaawuuf: /clearall
+// 🧹 2. Koodii DURAAN ERGAME HUNDA EXPIRE GOCHUUF FI GALMEE QULQULLEESSUUF: /clearall
 bot.onText(/\/clearall/, (msg) => {
   const chatId = String(msg.chat.id).trim();
 
@@ -121,15 +121,15 @@ bot.onText(/\/clearall/, (msg) => {
     return bot.sendMessage(chatId, "❌ You are not authorized to perform this action!");
   }
 
-  // Storage hunda guutummaatti qulqulleessuu
+  // Koodii OTP fi Email kuufaman HUNDA guutummaatti haxaawuu
   approvedEmails.clear();
-  verifiedCodes.clear();      // OTP active ta'an hunda ni dhabamsiisa
+  verifiedCodes.clear();      // 🛑 Koodii uumame hunda yeruma sana EXPIRE godha!
   pendingApprovals.clear();
   pendingUsers.clear();
 
   saveAllApprovedEmails(); // JSON file irratti [] save godha
 
-  bot.sendMessage(chatId, "🧹 **All approved users, active OTPs, and pending sessions have been COMPLETELY CLEARED!**", { parse_mode: 'Markdown' });
+  bot.sendMessage(chatId, "🧹 **ALL PREVIOUS OTP CODES ARE NOW EXPIRED & ALL USERS CLEARED!**\n\nNo one can log in using previous OTP codes anymore.", { parse_mode: 'Markdown' });
 });
 
 // ---------------- TELEGRAM BOT FLOW ----------------
@@ -336,10 +336,11 @@ app.post('/api/verify-code', (req, res) => {
 
   const record = verifiedCodes.get(cleanCode);
 
+  // 🛑 Yoo koodiin storage keessatti hin jire ta'e (haqameera ykn expire ta'eera)
   if (!record) {
     return res.status(400).json({ 
       success: false, 
-      message: 'Invalid Verification Code!' 
+      message: 'Invalid or Expired Verification Code! Please generate a new code.' 
     });
   }
 
