@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const fs = require('fs');
 const TelegramBot = require('node-telegram-bot-api');
 
 const app = express();
@@ -24,10 +25,82 @@ bot.on('polling_error', (error) => {
   console.error(`⚠️ Telegram Polling Error [${error.code}]: ${error.message}`);
 });
 
-// Storage
+// Storage Variables
 const pendingUsers = new Map();     // chatId -> userData
-const verifiedCodes = new Map();    // otpCode -> { email, verified }
+const verifiedCodes = new Map();    // otpCode -> { email, verified, createdAt }
 const pendingApprovals = new Map(); // pendingId -> { userChatId, email, method }
+
+// 🌟 Persistent JSON File Storage (Data barattoota kaffaltii raawwatanii kuusuuf)
+const APPROVED_FILE = path.join(__dirname, 'approved_users.json');
+let approvedEmails = new Set();
+
+// Read approved users from file
+if (fs.existsSync(APPROVED_FILE)) {
+  try {
+    const rawData = fs.readFileSync(APPROVED_FILE, 'utf8');
+    const parsedData = JSON.parse(rawData);
+    approvedEmails = new Set(parsedData);
+    console.log(`✅ Loaded ${approvedEmails.size} approved users from database.`);
+  } catch (err) {
+    console.error('❌ Error reading approved_users.json:', err.message);
+  }
+}
+
+// Helper function: Email persistent storage keessatti save gochuu
+function saveApprovedEmail(email) {
+  approvedEmails.add(email.toLowerCase());
+  try {
+    fs.writeFileSync(APPROVED_FILE, JSON.stringify([...approvedEmails], null, 2));
+    console.log(`💾 Saved paid student email: ${email}`);
+  } catch (err) {
+    console.error('❌ Failed to write to approved_users.json:', err.message);
+  }
+}
+
+// Helper function: Storage guutummaatti update/qulqulleessuu
+function saveAllApprovedEmails() {
+  try {
+    fs.writeFileSync(APPROVED_FILE, JSON.stringify([...approvedEmails], null, 2));
+  } catch (err) {
+    console.error('❌ Failed to update approved_users.json:', err.message);
+  }
+}
+
+// ---------------- ADMIN MANAGEMENT COMMANDS ----------------
+
+// 🗑️ 1. Email Tokko Baasuuf: /remove email@gmail.com
+bot.onText(/\/remove (.+)/, (msg, match) => {
+  const chatId = String(msg.chat.id).trim();
+
+  if (chatId !== ADMIN_CHAT_ID) {
+    return bot.sendMessage(chatId, "❌ You are not authorized to perform this action!");
+  }
+
+  const targetEmail = match[1].trim().toLowerCase();
+
+  if (approvedEmails.has(targetEmail)) {
+    approvedEmails.delete(targetEmail);
+    saveAllApprovedEmails();
+    bot.sendMessage(chatId, `🗑️ **Success:** Email \`\${targetEmail}\` has been removed from approved list!`, { parse_mode: 'Markdown' });
+  } else {
+    bot.sendMessage(chatId, `⚠️ Email \`\${targetEmail}\` was not found in the approved list.`, { parse_mode: 'Markdown' });
+  }
+});
+
+// 🧹 2. Namoota Galmaa'an Hunda Haxaawuuf: /clearall
+bot.onText(/\/clearall/, (msg) => {
+  const chatId = String(msg.chat.id).trim();
+
+  if (chatId !== ADMIN_CHAT_ID) {
+    return bot.sendMessage(chatId, "❌ You are not authorized to perform this action!");
+  }
+
+  approvedEmails.clear();
+  verifiedCodes.clear();
+  saveAllApprovedEmails();
+
+  bot.sendMessage(chatId, "🧹 **All approved users and active OTPs have been completely cleared!**", { parse_mode: 'Markdown' });
+});
 
 // ---------------- TELEGRAM BOT FLOW ----------------
 
@@ -58,6 +131,25 @@ bot.on('message', (msg) => {
     }
 
     userState.email = text;
+
+    // 🔍 SAKKATTA'IINSA: Yoo email kun kaffaltii duraan raawwateera ta'e OTP haaraa ergaaf
+    if (approvedEmails.has(text)) {
+      const newGeneratedCode = String(Math.floor(100000 + Math.random() * 900000));
+      
+      verifiedCodes.set(newGeneratedCode, { 
+        email: text, 
+        verified: false,
+        createdAt: Date.now()
+      });
+
+      return bot.sendMessage(
+        chatId,
+        `✅ **Payment Verified!**\n\nSystem check confirmed that email (*${text}*) has already completed payment.\n\n🔑 **Your NEW Verification OTP Code:** \`\${newGeneratedCode}\`\n\nEnter this code and your email on the website to access your masterclass!`,
+        { parse_mode: 'Markdown' }
+      );
+    }
+
+    // ❌ Yoo kaffaltii hin raawwanne ta'e kaffaltii gaafata
     userState.step = 'AWAITING_PAYMENT_METHOD';
 
     const opts = {
@@ -69,7 +161,7 @@ bot.on('message', (msg) => {
       }
     };
 
-    bot.sendMessage(chatId, `✅ Email: *${userState.email}* registered successfully.\n\nPlease select your payment method:`, { parse_mode: 'Markdown', ...opts });
+    bot.sendMessage(chatId, `✅ Email: *${userState.email}* registered.\n\n⚠️ No previous payment record found for this email. Please select payment method to complete enrollment:`, { parse_mode: 'Markdown', ...opts });
   }
 });
 
@@ -106,26 +198,27 @@ bot.on('callback_query', (query) => {
     }
 
     if (data.startsWith('APPROVE_')) {
-      // Generate Real 6-Digit Random Verification OTP Code
       const generatedCode = String(Math.floor(100000 + Math.random() * 900000));
+      const studentEmail = pendingData.email.toLowerCase();
+
+      // Email persistent storage (approved_users.json) irratti save gochuu
+      saveApprovedEmail(studentEmail);
       
-      // Store code linked to the registered student's email
+      // OTP Storage
       verifiedCodes.set(generatedCode, { 
-        email: pendingData.email.toLowerCase(), 
-        verified: false 
+        email: studentEmail, 
+        verified: false,
+        createdAt: Date.now()
       });
 
-      // Build Approval Message with Real Code
       const studentMessage = `🎉 *Payment Approved by Admin!*\n\nYour payment has been successfully verified.\n\n🔑 *Your Verification OTP Code:* \`\${generatedCode}\`\n\nEnter this code along with your registered email (*${pendingData.email}*) on the website to instantly unlock VIP Masterclass Access!`;
 
-      // Notify Student with Real OTP Code
       bot.sendMessage(
         pendingData.userChatId,
         studentMessage,
         { parse_mode: 'Markdown' }
       );
 
-      // Edit Admin Message Caption
       bot.editMessageCaption(
         `✅ **APPROVED PAYMENT**\n\n• **Student Email:** ${pendingData.email}\n• **Method:** ${pendingData.method}\n• **Generated OTP:** \`\${generatedCode}\`\n• **User ID:** ${pendingData.userChatId}`,
         { chat_id: chatId, message_id: query.message.message_id, parse_mode: 'Markdown' }
@@ -133,7 +226,6 @@ bot.on('callback_query', (query) => {
 
       bot.answerCallbackQuery(query.id, { text: 'Payment Approved and OTP sent to student!' });
     } else {
-      // Reject Payment
       bot.sendMessage(
         pendingData.userChatId,
         `❌ **Payment Verification Failed**\n\nYour payment receipt could not be verified by the Admin. Please double check your payment or contact support.`,
@@ -166,7 +258,6 @@ bot.on('photo', (msg) => {
     method: userState.method || 'Unknown'
   });
 
-  // Direct Forward to Admin Chat ID
   if (ADMIN_CHAT_ID) {
     const adminKeyboard = {
       reply_markup: {
@@ -192,7 +283,6 @@ bot.on('photo', (msg) => {
     console.error('❌ ADMIN_CHAT_ID is missing!');
   }
 
-  // Response to Student
   bot.sendMessage(
     chatId,
     `⏳ **Payment Received — Status: Pending Review**\n\nWe have received your payment receipt screenshot. Please wait while the Admin reviews and approves your transaction.\n\nYou will receive your **Verification OTP Code** here immediately once approved!`,
@@ -200,7 +290,7 @@ bot.on('photo', (msg) => {
   );
 });
 
-// REST API for Website Verification (STRICT CHECK FOR BOTH OTP & EMAIL)
+// REST API for Website Verification (STRICT EMAIL + EXPIRATION CHECK)
 app.post('/api/verify-code', (req, res) => {
   const { code, email } = req.body;
 
@@ -223,7 +313,17 @@ app.post('/api/verify-code', (req, res) => {
     });
   }
 
-  // Verify that the code belongs to this specific email address
+  // 1. Check Expiration (Daqiiqaa 15)
+  const OTP_EXPIRATION_TIME = 15 * 60 * 1000;
+  if (Date.now() - record.createdAt > OTP_EXPIRATION_TIME) {
+    verifiedCodes.delete(cleanCode);
+    return res.status(400).json({
+      success: false,
+      message: 'This OTP code has expired! Please send your registered email to the Telegram bot again to receive a new code.'
+    });
+  }
+
+  // 2. Check Email Match
   if (record.email !== cleanEmail) {
     return res.status(403).json({ 
       success: false, 
@@ -231,7 +331,6 @@ app.post('/api/verify-code', (req, res) => {
     });
   }
 
-  // Mark as verified
   record.verified = true;
 
   return res.json({ 
