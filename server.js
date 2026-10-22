@@ -18,11 +18,23 @@ const ADMIN_CHAT_ID = String(process.env.ADMIN_CHAT_ID || '6741214107').trim();
 
 console.log(`🤖 Telegram Bot Initializing... Admin Chat ID: ${ADMIN_CHAT_ID}`);
 
-const bot = new TelegramBot(BOT_TOKEN, { polling: true });
+// Telegram Bot Options with Improved Polling Handling
+const bot = new TelegramBot(BOT_TOKEN, { 
+  polling: {
+    autoStart: true,
+    params: {
+      timeout: 10
+    }
+  } 
+});
 
-// Handle Polling Errors
+// Handle Polling Errors (Conflict 409 fix)
 bot.on('polling_error', (error) => {
-  console.error(`⚠️ Telegram Polling Error [${error.code}]: ${error.message}`);
+  if (error.code === 'ETELEGRAM' && error.message.includes('409 Conflict')) {
+    console.error('⚠️ Conflict Error (409): Bot token is currently running on another instance/PC![cite: 1]');
+  } else {
+    console.error(`⚠️ Telegram Polling Error [${error.code}]: ${error.message}`);
+  }
 });
 
 // Storage Variables
