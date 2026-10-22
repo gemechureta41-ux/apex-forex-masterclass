@@ -48,13 +48,35 @@ body.blurred #readerBody,body.blurred #modulesContainer,body.blurred #dashboardS
 #shield{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;background:#070a13;color:#fbbf24;text-align:center;padding:24px;font-weight:800;font-size:18px}
 body.shielded #shield{display:flex}
 @media print{body *{display:none!important}body::before{content:"Printing is disabled for this course.";display:block;padding:40px;font:20px sans-serif;color:#000}}
+
+/* ---------- Professional background extras ---------- */
+#bg .aurora{position:absolute;left:-25%;right:-25%;top:-12%;height:60%;background:conic-gradient(from 200deg at 50% 0%,rgba(245,158,11,0),rgba(245,158,11,.16),rgba(56,189,248,.12),rgba(16,185,129,.10),rgba(245,158,11,0));filter:blur(70px);animation:sway 26s ease-in-out infinite alternate}
+#bg .vignette{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,transparent 55%,rgba(3,5,10,.72) 100%)}
+#bg .gl{position:absolute;font-weight:800;color:rgba(245,158,11,.07);animation:bob 20s ease-in-out infinite;user-select:none;line-height:1}
+#bg .gl.b{color:rgba(56,189,248,.07)}
+@keyframes sway{0%{transform:translateX(-5%) rotate(-3deg)}100%{transform:translateX(5%) rotate(3deg)}}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-26px) rotate(6deg)}}
+@media (prefers-reduced-motion:reduce){#bg .aurora,#bg .gl{animation:none}}
+/* ---------- Exam ---------- */
+.qopt{width:100%;display:flex;gap:12px;align-items:flex-start;text-align:left;padding:14px 16px;border-radius:14px;border:1px solid rgba(255,255,255,.10);background:rgba(17,24,39,.6);color:#e5e7eb;font-size:14px;line-height:1.5;transition:.15s;cursor:pointer}
+.qopt:hover{border-color:rgba(245,158,11,.5);background:rgba(245,158,11,.06)}
+.qopt .l{flex:0 0 28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;background:#1f2937;color:#fbbf24}
+.qopt.sel{border-color:#f59e0b;background:rgba(245,158,11,.14)}
+.qopt.sel .l{background:#f59e0b;color:#000}
+.qdot{width:30px;height:30px;border-radius:8px;font-size:11px;font-weight:700;background:#111827;border:1px solid #374151;color:#9ca3af;cursor:pointer}
+.qdot.ans{background:rgba(16,185,129,.18);border-color:rgba(16,185,129,.5);color:#6ee7b7}
+.qdot.cur{outline:2px solid #f59e0b}
+body.blurred #quizBody,body.blurred #adminBody{filter:blur(24px);transition:filter .05s}
 </style>
 </head>
 <body class="custom-scrollbar">
 
 <div id="bg" aria-hidden="true">
   <div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div>
+  <div class="aurora"></div>
   <div class="grid"></div>
+  <span class="gl" style="left:5%;top:20%;font-size:92px">$</span><span class="gl b" style="left:84%;top:14%;font-size:78px;animation-delay:-5s">&euro;</span><span class="gl" style="left:72%;top:58%;font-size:104px;animation-delay:-9s">&pound;</span><span class="gl b" style="left:12%;top:64%;font-size:84px;animation-delay:-13s">&yen;</span><span class="gl" style="left:46%;top:8%;font-size:56px;animation-delay:-3s">%</span><span class="gl b" style="left:92%;top:78%;font-size:60px;animation-delay:-7s">$</span>
+  <div class="vignette"></div>
   <svg id="bgChart" viewBox="0 0 1440 500" preserveAspectRatio="none"></svg>
 </div>
 
@@ -77,8 +99,9 @@ body.shielded #shield{display:flex}
         <button onclick="scrollToDashboard()" class="flex items-center gap-2 px-2.5 sm:px-3 py-1.5 rounded-lg bg-gray-800 border border-amber-500/30 hover:border-amber-500 transition">
           <i data-lucide="user" class="w-4 h-4 text-amber-400"></i>
           <span id="navUserName" class="text-xs font-bold text-gray-200 hidden sm:inline max-w-[120px] truncate">User</span>
-          <span class="bg-amber-500/20 text-amber-400 text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded font-bold">VIP</span>
+          <span id="navBadge" class="bg-amber-500/20 text-amber-400 text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded font-bold">VIP</span>
         </button>
+        <button id="adminBtn" onclick="openAdmin()" class="hidden text-xs font-bold px-3 py-1.5 rounded-lg border border-amber-500/60 text-amber-300 hover:bg-amber-500/10">Admin Panel</button>
         <button onclick="logoutUser()" class="text-xs text-red-400 hover:text-red-300 font-semibold">Sign Out</button>
       </div>
     </div>
@@ -131,7 +154,7 @@ body.shielded #shield{display:flex}
     <div class="glass-card rounded-xl py-4"><div class="text-2xl font-black text-amber-400">15</div><div class="text-[11px] text-gray-400 uppercase tracking-wide">Modules</div></div>
     <div class="glass-card rounded-xl py-4"><div class="text-2xl font-black text-amber-400">50</div><div class="text-[11px] text-gray-400 uppercase tracking-wide">Lessons</div></div>
     <div class="glass-card rounded-xl py-4"><div class="text-2xl font-black text-amber-400">50</div><div class="text-[11px] text-gray-400 uppercase tracking-wide">Chart Diagrams</div></div>
-    <div class="glass-card rounded-xl py-4"><div class="text-2xl font-black text-amber-400">PDF</div><div class="text-[11px] text-gray-400 uppercase tracking-wide">Certificate</div></div>
+    <div class="glass-card rounded-xl py-4"><div class="text-2xl font-black text-amber-400">85%</div><div class="text-[11px] text-gray-400 uppercase tracking-wide">Exam Pass Mark</div></div>
   </div>
 </section>
 
@@ -148,7 +171,7 @@ body.shielded #shield{display:flex}
 <section id="curriculum" class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
   <div class="text-center mb-8">
     <h2 class="text-2xl sm:text-3xl font-black text-white">15 Modules &amp; 50 Lessons</h2>
-    <p class="text-xs sm:text-sm text-gray-400 mt-2 px-4">Preview every lesson title. Lesson 1 is free. Register via the Telegram bot to unlock the rest.</p>
+    <p class="text-xs sm:text-sm text-gray-400 mt-2 px-4">Preview every lesson title. Lesson 1 is free. After you register, each module unlocks when you finish the one before it. Pass the final exam with 85% or more to earn your certificate.</p>
   </div>
   <div class="relative mb-5">
     <i data-lucide="search" class="w-4 h-4 text-gray-500 absolute left-3 top-1/2 -translate-y-1/2"></i>
@@ -199,7 +222,7 @@ body.shielded #shield{display:flex}
     <p class="text-xs text-gray-400">Use the email and verification code you registered with.</p>
     <div class="space-y-3 mt-4">
       <div><label for="loginEmail" class="text-xs text-gray-400 block mb-1">Email</label><input type="email" id="loginEmail" autocomplete="email" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-amber-500"></div>
-      <div><label for="loginCode" class="text-xs text-gray-400 block mb-1">Verification Code</label><input type="text" id="loginCode" inputmode="numeric" maxlength="6" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-amber-500"></div>
+      <div><label for="loginCode" class="text-xs text-gray-400 block mb-1">Verification Code</label><input type="password" id="loginCode" autocomplete="current-password" class="w-full bg-gray-900 border border-gray-700 rounded-lg px-3 py-2 text-white text-sm outline-none focus:border-amber-500"></div>
       <p id="logMsg" class="text-xs hidden"></p>
       <button id="logBtn" onclick="loginUser()" class="w-full py-3 rounded-xl gold-bg-gradient text-black font-bold text-sm hover:opacity-90 transition mt-2">Sign In</button>
     </div>
@@ -235,6 +258,15 @@ body.shielded #shield{display:flex}
   </div>
 </div>
 
+<!-- Exam -->
+<div id="quizModal" class="fixed inset-0 z-[75] hidden bg-black/90 backdrop-blur-md overflow-y-auto custom-scrollbar" role="dialog" aria-modal="true" aria-label="Final exam">
+  <div class="min-h-full flex items-start justify-center p-3 sm:p-6"><div id="quizBody" class="glass-card rounded-2xl w-full max-w-3xl p-5 sm:p-8 border border-amber-500/20 my-4"></div></div>
+</div>
+<!-- Admin panel -->
+<div id="adminModal" class="fixed inset-0 z-[75] hidden bg-black/90 backdrop-blur-md overflow-y-auto custom-scrollbar" role="dialog" aria-modal="true" aria-label="Admin panel">
+  <div class="min-h-full flex items-start justify-center p-3 sm:p-6"><div id="adminBody" class="glass-card rounded-2xl w-full max-w-5xl p-5 sm:p-8 border border-amber-500/20 my-4"></div></div>
+</div>
+
 <!-- Lesson Reader -->
 <div id="reader" class="fixed inset-0 z-[60] hidden bg-black/85 backdrop-blur-md overflow-y-auto custom-scrollbar" role="dialog" aria-modal="true" aria-label="Lesson">
   <div class="min-h-full flex items-start justify-center p-3 sm:p-6">
@@ -250,6 +282,11 @@ var CONFIG = {
   VERIFY_ENDPOINT: '/api/verify-code',   // POST {email, code} -> {success:true|false}
   ALLOW_OFFLINE_DEMO: false,             // true = accept any 6-digit code when the server is unreachable (testing only!)
   FREE_PREVIEW_IDS: [1],
+  PASS_PERCENT: 85,                      // exam pass mark
+  QUIZ_MINUTES: 60,
+  RETAKE_WAIT_MIN: 10,                   // wait time after a failed attempt
+  ADMIN_NAME: 'Gemechu',
+  ADMIN_HASH: '34bc5bcd03ef103b1fc05c868372bc9e988edfe3b49aa17fd5157e9132865756',  // SHA-256 of "email:passcode". The admin credentials themselves are not stored in this page.
   MIN_LESSON_SECONDS: 45,                // minimum reading time before a lesson can be marked complete
   INSTRUCTOR: 'Gemechu',                 // name printed on the certificate signature
   INSTRUCTOR_TITLE: 'Lead Instructor',
@@ -886,11 +923,17 @@ function save(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 try{localStorage.removeItem('apex_user');localStorage.removeItem('apex_completed_lessons');}catch(e){}  // old insecure keys
 var users=load('apex_users',{});
 var session=load('apex_session',null);   // {email,name}
+if(session&&session.admin)session=null;   // the admin flag is never trusted from persistent storage
+try{var _as=JSON.parse(sessionStorage.getItem('apex_admin'));if(_as&&_as.admin&&_as.h===CONFIG.ADMIN_HASH&&_as.email)session={email:_as.email,name:CONFIG.ADMIN_NAME,admin:true};}catch(e){}
 var completed=[];
 var currentLesson=null;
 function loadProgress(){completed=session?load('apex_progress_'+session.email,[]):[];}
 function saveProgress(){if(session)save('apex_progress_'+session.email,completed);}
-function canView(id){return !!session||CONFIG.FREE_PREVIEW_IDS.indexOf(id)>-1;}
+function isAdmin(){return !!(session&&session.admin);}
+function modDone(m){return m.l.every(function(l){return completed.indexOf(l.id)>-1;});}
+function modUnlocked(mid){if(isAdmin())return true;if(!session)return false;if(mid<=1)return true;return modDone(MODULES[mid-2]);}
+function canView(id){var l=LESSONS[id-1];if(!l)return false;if(!session)return CONFIG.FREE_PREVIEW_IDS.indexOf(id)>-1;return modUnlocked(l.m);}
+function lockReason(id){var l=LESSONS[id-1];return 'Module '+l.m+' is locked. Finish every lesson in Module '+(l.m-1)+' first.';}
 function $(id){return document.getElementById(id);}
 function icons(){try{if(window.lucide)lucide.createIcons();}catch(e){}}
 
@@ -932,23 +975,26 @@ function completeRegistration(){
     });
   });
 }
+var loginFails=0,loginLockUntil=0;
 function loginUser(){
   var email=$('loginEmail').value.trim().toLowerCase(), code=$('loginCode').value.trim();
   if(!EMAIL_RE.test(email)||!code)return setMsg('logMsg','Enter your email and verification code.');
+  if(Date.now()<loginLockUntil)return setMsg('logMsg','Too many attempts. Please wait '+Math.ceil((loginLockUntil-Date.now())/1000)+' seconds.');
   busy('logBtn',true,'Sign In');
   sha(email+':'+code).then(function(h){
+    if(h===CONFIG.ADMIN_HASH){busy('logBtn',false,'Sign In');loginFails=0;adminLoginOK(email);return;}
     if(users[email]&&users[email].h===h){busy('logBtn',false,'Sign In');startSession(email,users[email].name);closeModal('loginModal');return;}
     return verifyCode(email,code).then(function(r){
       busy('logBtn',false,'Sign In');
-      if(!r.ok)return setMsg('logMsg',r.network?'Could not reach the server. Please try again shortly.':'Email or verification code is incorrect.');
+      if(!r.ok){if(!r.network&&++loginFails>=5){loginFails=0;loginLockUntil=Date.now()+60000;}return setMsg('logMsg',r.network?'Could not reach the server. Please try again shortly.':'Email or verification code is incorrect.');}
       var nm=(users[email]&&users[email].name)||r.name||email.split('@')[0];
       users[email]={name:nm,h:h};save('apex_users',users);
       startSession(email,nm);closeModal('loginModal');
     });
   });
 }
-function startSession(email,name){session={email:email,name:name};save('apex_session',session);loadProgress();loadRead();updateAuthUI();applyWatermark();}
-function logoutUser(){session=null;try{localStorage.removeItem('apex_session');}catch(e){}completed=[];readSecs={};closeReader();updateAuthUI();applyWatermark();}
+function startSession(email,name){try{sessionStorage.removeItem('apex_admin');}catch(e){}session={email:email,name:name};save('apex_session',session);loadProgress();loadRead();updateAuthUI();applyWatermark();}
+function logoutUser(){if(QZ&&QZ.active&&!confirm('Leave the exam? This will count as a failed attempt.'))return;if(QZ&&QZ.active){clearInterval(QZ.timer);QZ.active=false;clearActive();if(!isAdmin())recordAttempt(0,false);}QZ=null;session=null;try{localStorage.removeItem('apex_session');sessionStorage.removeItem('apex_admin');}catch(e){}completed=[];readSecs={};closeReader();closeAdmin();$('quizModal').classList.add('hidden');closeModal('certModal');document.body.style.overflow='';updateAuthUI();applyWatermark();}
 
 /* =====================================================================
    UI
@@ -959,6 +1005,7 @@ function updateAuthUI(){
   $('userNav').classList.toggle('hidden',!on);$('userNav').classList.toggle('flex',on);
   $('dashboardSection').classList.toggle('hidden',!on);
   if(on){$('navUserName').textContent=session.name||'User';$('dashName').textContent=session.name||'student';}
+  $('navBadge').textContent=isAdmin()?'ADMIN':'VIP';$('adminBtn').classList.toggle('hidden',!isAdmin());
   renderModules();updateProgress();icons();
 }
 function modProgress(m){var d=m.l.filter(function(l){return completed.indexOf(l.id)>-1;}).length;return d;}
@@ -968,21 +1015,22 @@ function renderModules(){
   MODULES.forEach(function(m){
     var ls=m.l.filter(function(l){return !q||l.t.toLowerCase().indexOf(q)>-1||m.t.toLowerCase().indexOf(q)>-1||l.p.join(' ').toLowerCase().indexOf(q)>-1;});
     if(!ls.length)return;any=true;
-    var isOpen=q?true:!!openMods[m.id], done=modProgress(m);
+    var isOpen=q?true:!!openMods[m.id], done=modProgress(m), locked=!!session&&!modUnlocked(m.id), mdone=!!session&&done===m.l.length;
     var rows=ls.map(function(l){
       var ok=canView(l.id), isDone=completed.indexOf(l.id)>-1, free=!session&&CONFIG.FREE_PREVIEW_IDS.indexOf(l.id)>-1;
       var ic=isDone?'<i data-lucide="check-circle-2" class="w-5 h-5 text-emerald-400 shrink-0"></i>':(ok?'<i data-lucide="play-circle" class="w-5 h-5 text-amber-400 shrink-0"></i>':'<i data-lucide="lock" class="w-4 h-4 text-gray-500 shrink-0 ml-0.5"></i>');
-      var tag=free?'<span class="text-[9px] sm:text-[10px] text-emerald-300 bg-emerald-500/10 border border-emerald-500/30 px-2 py-1 rounded font-bold shrink-0">FREE</span>':(!ok?'<span class="text-[9px] sm:text-[10px] text-amber-400 bg-amber-500/10 border border-amber-500/30 px-2 py-1 rounded font-bold shrink-0">VIP</span>':'<span class="text-[10px] text-gray-500 shrink-0 hidden sm:inline">'+readMins(l)+' min</span>');
+      var tag=free?'<span class="text-[9px] sm:text-[10px] text-emerald-300 bg-emerald-500/10 border border-emerald-500/30 px-2 py-1 rounded font-bold shrink-0">FREE</span>':(!ok?'<span class="text-[9px] sm:text-[10px] text-amber-400 bg-amber-500/10 border border-amber-500/30 px-2 py-1 rounded font-bold shrink-0">'+(session?'LOCKED':'VIP')+'</span>':'<span class="text-[10px] text-gray-500 shrink-0 hidden sm:inline">'+readMins(l)+' min</span>');
       return '<button onclick="openLesson('+l.id+')" class="w-full text-left p-3 sm:p-4 bg-gray-900/40 hover:bg-gray-800/60 border-t border-gray-800/60 flex items-center justify-between gap-3 transition">'+
         '<span class="flex items-center gap-3 min-w-0">'+ic+'<span class="min-w-0"><span class="block text-xs sm:text-sm font-semibold '+(ok?'text-gray-100':'text-gray-400')+' truncate">L'+l.id+': '+esc(l.t)+'</span></span></span>'+tag+'</button>';
     }).join('');
     h+='<div class="glass-card rounded-2xl border border-gray-800 overflow-hidden '+(isOpen?'module-open':'')+'">'+
       '<button onclick="toggleModule('+m.id+')" aria-expanded="'+isOpen+'" class="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-3 bg-gray-900/70 hover:bg-gray-800/70 transition">'+
-      '<span class="flex items-center gap-3 min-w-0"><span class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs sm:text-sm flex items-center justify-center font-bold shrink-0">'+m.id+'</span>'+
-      '<span class="min-w-0"><span class="block text-sm sm:text-base font-bold text-white truncate">Module '+m.id+': '+esc(m.t)+'</span><span class="block text-[11px] text-gray-400 truncate">'+esc(m.d)+'</span></span></span>'+
+      '<span class="flex items-center gap-3 min-w-0"><span class="w-8 h-8 sm:w-9 sm:h-9 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400 text-xs sm:text-sm flex items-center justify-center font-bold shrink-0">'+(locked?'<i data-lucide="lock" class="w-4 h-4 text-gray-500"></i>':(mdone?'<i data-lucide="check" class="w-4 h-4 text-emerald-400"></i>':m.id))+'</span>'+
+      '<span class="min-w-0"><span class="block text-sm sm:text-base font-bold text-white truncate">Module '+m.id+': '+esc(m.t)+'</span><span class="block text-[11px] text-gray-400 truncate">'+(locked?'<span class="text-amber-400/90">Locked. Complete Module '+(m.id-1)+' to unlock</span>':esc(m.d))+'</span></span></span>'+
       '<span class="flex items-center gap-3 shrink-0"><span class="text-[11px] text-gray-400 hidden sm:inline">'+(session?done+'/':'')+m.l.length+' lessons</span><i data-lucide="chevron-down" class="chev w-5 h-5 text-gray-400"></i></span></button>'+
       '<div class="'+(isOpen?'':'hidden')+'">'+rows+'</div></div>';
   });
+  if(!q)h+=examCardHTML();
   box.innerHTML=h;$('noResults').classList.toggle('hidden',any);icons();
 }
 function toggleModule(id){openMods[id]=!openMods[id];renderModules();}
@@ -993,19 +1041,19 @@ function updateProgress(){
   $('dashCompletedCount').textContent=count+' / '+TOTAL+' Lessons';
   $('dashProgressBar').style.width=pct+'%';
   var next=null;for(var i=0;i<LESSONS.length;i++){if(completed.indexOf(LESSONS[i].id)<0){next=LESSONS[i];break;}}
-  $('continueLabel').textContent=count===0?'Start Learning':(next?'Continue: L'+next.id:'Course Complete');
+  $('continueLabel').textContent=count===0?'Start Learning':(next?'Continue: L'+next.id:(isAdmin()||quizPassed()?'Course Complete':'Take Final Exam'));
   renderCertBox();
   $('dashModules').innerHTML=MODULES.map(function(m){var d=modProgress(m),p=Math.round(d/m.l.length*100);
     return '<div class="bg-gray-900/50 border border-gray-800 rounded-xl p-3"><div class="flex justify-between text-[11px] mb-1.5"><span class="text-gray-300 font-semibold truncate pr-2">M'+m.id+'. '+esc(m.t)+'</span><span class="text-amber-400 font-bold shrink-0">'+d+'/'+m.l.length+'</span></div><div class="h-1.5 bg-gray-800 rounded-full overflow-hidden"><div class="h-full bg-amber-500 rounded-full" style="width:'+p+'%"></div></div></div>';}).join('');
 }
 function continueLearning(){
   var next=null;for(var i=0;i<LESSONS.length;i++){if(completed.indexOf(LESSONS[i].id)<0){next=LESSONS[i];break;}}
-  if(next){openMods[next.m]=true;renderModules();openLesson(next.id);}else{scrollToCurriculum();}
+  if(next){openMods[next.m]=true;renderModules();openLesson(next.id);}else{if(session&&!isAdmin()&&!quizPassed())openQuizIntro();else scrollToCurriculum();}
 }
 
 function openLesson(id){
   var l=LESSONS[id-1];if(!l)return;
-  if(!canView(id)){openModal('registerModal');return;}
+  if(!canView(id)){if(session)toast(lockReason(id));else openModal('registerModal');return;}
   currentLesson=id;
   var done=completed.indexOf(id)>-1, prev=LESSONS[id-2], next=LESSONS[id];
   var h='<div class="flex items-start justify-between gap-3 mb-5"><div><div class="text-[11px] text-amber-400 font-bold uppercase tracking-wide">Module '+l.m+' &middot; '+esc(l.mt)+'</div>'+
@@ -1016,7 +1064,7 @@ function openLesson(id){
   h+='<div class="mt-6 rounded-xl border border-emerald-500/25 bg-emerald-500/5 p-4"><div class="text-xs font-bold text-emerald-400 uppercase tracking-wide mb-2">Key takeaways</div><ul class="space-y-1.5 text-sm text-gray-200">'+l.k.map(function(k){return '<li class="flex gap-2"><span class="text-emerald-400">&#10003;</span><span>'+esc(k)+'</span></li>';}).join('')+'</ul></div>';
   if(l.x)h+='<div class="mt-3 rounded-xl border border-red-500/25 bg-red-500/5 p-4"><div class="text-xs font-bold text-red-400 uppercase tracking-wide mb-1">Common mistake</div><p class="text-sm text-gray-200">'+esc(l.x)+'</p></div>';
   h+='<div class="mt-7 flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between border-t border-gray-800 pt-5">'+
-    (session?'<button onclick="toggleLesson('+id+')" class="px-5 py-2.5 rounded-xl text-xs font-bold transition '+(done?'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30':'gold-bg-gradient text-black hover:opacity-90')+'">'+(done?'&#10003; Completed (click to undo)':'Mark as Complete')+'</button>':'<button onclick="closeReader();openModal(\'registerModal\')" class="px-5 py-2.5 rounded-xl text-xs font-bold gold-bg-gradient text-black">Register to unlock all 50 lessons</button>')+
+    (session?'<button '+(done&&!isAdmin()?'disabled ':'')+'onclick="toggleLesson('+id+')" class="px-5 py-2.5 rounded-xl text-xs font-bold transition '+(done?'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30':'gold-bg-gradient text-black hover:opacity-90')+'">'+(done?(isAdmin()?'&#10003; Completed (click to undo)':'&#10003; Completed'):'Mark as Complete')+'</button>':'<button onclick="closeReader();openModal(\'registerModal\')" class="px-5 py-2.5 rounded-xl text-xs font-bold gold-bg-gradient text-black">Register to unlock all 50 lessons</button>')+
     '<div class="flex gap-2">'+
     (prev?'<button onclick="openLesson('+prev.id+')" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl text-xs font-bold bg-gray-800 border border-gray-700 hover:bg-gray-700 flex items-center justify-center gap-1.5"><i data-lucide="arrow-left" class="w-4 h-4"></i> Previous</button>':'')+
     (next?'<button onclick="openLesson('+next.id+')" class="flex-1 sm:flex-none px-4 py-2.5 rounded-xl text-xs font-bold bg-gray-800 border border-gray-700 hover:bg-gray-700 flex items-center justify-center gap-1.5">Next <i data-lucide="arrow-right" class="w-4 h-4"></i></button>':'')+
@@ -1026,8 +1074,9 @@ function openLesson(id){
 function closeReader(){var rd=$('reader');if(rd)rd.classList.add('hidden');document.body.style.overflow='';currentLesson=null;}
 function toggleLesson(id){
   if(!session){openModal('loginModal');return;}
-  var i=completed.indexOf(id);if(i<0&&(readSecs[id]||0)<CONFIG.MIN_LESSON_SECONDS)return;if(i>-1)completed.splice(i,1);else completed.push(id);
-  saveProgress();saveRead();updateProgress();renderModules();openLesson(id);if(i<0&&completed.length>=TOTAL){issueCertificate().then(function(){closeReader();showCertificate(true);});return;}
+  if(!canView(id))return;
+  var i=completed.indexOf(id);if(i<0&&!isAdmin()&&(readSecs[id]||0)<CONFIG.MIN_LESSON_SECONDS)return;if(i>-1&&!isAdmin())return;if(i>-1)completed.splice(i,1);else completed.push(id);
+  saveProgress();saveRead();updateProgress();renderModules();openLesson(id);if(i<0){afterComplete(id);if(completed.length>=TOTAL)return;}
   var rd=$('reader');rd.scrollTop=rd.scrollHeight;
 }
 
@@ -1036,7 +1085,7 @@ function closeModal(id){var m=$(id);m.classList.add('hidden');m.classList.remove
 function scrollToCurriculum(){$('curriculum').scrollIntoView({behavior:'smooth'});}
 function scrollToDashboard(){$('dashboardSection').scrollIntoView({behavior:'smooth'});}
 document.addEventListener('keydown',function(e){
-  if(e.key==='Escape'){closeModal('registerModal');closeModal('loginModal');closeReader();}
+  if(e.key==='Escape'){closeModal('registerModal');closeModal('loginModal');closeReader();closeAdmin();}
   if(currentLesson&&!/INPUT|TEXTAREA/.test((document.activeElement||{}).tagName||'')){
     if(e.key==='ArrowRight'&&LESSONS[currentLesson])openLesson(currentLesson+1);
     if(e.key==='ArrowLeft'&&currentLesson>1)openLesson(currentLesson-1);
@@ -1063,7 +1112,7 @@ function startReadTimer(){
 }
 function gateCompleteBtn(id){
   var b=document.querySelector('#readerBody button[onclick^="toggleLesson"]');
-  if(!b||completed.indexOf(id)>-1)return;
+  if(!b||completed.indexOf(id)>-1||isAdmin())return;
   var left=CONFIG.MIN_LESSON_SECONDS-(readSecs[id]||0);
   if(left>0){b.disabled=true;b.style.opacity='.55';b.style.cursor='not-allowed';b.textContent='Keep reading... ('+left+'s)';}
   else{b.disabled=false;b.style.opacity='1';b.style.cursor='pointer';b.textContent='Mark as Complete';}
@@ -1076,19 +1125,19 @@ function hash53(str){var h1=0xdeadbeef,h2=0x41c6ce57;for(var i=0,ch;i<str.length
 function niceName(n){n=(n||'').replace(/\s+/g,' ').trim();if(n===n.toLowerCase()||n===n.toUpperCase())n=n.toLowerCase().replace(/(^|\s)(\S)/g,function(m,a,b){return a+b.toUpperCase();});return n;}
 function getCert(){return session?load('apex_cert_'+session.email,null):null;}
 function issueCertificate(){
-  if(!session||completed.length<TOTAL)return Promise.resolve(null);
+  if(!session||isAdmin()||completed.length<TOTAL||!quizPassed())return Promise.resolve(null);
   var ex=getCert();if(ex)return Promise.resolve(ex);
   var d=new Date(), name=niceName(session.name);
   var id='AFA-'+d.getFullYear()+'-'+hash53(session.email+'|'+name+'|'+d.getTime()).toString(36).toUpperCase().padStart(10,'0').slice(0,10);
-  var cert={id:id,name:name,date:d.toISOString()};
+  var qz=getQuiz(),cert={id:id,name:name,date:d.toISOString(),score:qz.passScore||qz.best};
   save('apex_cert_'+session.email,cert);
-  var all=load('apex_certs',{});all[id]={name:name,date:cert.date};save('apex_certs',all);
+  var all=load('apex_certs',{});all[id]={name:name,date:cert.date,score:cert.score};save('apex_certs',all);
   try{fetch(CONFIG.CERT_ISSUE_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:id,name:name,email:session.email,date:cert.date})}).catch(function(){});}catch(e){}
   return Promise.resolve(cert);
 }
 function claimCertificate(){issueCertificate().then(function(c){if(c){renderCertBox();showCertificate(true);}});}
 function showCertificate(isNew){
-  var c=getCert();if(!c)return;
+  var c=getCert();if(!c)return;viewCert=c;
   $('certHeading').textContent=isNew?'Congratulations! You are now certified.':'Your Certificate';
   drawCertificate($('certCanvas'),c);
   openModal('certModal');
@@ -1096,13 +1145,18 @@ function showCertificate(isNew){
 function renderCertBox(){
   var box=$('certBox');if(!box)return;
   if(!session){box.innerHTML='';return;}
-  var done=completed.length>=TOTAL, c=getCert(), left=TOTAL-completed.length;
+  var btn='px-4 py-2.5 rounded-xl text-xs font-bold ';
+  if(isAdmin()){
+    box.innerHTML='<div class="rounded-xl border border-amber-500/40 bg-gradient-to-r from-amber-500/15 to-yellow-400/5 p-4"><div class="text-sm font-bold text-amber-300">Admin access: every module, the exam and all certificates are unlocked</div><div class="mt-3 flex flex-wrap gap-2"><button onclick="openAdmin()" class="'+btn+'gold-bg-gradient text-black">Admin Panel</button><button onclick="openQuizIntro()" class="'+btn+'bg-gray-800 border border-gray-700 hover:bg-gray-700">Open Final Exam</button><button onclick="adminPreviewCert()" class="'+btn+'bg-gray-800 border border-gray-700 hover:bg-gray-700">Preview Certificate</button></div></div>';
+    icons();return;
+  }
+  var done=completed.length>=TOTAL, c=getCert(), q=getQuiz(), left=TOTAL-completed.length;
   if(c){
-    box.innerHTML='<div class="rounded-xl border border-amber-500/40 bg-gradient-to-r from-amber-500/15 to-yellow-400/5 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3"><div><div class="text-sm font-bold text-amber-300">Certificate of Completion earned</div><div class="text-[11px] text-gray-400 mt-0.5">ID: '+esc(c.id)+'</div></div><button onclick="showCertificate(false)" class="px-5 py-2.5 rounded-xl gold-bg-gradient text-black text-xs font-bold hover:opacity-90">View &amp; Download</button></div>';
+    box.innerHTML='<div class="rounded-xl border border-amber-500/40 bg-gradient-to-r from-amber-500/15 to-yellow-400/5 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3"><div><div class="text-sm font-bold text-amber-300">Certificate of Completion earned'+(c.score?' &middot; exam score '+c.score+'%':'')+'</div><div class="text-[11px] text-gray-400 mt-0.5">ID: '+esc(c.id)+'</div></div><button onclick="showCertificate(false)" class="px-5 py-2.5 rounded-xl gold-bg-gradient text-black text-xs font-bold hover:opacity-90">View &amp; Download</button></div>';
   }else if(done){
-    box.innerHTML='<div class="rounded-xl border border-amber-500/40 bg-amber-500/10 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3"><div class="text-sm font-bold text-amber-300">All 50 lessons completed. Your certificate is ready!</div><button onclick="claimCertificate()" class="px-5 py-2.5 rounded-xl gold-bg-gradient text-black text-xs font-bold hover:opacity-90">Claim Certificate</button></div>';
+    box.innerHTML='<div class="rounded-xl border border-amber-500/40 bg-amber-500/10 p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3"><div><div class="text-sm font-bold text-amber-300">All '+TOTAL+' lessons completed. The final exam is unlocked!</div><div class="text-[11px] text-gray-400 mt-0.5">Score '+CONFIG.PASS_PERCENT+'% or more to receive your certificate.'+(q.attempts?' Best so far: '+q.best+'%.':'')+'</div></div><button onclick="openQuizIntro()" class="px-5 py-2.5 rounded-xl gold-bg-gradient text-black text-xs font-bold hover:opacity-90">'+(q.attempts?'Retake Exam':'Start Final Exam')+'</button></div>';
   }else{
-    box.innerHTML='<div class="rounded-xl border border-gray-700 bg-gray-900/50 p-4 flex items-center gap-3"><i data-lucide="lock" class="w-5 h-5 text-gray-500 shrink-0"></i><div class="text-xs text-gray-400">Complete all '+TOTAL+' lessons to automatically earn your professional certificate in the name you registered with. <span class="text-amber-400 font-bold">'+left+' lessons remaining.</span></div></div>';
+    box.innerHTML='<div class="rounded-xl border border-gray-700 bg-gray-900/50 p-4 flex items-center gap-3"><i data-lucide="lock" class="w-5 h-5 text-gray-500 shrink-0"></i><div class="text-xs text-gray-400">Finish all '+TOTAL+' lessons, then pass the final exam with '+CONFIG.PASS_PERCENT+'% or more to earn your certificate in the name you registered with. <span class="text-amber-400 font-bold">'+left+' lessons remaining.</span></div></div>';
   }
   icons();
 }
@@ -1126,28 +1180,29 @@ function drawCertificate(cv,c){
   x.fillStyle=gold;x.font='bold 96px Georgia, "Times New Roman", serif';try{x.letterSpacing='8px';}catch(e){}x.fillText('CERTIFICATE',W/2,330);
   x.fillStyle='#e5e7eb';x.font='600 32px Arial, sans-serif';try{x.letterSpacing='14px';}catch(e){}x.fillText('OF COMPLETION',W/2,390);
   try{x.letterSpacing='0px';}catch(e){}
-  x.fillStyle='#9ca3af';x.font='italic 30px Georgia, serif';x.fillText('This is to certify that',W/2,478);
+  x.fillStyle='#9ca3af';x.font='italic 30px Georgia, serif';x.fillText('This is to certify that',W/2,458);
   var name=c.name,size=104;x.font='italic 700 '+size+'px Georgia, "Times New Roman", serif';
   while(x.measureText(name).width>1150&&size>40){size-=4;x.font='italic 700 '+size+'px Georgia, "Times New Roman", serif';}
-  var nw=x.measureText(name).width;x.fillStyle=gold;x.fillText(name,W/2,600);
-  x.strokeStyle='rgba(245,158,11,0.6)';x.lineWidth=2;x.beginPath();x.moveTo(W/2-nw/2-50,632);x.lineTo(W/2+nw/2+50,632);x.stroke();
-  x.fillStyle='#d1d5db';x.font='30px Arial, sans-serif';x.fillText('has successfully completed all 15 modules and 50 lessons of the',W/2,706);
-  x.fillStyle='#ffffff';x.font='bold 40px Georgia, serif';x.fillText('Forex Supply & Demand, Smart Money Concepts',W/2,768);x.fillText('& Price Action Masterclass',W/2,820);
-  x.fillStyle='#9ca3af';x.font='24px Arial, sans-serif';x.fillText('covering market structure, liquidity, order blocks, risk management and trading psychology.',W/2,868);
+  var nw=x.measureText(name).width;x.fillStyle=gold;x.fillText(name,W/2,572);
+  x.strokeStyle='rgba(245,158,11,0.6)';x.lineWidth=2;x.beginPath();x.moveTo(W/2-nw/2-50,602);x.lineTo(W/2+nw/2+50,602);x.stroke();
+  x.fillStyle='#d1d5db';x.font='30px Arial, sans-serif';x.fillText('has successfully completed all 15 modules and 50 lessons of the',W/2,662);
+  x.fillStyle='#ffffff';x.font='bold 40px Georgia, serif';x.fillText('Forex Supply & Demand, Smart Money Concepts',W/2,722);x.fillText('& Price Action Masterclass',W/2,772);
+  x.fillStyle='#9ca3af';x.font='24px Arial, sans-serif';x.fillText('covering market structure, liquidity, order blocks, risk management and trading psychology.',W/2,816);
+  if(c.score!=null){x.fillStyle='#fbbf24';x.font='bold 26px Arial, sans-serif';x.fillText('Final exam score: '+c.score+'%   |   Pass mark: '+CONFIG.PASS_PERCENT+'%',W/2,862);}
   var ds=new Date(c.date).toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
   x.strokeStyle='rgba(229,231,235,0.5)';x.lineWidth=2;
-  x.beginPath();x.moveTo(190,990);x.lineTo(520,990);x.stroke();x.beginPath();x.moveTo(1080,990);x.lineTo(1410,990);x.stroke();
-  x.fillStyle='#ffffff';x.font='bold 32px Arial, sans-serif';x.fillText(ds,355,970);
-  x.fillStyle='#9ca3af';x.font='20px Arial, sans-serif';x.fillText('DATE OF ISSUE',355,1022);
-  x.fillStyle='#fbbf24';x.font='italic 60px "Brush Script MT","Segoe Script","Lucida Handwriting",cursive';x.fillText(CONFIG.INSTRUCTOR,1245,968);
-  x.fillStyle='#e5e7eb';x.font='bold 22px Arial, sans-serif';x.fillText(CONFIG.INSTRUCTOR,1245,1022);
-  x.fillStyle='#9ca3af';x.font='18px Arial, sans-serif';x.fillText(CONFIG.INSTRUCTOR_TITLE.toUpperCase(),1245,1048);
-  var sg=x.createRadialGradient(W/2-20,930,10,W/2,945,90);sg.addColorStop(0,'#fde68a');sg.addColorStop(1,'#b45309');
-  x.fillStyle=sg;x.beginPath();x.arc(W/2,945,88,0,Math.PI*2);x.fill();
-  x.strokeStyle='#78350f';x.lineWidth=3;x.beginPath();x.arc(W/2,945,74,0,Math.PI*2);x.stroke();
-  x.fillStyle='#451a03';x.font='900 52px Georgia, serif';x.fillText('A',W/2,962);x.font='bold 15px Arial, sans-serif';x.fillText('VERIFIED',W/2,985);x.fillText('APEX FOREX',W/2,917);
-  x.fillStyle='#9ca3af';x.font='22px "Courier New", monospace';x.fillText('Certificate ID: '+c.id,W/2,1078);
-  x.fillStyle='#6b7280';x.font='16px Arial, sans-serif';x.fillText('Verify this certificate on the Academy website using the ID above. Educational certificate only, not a financial licence or advice.',W/2,1104);
+  x.beginPath();x.moveTo(190,962);x.lineTo(520,962);x.stroke();x.beginPath();x.moveTo(1080,962);x.lineTo(1410,962);x.stroke();
+  x.fillStyle='#ffffff';x.font='bold 32px Arial, sans-serif';x.fillText(ds,355,942);
+  x.fillStyle='#9ca3af';x.font='20px Arial, sans-serif';x.fillText('DATE OF ISSUE',355,992);
+  x.fillStyle='#fbbf24';x.font='italic 60px "Brush Script MT","Segoe Script","Lucida Handwriting",cursive';x.fillText(CONFIG.INSTRUCTOR,1245,942);
+  x.fillStyle='#e5e7eb';x.font='bold 22px Arial, sans-serif';x.fillText(CONFIG.INSTRUCTOR,1245,992);
+  x.fillStyle='#9ca3af';x.font='18px Arial, sans-serif';x.fillText(CONFIG.INSTRUCTOR_TITLE.toUpperCase(),1245,1016);
+  var sg=x.createRadialGradient(W/2-20,935,10,W/2,952,90);sg.addColorStop(0,'#fde68a');sg.addColorStop(1,'#b45309');
+  x.fillStyle=sg;x.beginPath();x.arc(W/2,952,72,0,Math.PI*2);x.fill();
+  x.strokeStyle='#78350f';x.lineWidth=3;x.beginPath();x.arc(W/2,952,60,0,Math.PI*2);x.stroke();
+  x.fillStyle='#451a03';x.font='900 52px Georgia, serif';x.fillText('A',W/2,969);x.font='bold 13px Arial, sans-serif';x.fillText('VERIFIED',W/2,990);x.fillText('APEX FOREX',W/2,924);
+  x.fillStyle='#9ca3af';x.font='22px "Courier New", monospace';x.fillText('Certificate ID: '+c.id,W/2,1046);
+  x.fillStyle='#6b7280';x.font='16px Arial, sans-serif';x.fillText('Verify this certificate on the Academy website using the ID above. Educational certificate only, not a financial licence or advice.',W/2,1062);
 }
 function saveBlob(b,name){var a=document.createElement('a');a.href=URL.createObjectURL(b);a.download=name;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(a.href);a.remove();},800);}
 function jpegToPdf(dataUrl,wPx,hPx){
@@ -1167,7 +1222,7 @@ function jpegToPdf(dataUrl,wPx,hPx){
   return new Blob(parts,{type:'application/pdf'});
 }
 function downloadCert(kind){
-  var c=getCert(),cv=$('certCanvas');if(!c)return;
+  var c=viewCert||getCert(),cv=$('certCanvas');if(!c)return;
   var base='Apex-Forex-Certificate-'+c.name.replace(/[^A-Za-z0-9]+/g,'-');
   if(kind==='png'){cv.toBlob(function(b){saveBlob(b,base+'.png');},'image/png');}
   else{saveBlob(jpegToPdf(cv.toDataURL('image/jpeg',0.95),cv.width,cv.height),base+'.pdf');}
@@ -1200,7 +1255,7 @@ function wipeClipboard(){try{navigator.clipboard.writeText(' ').catch(function()
 function devtoolsCheck(){
   if(/Mobi|Android|iPhone|iPad/i.test(navigator.userAgent))return;
   var th=170,open=(window.outerWidth-window.innerWidth>th)||(window.outerHeight-window.innerHeight>th);
-  document.body.classList.toggle('shielded',open&&(!!session||!!currentLesson));
+  document.body.classList.toggle('shielded',open&&!isAdmin()&&(!!session||!!currentLesson));
 }
 function initProtection(){
   document.body.classList.add('protected');
@@ -1208,19 +1263,272 @@ function initProtection(){
   document.addEventListener('keydown',function(e){
     var k=(e.key||'').toLowerCase(),ctrl=e.ctrlKey||e.metaKey;
     var blockKey=(k==='printscreen')||(k==='f12')||(ctrl&&e.shiftKey&&['i','j','c','s'].indexOf(k)>-1)||(ctrl&&['u','s','p'].indexOf(k)>-1)||(e.metaKey&&e.shiftKey&&['3','4','5','#','$','%'].indexOf(k)>-1);
-    if(blockKey){e.preventDefault();tempBlur(2000);if(k==='printscreen')wipeClipboard();return false;}
+    if(blockKey&&!isAdmin()){e.preventDefault();tempBlur(2000);if(k==='printscreen')wipeClipboard();return false;}
     if(ctrl&&(k==='c'||k==='a'||k==='x')&&!inField(e))e.preventDefault();
     if(e.key==='Escape'){closeModal('certModal');closeModal('verifyModal');}
   },true);
   document.addEventListener('keyup',function(e){if((e.key||'')==='PrintScreen'){wipeClipboard();tempBlur(2000);}});
-  window.addEventListener('blur',function(){document.body.classList.add('blurred');});
+  window.addEventListener('blur',function(){if(!isAdmin())document.body.classList.add('blurred');});
   window.addEventListener('focus',function(){document.body.classList.remove('blurred');});
-  document.addEventListener('visibilitychange',function(){document.body.classList.toggle('blurred',document.hidden);});
+  document.addEventListener('visibilitychange',function(){document.body.classList.toggle('blurred',document.hidden&&!isAdmin());});
   window.addEventListener('beforeprint',function(){document.body.classList.add('blurred');});
   ['verifyModal','certModal'].forEach(function(id){$(id).addEventListener('click',function(e){if(e.target===this)closeModal(id);});});
   setInterval(devtoolsCheck,1500);
 }
 
+/* =====================================================================
+   FINAL QUIZ: 50 hard multiple-choice questions, pass mark 85%
+   Format: [question, CORRECT answer, [3 wrong answers], explanation]
+   Options are shuffled on every attempt.
+   ===================================================================== */
+var QBANK=[
+["A trader with a $5,000 account risks 1% per trade, uses a 25-pip stop on EUR/USD and the pip value is $10 per standard lot. Which position size is correct?","0.20 lots",["0.02 lots","2.00 lots","0.50 lots"],"Risk = $50. Lot size = 50 / (25 x 10) = 0.20 lots."],
+["With a consistent 1:4 risk-to-reward, what is the minimum win rate needed to break even before costs?","20%",["25%","33%","40%"],"Break-even win rate = 1 / (1 + RR) = 1 / 5 = 20%."],
+["A drawdown of 40% requires what percentage gain to return to the starting balance?","66.7%",["40%","60%","80%"],"After a 40% loss you hold 60% of the balance. 1 / 0.60 = 1.667, so you need +66.7%."],
+["A system wins 40% of the time, with an average win of 2.5R and an average loss of 1R. What is its expectancy per trade?","+0.4R",["+1.0R","-0.2R","+0.1R"],"(0.40 x 2.5) - (0.60 x 1) = 1.0 - 0.6 = +0.4R."],
+["Price pushes above a prior swing high with a long wick, then the candle closes back below that high. What is the most accurate reading?","A liquidity sweep that did not break structure",["A confirmed break of structure to the upside","A valid continuation signal to buy the close","A change of character to the upside"],"A BOS needs a close beyond the level. A wick that snaps back is a sweep of the stops above the high."],
+["In an uptrend, which event is the first sign (CHoCH) that control may be shifting to sellers?","A candle close below the most recent higher low",["A wick below the most recent higher low","A close below the 200 EMA","A new higher high on lower volume"],"A CHoCH is the first close against the trend: below the last higher low. A wick alone can be a sweep."],
+["Which candle best qualifies as a bullish order block?","The last bearish candle before a displacement move that breaks structure",["The largest bullish candle of the rally","The first bearish candle after the rally ends","Any bearish candle inside a ranging market"],"An order block is the last opposite candle before an impulsive move that breaks structure."],
+["Candle 1 has a high of 1.1050, candle 2 is a large bullish candle, and candle 3 has a low of 1.1070. Where is the bullish fair value gap?","1.1050 to 1.1070",["1.1070 up to the high of candle 2","The full range of candle 2","There is no gap because the candles overlap"],"The gap lies between the high of candle 1 and the low of candle 3, where their wicks do not overlap."],
+["A dealing range runs from a swing low at 1.0800 to a swing high at 1.1000. Which price is in discount?","1.0870",["1.0910","1.0950","1.0990"],"Equilibrium is 1.0900. Anything below it is discount, so 1.0870 qualifies."],
+["For an up-leg from 1.0800 to 1.1000, where is the OTE zone (62% to 79% retracement)?","1.0842 to 1.0876",["1.0876 to 1.0924","1.0924 to 1.0958","1.0800 to 1.0842"],"62% retrace = 1.1000 - 0.0124 = 1.0876; 79% retrace = 1.1000 - 0.0158 = 1.0842."],
+["Which description best fits inducement?","A minor swing point ahead of a key zone that traps early traders when it is swept",["A large order block created after a CHoCH","A three-candle gap with no overlap","A trendline touched three times"],"Inducement is the bait: a minor high or low that is taken before price reaches the real zone."],
+["Resistance at 1.2000 breaks with a strong close at 1.2040. What is the highest-probability way to trade the role reversal?","Wait for a retest of 1.2000 that holds as support with a rejection",["Buy immediately at the high of the breakout candle","Sell the first retest expecting resistance to hold","Place pending orders on both sides of 1.2000"],"Enter on the retest after a clean break, not on the breakout candle, and require rejection."],
+["Which statement about the Asian range and the London open is most consistent with the course?","London often sweeps the Asian high or low before the real move of the day",["Asia always delivers the biggest move of the day","Price never trades back into the Asian range","The Asian range becomes invalid at 05:00 UTC"],"The London open frequently takes the liquidity of the Asian range first, then moves in the true direction."],
+["GBP/JPY moves from 191.250 to 191.700. How many pips is that?","45",["450","4.5","4,500"],"For JPY pairs a pip is 0.01. A move of 0.450 equals 45 pips."],
+["A $1,000 account opens 1 standard lot of EUR/USD (about $10 per pip) with a 20-pip stop, using 1:500 leverage. What percentage of the account is at risk?","20%",["2%","0.2%","50%"],"20 pips x $10 = $200 = 20% of $1,000. Leverage allows the size but does not change the risk."],
+["Which risk per trade leaves roughly 90% of the account after ten consecutive losses?","1%",["2%","5%","10%"],"0.99^10 is about 0.904, so about 90% remains. At 2% it is about 82%, at 5% about 60%."],
+["A bullish order block fails when price closes decisively below it. What does the block become?","A bearish breaker that may act as resistance on a retest",["A stronger demand zone","A fair value gap","A pool of equal lows"],"A failed bullish OB with a structure shift becomes a breaker, trapping buyers who then sell at breakeven."],
+["Equal highs are visible and price is approaching them from below. Which plan best matches the course?","Expect the stops above them to be targeted; wait for a sweep and a lower-timeframe CHoCH before selling",["Sell just under them with a tight stop above","Buy only after the second touch","Ignore them because they are too obvious"],"The more obvious the level, the more likely it is run first. Confirmation comes after the sweep."],
+["The daily bias is bullish but the M15 chart looks bearish. According to top-down analysis, what should you do?","Respect the higher timeframe: look for buys at a zone or wait",["Trade the M15 direction because it is more recent","Use a larger lot to compensate","Take both directions at once"],"When timeframes conflict, the higher timeframe wins."],
+["In the sweep plus order block model, where does the stop loss normally go?","Beyond the sweep wick and the block",["In the middle of the order block","At the equilibrium of the range","At a round number far from structure"],"Invalidation is beyond the sweep wick; if price goes there the idea is wrong."],
+["Which supply zone has the highest quality?","A base of 2 small candles followed by a strong drop that breaks structure",["A wide, messy base of 12 candles followed by a slow drift down","A zone formed in a news spike with no structure break","A zone that has already been touched four times"],"Good zones have a tight base, an impulsive exit that breaks structure and are fresh."],
+["A demand zone has been retested three times. What is its most likely condition by the third touch?","Weaker, because earlier touches consumed pending orders",["Stronger, because more buyers were attracted","Unchanged, since zones never weaken","Automatically converted into supply"],"Each touch fills some of the resting orders, leaving less fuel for the next reaction."],
+["Which event invalidates a demand zone according to the course?","A full-bodied candle close below the zone",["A wick that touches the lower edge and returns","A retest that forms a pin bar","A bullish engulfing candle inside the zone"],"A body close through the zone shows the orders are gone or overwhelmed."],
+["After a breakout above resistance, price retests the level and then closes back below it. What does this suggest?","The role reversal failed and the bias may flip",["Support is confirmed","A bullish continuation entry has appeared","The breakout was valid, only the retest was late"],"A close back through the level means the flip failed. Treat it as information."],
+["When the 20, 50 and 200 EMAs are flat and tangled, how reliable are EMA bounces?","Unreliable, because the market is ranging",["Very reliable because many lines overlap","Reliable only on the daily chart","More reliable than horizontal support"],"Moving-average bounces work in clean trends. Flat, tangled averages describe a range."],
+["How is a double top confirmed, and what is its measured target?","A close below the neckline; target is the pattern height projected down",["Touching the second top; target is the neckline","A wick below the neckline; target is the first top","A close above the second top; target is the head"],"Confirmation is a neckline close. The target equals the distance from the tops to the neckline, projected down."],
+["A head and shoulders has its head at 1.1200 and a neckline at 1.1000. After a close below the neckline, what is the measured target?","1.0800",["1.0900","1.1000","1.0600"],"Head height is 200 pips (1.1200 - 1.1000). Project it below the neckline: 1.1000 - 0.0200 = 1.0800."],
+["An inside bar signals what, and how is it usually traded?","Compression; trade the break of the mother bar high or low",["Exhaustion; always fade the mother bar","A trend reversal; sell the close","A liquidity sweep; buy the low"],"An inside bar is contained in the previous candle. It signals compression before expansion."],
+["Why does the same pin bar carry different value in different locations?","Rejection only matters at meaningful locations such as zones and liquidity",["Pin bars only work on weekly charts","Long wicks always mean reversal","Body size decides everything"],"Location is everything. A pin bar in the middle of a range has little edge."],
+["A trader hits the daily loss limit of 3% at 10:00. What should the plan say?","Stop trading for the day and review",["Double the size to recover quickly","Switch to a lower timeframe and scalp","Remove the stop on the next trade"],"A hard daily loss limit protects against emotional spirals."],
+["A strategy takes 100 trades with a 30% win rate and a fixed 1:3 risk-to-reward. What is the result in R?","+20R",["-20R","+90R","0R"],"30 wins x 3R = +90R. 70 losses x 1R = -70R. Net = +20R."],
+["A high-impact release spikes price 60 pips up, then reverses sharply. Which approach is most consistent with the course?","Wait for the dust to settle and trade the structure that forms",["Place pending orders on both sides before the release","Move the stop to breakeven just before the release","Chase the spike with a large position"],"Spikes often sweep liquidity and reverse. Waiting 15 to 30 minutes and trading structure is safer."],
+["A central bank raises rates by 25 bps while markets expected 50 bps. What is a plausible short-term reaction?","The currency may fall because the hike was smaller than expected",["The currency must rise because rates went up","No reaction is possible","Only the stock market reacts"],"Markets trade expectations. A smaller-than-expected hike can be read as dovish."],
+["A 'hawkish' central bank stance means it leans toward:","Tighter policy and higher rates",["Lower rates and easing","Fixed exchange rates","Unlimited bond buying"],"Hawkish leans toward higher rates; dovish leans toward lower rates."],
+["Which set represents genuine confluence rather than duplicated signals?","HTF structure bias, discount location, swept liquidity and a CHoCH",["RSI, Stochastic, MACD and CCI all showing overbought","Three moving averages stacked together","Five timeframes with no hierarchy"],"Real confluence uses different types of evidence: structure, location, liquidity and timing."],
+["Which backtesting practice is most likely to produce misleading results?","Cherry-picking the best-looking setups in hindsight",["Testing at least 100 trades","Recording drawdown and the longest losing streak","Forward-testing on a demo afterwards"],"Hindsight selection inflates results. Record every setup honestly."],
+["A trade risked $50 and closed with a $175 profit. What is the result in R?","+3.5R",["+1.75R","+2.5R","+7R"],"R = profit / initial risk = 175 / 50 = 3.5."],
+["You missed a 100-pip move. What does the course recommend?","Wait for the next valid setup or retracement; a missed trade costs nothing",["Enter now with a larger size","Remove the stop to catch more of the move","Reverse immediately against the move"],"Chasing after the move is FOMO. Another setup will come."],
+["After three consecutive losses, which response best protects the account?","Pause, review the journal for rule violations and reduce risk",["Increase size on the next trade","Switch strategies immediately","Trade more pairs to diversify"],"Streaks are normal. Review, reduce risk and judge the strategy over a large sample."],
+["A 0.10 lot position is called what, and what is roughly the value per pip on a USD-quoted pair?","Mini lot, about $1 per pip",["Micro lot, about $0.10 per pip","Standard lot, about $10 per pip","Mini lot, about $10 per pip"],"0.10 lots = 10,000 units, a mini lot, worth about $1 per pip."],
+["When should a trader change a rule in the trading plan?","On the weekend, after reviewing data over a meaningful sample",["In the middle of a losing trade","Immediately after two losses","Whenever a setup looks tempting"],"Rules change after reviewing data, never in the heat of a trade."],
+["An H4 demand zone is 40 pips tall. Inside it an M15 zone is 10 pips tall. With a 60-pip target, what are the approximate risk-to-reward ratios using the full H4 zone versus the M15 zone as the stop distance?","1:1.5 versus 1:6",["1:6 versus 1:1.5","1:2 versus 1:3","1:1 versus 1:4"],"60/40 = 1.5 and 60/10 = 6. Refining the zone shrinks the stop and lifts the reward-to-risk."],
+["Which combination marks a high-quality (A+) order block?","Liquidity taken, displacement, a structure break and a fair value gap",["Any opposite candle in a range","A long-bodied candle on M1","An untouched zone with no displacement"],"Strong blocks come from liquidity grabs followed by displacement that breaks structure and leaves an imbalance."],
+["Why does the course insist on candle closes to confirm a BOS?","Wicks beyond a level are often liquidity sweeps that snap back",["Closes are easier to see","Wicks are not shown on all charts","Closes always continue the trend"],"A wick through a level can just be stops being collected."],
+["Why are fresh (untested) zones considered higher probability?","Their pending orders are likely still unfilled",["They are always larger","They appear only on higher timeframes","They never fail"],"Untouched zones likely still hold the unfilled orders that cause reactions."],
+["A breaker block should only be accepted when:","Price has closed clearly beyond the original order block",["A wick pierces the block","The block is on M1","Price touches the block twice"],"Require a clear close beyond the block, not just a wick."],
+["Which is the best-aligned setup for a bearish FVG?","A downtrend where price retraces up into the bearish FVG in premium",["An uptrend where price drops into a bearish FVG in discount","A range where price sits exactly at equilibrium","A bearish FVG in discount during a strong uptrend"],"Sell setups belong in the direction of the higher-timeframe trend and in premium."],
+["What is an inverse FVG?","A fair value gap that price closes through, flipping it to the opposite role",["A gap that has never been touched","A gap formed at the Sunday open","A three-candle pattern with overlapping wicks"],"When price closes through an FVG it can flip, like a breaker block."],
+["Where should stops be placed relative to obvious liquidity pools?","Beyond the pool, with small position size, not exactly at the obvious high or low",["Exactly at the obvious high or low","Inside the pool","No stop is needed if the zone is strong"],"Obvious levels are taken first. Place stops beyond them and control the risk with size."],
+["What is the main weakness of the CHoCH entry model?","False CHoCHs inside strong trends, so the higher-timeframe direction must be checked",["It never gives a tight stop","It only works on weekends","It requires several indicators"],"The model gives a tight stop but can fail against a strong trend, so check the HTF direction first."]
+];
+
+/* =====================================================================
+   QUIZ ENGINE
+   ===================================================================== */
+var QZ=null, viewCert=null;
+function qDefault(){return {attempts:0,best:0,passed:false,passScore:0,lastFail:0};}
+function quizKey(){return 'apex_quiz_'+session.email;}
+function activeKey(){return 'apex_qactive_'+session.email;}
+function getQuiz(){return session?load(quizKey(),qDefault()):qDefault();}
+function quizPassed(){return !!getQuiz().passed;}
+function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
+function passCount(){return Math.ceil(QBANK.length*CONFIG.PASS_PERCENT/100-1e-9);}
+function cooldownLeft(){if(isAdmin())return 0;var q=getQuiz();return q.lastFail?Math.max(0,q.lastFail+CONFIG.RETAKE_WAIT_MIN*60000-Date.now()):0;}
+function showQuizModal(){$('quizModal').classList.remove('hidden');document.body.style.overflow='hidden';$('quizModal').scrollTop=0;icons();}
+function toast(msg){
+  var t=document.getElementById('toast');
+  if(!t){t=document.createElement('div');t.id='toast';t.setAttribute('role','status');t.className='fixed left-1/2 bottom-6 z-[95] max-w-[92vw] px-4 py-3 rounded-xl bg-gray-900 border border-amber-500/40 text-amber-200 text-xs sm:text-sm font-semibold shadow-xl';t.style.transform='translateX(-50%)';document.body.appendChild(t);}
+  t.textContent=msg;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(function(){t.style.display='none';},4500);
+}
+function recordAttempt(pct,passed){
+  var prev=getQuiz();
+  save(quizKey(),{attempts:prev.attempts+1,best:Math.max(prev.best,pct),passed:prev.passed||passed,passScore:prev.passed?prev.passScore:(passed?pct:0),lastFail:passed?0:Date.now()});
+}
+function clearActive(){try{localStorage.removeItem(activeKey());}catch(e){}}
+function checkForfeit(){
+  if(!session||isAdmin())return;
+  try{if(localStorage.getItem(activeKey())){clearActive();recordAttempt(0,false);}}catch(e){}
+}
+
+function openQuizIntro(){
+  if(!session){openModal('loginModal');return;}
+  if(!isAdmin()&&completed.length<TOTAL){toast('Finish all '+TOTAL+' lessons to unlock the final exam.');return;}
+  closeReader();
+  var q=getQuiz(),wait=cooldownLeft(),need=passCount(),n=QBANK.length;
+  var h='<div class="flex items-start justify-between gap-3 mb-5"><div><div class="text-[11px] text-amber-400 font-bold uppercase tracking-wide">Final Exam</div><h2 class="text-xl sm:text-3xl font-black text-white mt-1">Pass to earn your certificate</h2></div><button onclick="closeQuiz()" aria-label="Close" class="text-gray-400 hover:text-white p-1"><i data-lucide="x" class="w-6 h-6"></i></button></div>';
+  h+='<div class="grid sm:grid-cols-3 gap-3 mb-5"><div class="rounded-xl bg-gray-900/60 border border-gray-800 p-4 text-center"><div class="text-2xl font-black text-amber-400">'+n+'</div><div class="text-[11px] text-gray-400 uppercase">Questions</div></div><div class="rounded-xl bg-gray-900/60 border border-gray-800 p-4 text-center"><div class="text-2xl font-black text-amber-400">'+CONFIG.PASS_PERCENT+'%</div><div class="text-[11px] text-gray-400 uppercase">Pass mark ('+need+' correct)</div></div><div class="rounded-xl bg-gray-900/60 border border-gray-800 p-4 text-center"><div class="text-2xl font-black text-amber-400">'+CONFIG.QUIZ_MINUTES+'</div><div class="text-[11px] text-gray-400 uppercase">Minutes</div></div></div>';
+  h+='<ul class="space-y-2 text-sm text-gray-300 mb-5"><li class="flex gap-2"><span class="text-amber-400">&#9679;</span>Hard multiple-choice questions covering all 15 modules, with calculations and chart scenarios.</li><li class="flex gap-2"><span class="text-amber-400">&#9679;</span>Questions and answer positions are shuffled on every attempt.</li><li class="flex gap-2"><span class="text-amber-400">&#9679;</span>You need at least '+need+' of '+n+' correct ('+CONFIG.PASS_PERCENT+'%). Your certificate is then issued automatically in your registered name.</li><li class="flex gap-2"><span class="text-amber-400">&#9679;</span>Leaving or refreshing the page during the exam counts as a failed attempt. If you fail, you can retake it after '+CONFIG.RETAKE_WAIT_MIN+' minutes.</li></ul>';
+  if(q.attempts)h+='<div class="rounded-xl border border-gray-800 bg-gray-900/50 p-3 text-xs text-gray-300 mb-4">Attempts: <b class="text-white">'+q.attempts+'</b> &middot; Best score: <b class="text-amber-400">'+q.best+'%</b>'+(q.passed?' &middot; <b class="text-emerald-400">Passed</b>':'')+'</div>';
+  if(q.passed&&!isAdmin()){
+    h+='<button onclick="closeQuiz();showCertificate(false)" class="w-full py-3.5 rounded-xl gold-bg-gradient text-black font-bold text-sm hover:opacity-90 transition">You passed. View your certificate</button>';
+  }else{
+    if(wait>0)h+='<div class="rounded-xl border border-red-500/30 bg-red-500/5 p-3 text-xs text-red-300 mb-4">You can retake the exam in about '+Math.ceil(wait/60000)+' minute(s).</div>';
+    h+='<button '+(wait>0?'disabled style="opacity:.5;cursor:not-allowed" ':'')+'onclick="startQuiz()" class="w-full py-3.5 rounded-xl gold-bg-gradient text-black font-bold text-sm hover:opacity-90 transition">'+(q.attempts?'Retake Final Exam':'Start Final Exam')+'</button>';
+  }
+  $('quizBody').innerHTML=h;showQuizModal();
+}
+function startQuiz(){
+  if(cooldownLeft()>0)return;
+  var qs=shuffle(QBANK.map(function(q){return {q:q[0],e:q[3],o:shuffle([{t:q[1],c:1}].concat(q[2].map(function(w){return {t:w,c:0};})))};}));
+  QZ={qs:qs,a:[],i:0,end:Date.now()+CONFIG.QUIZ_MINUTES*60000,active:true,timer:null};
+  if(!isAdmin()){try{localStorage.setItem(activeKey(),String(QZ.end));}catch(e){}}
+  QZ.timer=setInterval(quizTick,1000);renderQuiz();
+}
+function quizTick(){
+  if(!QZ||!QZ.active)return;
+  var left=Math.max(0,QZ.end-Date.now()),el=$('quizTimer');
+  if(el){var m=Math.floor(left/60000),s=Math.floor(left/1000)%60;el.textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;el.style.color=left<300000?'#f87171':'#fbbf24';}
+  if(left<=0)submitQuiz(true);
+}
+function answeredCount(){var c=0;for(var k=0;k<QZ.qs.length;k++)if(QZ.a[k]!=null)c++;return c;}
+function renderQuiz(){
+  var n=QZ.qs.length,i=QZ.i,q=QZ.qs[i],ans=answeredCount(),L='ABCD';
+  var h='<div class="flex items-center justify-between gap-3 mb-3"><div class="text-xs text-gray-400"><b class="text-white">Question '+(i+1)+'</b> of '+n+' &middot; Answered '+ans+'/'+n+'</div><div class="flex items-center gap-3"><span class="text-xs text-gray-400">Time left</span><span id="quizTimer" class="font-black text-amber-400 tabular-nums">--:--</span><button onclick="closeQuiz()" aria-label="Leave exam" class="text-gray-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button></div></div>';
+  h+='<div class="h-1.5 bg-gray-800 rounded-full overflow-hidden mb-5"><div class="h-full bg-gradient-to-r from-amber-500 to-yellow-300" style="width:'+Math.round(ans/n*100)+'%"></div></div>';
+  h+='<h3 class="text-base sm:text-lg font-bold text-white leading-relaxed mb-4">'+esc(q.q)+'</h3><div class="space-y-3">';
+  q.o.forEach(function(o,k){h+='<button class="qopt'+(QZ.a[i]===k?' sel':'')+'" onclick="pickAns('+k+')"><span class="l">'+L[k]+'</span><span>'+esc(o.t)+'</span></button>';});
+  h+='</div><div class="mt-6 flex items-center justify-between gap-3"><button onclick="goQ('+(i-1)+')" '+(i===0?'disabled style="opacity:.4" ':'')+'class="px-4 py-2.5 rounded-xl text-xs font-bold bg-gray-800 border border-gray-700 hover:bg-gray-700">Previous</button>'+
+    (i<n-1?'<button onclick="goQ('+(i+1)+')" class="px-5 py-2.5 rounded-xl text-xs font-bold gold-bg-gradient text-black">Next</button>':'<button onclick="submitQuiz(false)" class="px-5 py-2.5 rounded-xl text-xs font-bold gold-bg-gradient text-black">Submit Exam</button>')+'</div>';
+  h+='<div class="mt-6 pt-5 border-t border-gray-800"><div class="text-[11px] text-gray-400 mb-2 uppercase font-bold">Question map</div><div class="flex flex-wrap gap-1.5">';
+  for(var k=0;k<n;k++)h+='<button onclick="goQ('+k+')" class="qdot'+(QZ.a[k]!=null?' ans':'')+(k===i?' cur':'')+'" aria-label="Question '+(k+1)+'">'+(k+1)+'</button>';
+  h+='</div><button onclick="submitQuiz(false)" class="mt-4 px-4 py-2 rounded-xl text-xs font-bold border border-amber-500/40 text-amber-300 hover:bg-amber-500/10">Submit exam now</button></div>';
+  $('quizBody').innerHTML=h;quizTick();icons();
+}
+function pickAns(k){if(!QZ||!QZ.active)return;QZ.a[QZ.i]=k;renderQuiz();}
+function goQ(k){if(!QZ||!QZ.active||k<0||k>=QZ.qs.length)return;QZ.i=k;renderQuiz();$('quizModal').scrollTop=0;}
+function submitQuiz(force){
+  if(!QZ||!QZ.active)return;
+  var un=QZ.qs.length-answeredCount();
+  if(!force&&!confirm(un>0?('You have '+un+' unanswered question(s). Submit anyway?'):'Submit your exam now?'))return;
+  QZ.active=false;clearInterval(QZ.timer);clearActive();
+  var n=QZ.qs.length,score=0,wrong=[];
+  QZ.qs.forEach(function(q,k){var sel=QZ.a[k];if(sel!=null&&q.o[sel].c)score++;else wrong.push({q:q,sel:sel});});
+  var pct=Math.round(score/n*1000)/10,passed=score>=passCount();
+  recordAttempt(pct,passed);
+  var finish=function(){renderQuizResult(score,n,pct,passed,wrong);updateProgress();renderModules();};
+  if(passed&&!isAdmin())issueCertificate().then(finish);else finish();
+}
+function renderQuizResult(score,n,pct,passed,wrong){
+  var h='<div class="text-center mb-6"><div class="inline-flex w-20 h-20 rounded-full items-center justify-center mb-3 '+(passed?'bg-emerald-500/15 border border-emerald-500/40':'bg-red-500/10 border border-red-500/40')+'"><i data-lucide="'+(passed?'award':'rotate-ccw')+'" class="w-9 h-9 '+(passed?'text-emerald-400':'text-red-400')+'"></i></div>'+
+   '<h2 class="text-2xl sm:text-3xl font-black text-white">'+(passed?'Congratulations, you passed!':'Not passed this time')+'</h2>'+
+   '<div class="text-5xl font-black mt-3 '+(passed?'text-emerald-400':'text-red-400')+'">'+pct+'%</div>'+
+   '<div class="text-sm text-gray-400 mt-1">'+score+' of '+n+' correct &middot; pass mark '+CONFIG.PASS_PERCENT+'% ('+passCount()+' correct)</div></div>';
+  if(passed&&!isAdmin())h+='<button onclick="closeQuiz();showCertificate(true)" class="w-full py-3.5 rounded-xl gold-bg-gradient text-black font-bold text-sm hover:opacity-90 transition mb-4">View &amp; Download Your Certificate</button>';
+  else if(passed)h+='<p class="text-center text-xs text-gray-400 mb-4">Admin preview: certificates are issued to students only.</p>';
+  else h+='<p class="text-center text-sm text-gray-300 mb-4">Review the topics below, revisit the lessons, and retake the exam after '+CONFIG.RETAKE_WAIT_MIN+' minutes. The correct answers are shown only after you pass.</p>';
+  if(wrong.length){
+    h+='<details class="rounded-xl border border-gray-800 bg-gray-900/50 p-4"><summary class="cursor-pointer text-sm font-bold text-amber-300">'+(passed?'Review the '+wrong.length+' question(s) you missed':'Questions to revisit ('+wrong.length+')')+'</summary><div class="mt-4 space-y-4">';
+    wrong.forEach(function(w,k){
+      h+='<div class="rounded-lg border border-gray-800 p-3"><div class="text-sm font-semibold text-white mb-2">'+(k+1)+'. '+esc(w.q.q)+'</div>'+
+        '<div class="text-xs '+(w.sel==null?'text-gray-400':'text-red-300')+'">Your answer: '+(w.sel==null?'(unanswered)':esc(w.q.o[w.sel].t))+'</div>';
+      if(passed){var right=w.q.o.filter(function(o){return o.c;})[0].t;h+='<div class="text-xs text-emerald-300 mt-1">Correct answer: '+esc(right)+'</div><div class="text-xs text-gray-400 mt-1">'+esc(w.q.e)+'</div>';}
+      h+='</div>';
+    });
+    h+='</div></details>';
+  }
+  h+='<button onclick="closeQuiz()" class="w-full mt-4 py-3 rounded-xl bg-gray-800 border border-gray-700 hover:bg-gray-700 text-white font-bold text-sm">Close</button>';
+  $('quizBody').innerHTML=h;$('quizModal').scrollTop=0;icons();
+}
+function closeQuiz(){
+  if(QZ&&QZ.active){
+    if(!confirm('Leave the exam? This will count as a failed attempt.'))return;
+    clearInterval(QZ.timer);QZ.active=false;clearActive();if(!isAdmin())recordAttempt(0,false);
+  }
+  QZ=null;
+  $('quizModal').classList.add('hidden');document.body.style.overflow='';updateProgress();
+}
+window.addEventListener('beforeunload',function(e){if(QZ&&QZ.active){e.preventDefault();e.returnValue='';}});
+
+function examCardHTML(){
+  var admin=isAdmin(),q=getQuiz(),ready=admin||(!!session&&completed.length>=TOTAL);
+  var tag,sub;
+  if(!session){tag='<span class="text-[10px] text-amber-400 bg-amber-500/10 border border-amber-500/30 px-2 py-1 rounded font-bold shrink-0">VIP</span>';sub='Finish all lessons, then pass '+QBANK.length+' hard questions with '+CONFIG.PASS_PERCENT+'% or more to earn your certificate.';}
+  else if(q.passed&&!admin){tag='<span class="text-[10px] text-emerald-300 bg-emerald-500/10 border border-emerald-500/30 px-2 py-1 rounded font-bold shrink-0">PASSED '+q.passScore+'%</span>';sub='Your certificate is ready. Open the dashboard to download it.';}
+  else if(ready){tag='<span class="text-[10px] text-emerald-300 bg-emerald-500/10 border border-emerald-500/30 px-2 py-1 rounded font-bold shrink-0">'+(admin?'ADMIN':'UNLOCKED')+'</span>';sub=QBANK.length+' questions &middot; '+CONFIG.QUIZ_MINUTES+' minutes &middot; pass mark '+CONFIG.PASS_PERCENT+'%.';}
+  else{tag='<span class="text-[10px] text-gray-300 bg-gray-700/40 border border-gray-600 px-2 py-1 rounded font-bold shrink-0">LOCKED</span>';sub='Complete all '+TOTAL+' lessons ('+(TOTAL-completed.length)+' remaining) to unlock the exam.';}
+  var icon=ready?'<i data-lucide="award" class="w-5 h-5 text-amber-400"></i>':'<i data-lucide="lock" class="w-5 h-5 text-gray-500"></i>';
+  return '<button onclick="openQuizIntro()" class="w-full text-left glass-card rounded-2xl border border-amber-500/30 hover:border-amber-500/60 transition p-4 sm:p-5 flex items-center justify-between gap-3"><span class="flex items-center gap-3 min-w-0"><span class="w-9 h-9 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center shrink-0">'+icon+'</span><span class="min-w-0"><span class="block text-sm sm:text-base font-bold text-white">Final Exam &amp; Certificate</span><span class="block text-[11px] text-gray-400">'+sub+'</span></span></span>'+tag+'</button>';
+}
+
+/* =====================================================================
+   ADMIN (the admin controls exist only inside an admin session)
+   ===================================================================== */
+function adminLoginOK(email){
+  session={email:email,name:CONFIG.ADMIN_NAME,admin:true};
+  try{sessionStorage.setItem('apex_admin',JSON.stringify({admin:true,email:email,h:CONFIG.ADMIN_HASH}));}catch(e){}
+  loadProgress();loadRead();closeModal('loginModal');$('loginCode').value='';updateAuthUI();applyWatermark();
+  toast('Welcome back, admin. Every module, the exam and all certificates are unlocked for you.');
+}
+function adminPreviewCert(){
+  if(!isAdmin())return;
+  viewCert={id:'AFA-'+new Date().getFullYear()+'-PREVIEW000',name:CONFIG.ADMIN_NAME,date:new Date().toISOString()};
+  $('certHeading').textContent='Certificate preview (admin)';drawCertificate($('certCanvas'),viewCert);openModal('certModal');
+}
+function adminViewCert(id){
+  if(!isAdmin())return;var all=load('apex_certs',{}),c=all[id];if(!c)return;
+  viewCert={id:id,name:c.name,date:c.date,score:c.score};$('certHeading').textContent='Certificate '+id;drawCertificate($('certCanvas'),viewCert);openModal('certModal');
+}
+function adminRows(){
+  var us=load('apex_users',{}),rows=[];
+  Object.keys(us).forEach(function(em){
+    var pr=load('apex_progress_'+em,[]),qz=load('apex_quiz_'+em,null),ce=load('apex_cert_'+em,null);
+    rows.push({name:us[em].name,email:em,done:pr.length,quiz:qz?qz.best:null,attempts:qz?qz.attempts:0,passed:!!(qz&&qz.passed),cert:ce?ce.id:'',date:ce?ce.date:''});
+  });
+  return rows;
+}
+function openAdmin(){
+  if(!isAdmin())return;
+  var rows=adminRows(),certs=rows.filter(function(r){return r.cert;}).length;
+  var avg=rows.length?Math.round(rows.reduce(function(s,r){return s+r.done;},0)/rows.length/TOTAL*100):0;
+  var h='<div class="flex items-start justify-between gap-3 mb-5"><div><div class="text-[11px] text-amber-400 font-bold uppercase tracking-wide">Admin only</div><h2 class="text-xl sm:text-3xl font-black text-white mt-1">Admin Panel</h2></div><button onclick="closeAdmin()" aria-label="Close" class="text-gray-400 hover:text-white p-1"><i data-lucide="x" class="w-6 h-6"></i></button></div>';
+  h+='<div class="grid grid-cols-3 gap-3 mb-5"><div class="rounded-xl bg-gray-900/60 border border-gray-800 p-4 text-center"><div class="text-2xl font-black text-amber-400">'+rows.length+'</div><div class="text-[11px] text-gray-400 uppercase">Students</div></div><div class="rounded-xl bg-gray-900/60 border border-gray-800 p-4 text-center"><div class="text-2xl font-black text-amber-400">'+certs+'</div><div class="text-[11px] text-gray-400 uppercase">Certificates</div></div><div class="rounded-xl bg-gray-900/60 border border-gray-800 p-4 text-center"><div class="text-2xl font-black text-amber-400">'+avg+'%</div><div class="text-[11px] text-gray-400 uppercase">Avg progress</div></div></div>';
+  h+='<div class="flex flex-wrap gap-2 mb-4"><button onclick="adminPreviewCert()" class="px-4 py-2 rounded-xl text-xs font-bold bg-gray-800 border border-gray-700 hover:bg-gray-700">Preview certificate</button><button onclick="closeAdmin();openQuizIntro()" class="px-4 py-2 rounded-xl text-xs font-bold bg-gray-800 border border-gray-700 hover:bg-gray-700">Open final exam</button><button onclick="adminExportCSV()" class="px-4 py-2 rounded-xl text-xs font-bold gold-bg-gradient text-black">Export CSV</button></div>';
+  if(!rows.length)h+='<p class="text-sm text-gray-400 py-6 text-center">No students have registered on this browser yet.</p>';
+  else{
+    h+='<div class="overflow-x-auto rounded-xl border border-gray-800"><table class="w-full text-xs"><thead class="bg-gray-900 text-gray-400 uppercase"><tr><th class="text-left p-3">Student</th><th class="text-left p-3">Progress</th><th class="text-left p-3">Exam best</th><th class="text-left p-3">Certificate</th></tr></thead><tbody>';
+    rows.forEach(function(r){
+      h+='<tr class="border-t border-gray-800"><td class="p-3"><div class="font-semibold text-white">'+esc(r.name)+'</div><div class="text-gray-400">'+esc(r.email)+'</div></td><td class="p-3 text-gray-200">'+r.done+' / '+TOTAL+'</td><td class="p-3 text-gray-200">'+(r.quiz==null?'-':r.quiz+'% ('+r.attempts+' tries)')+'</td><td class="p-3">'+(r.cert?'<button onclick="adminViewCert(\''+esc(r.cert)+'\')" class="text-amber-300 font-semibold hover:underline">'+esc(r.cert)+'</button>':'<span class="text-gray-500">-</span>')+'</td></tr>';
+    });
+    h+='</tbody></table></div>';
+  }
+  h+='<p class="text-[11px] text-gray-500 mt-4 leading-relaxed">This list shows only the students who used this browser. To see every student on every device, connect the site to a server database.</p>';
+  $('adminBody').innerHTML=h;$('adminModal').classList.remove('hidden');document.body.style.overflow='hidden';icons();
+}
+function closeAdmin(){var m=$('adminModal');if(m&&!m.classList.contains('hidden')){m.classList.add('hidden');document.body.style.overflow='';}}
+function adminExportCSV(){
+  if(!isAdmin())return;
+  function c(v){v=String(v==null?'':v);if(/^[=+\-@\t\r]/.test(v))v="'"+v;return '"'+v.replace(/"/g,'""')+'"';}
+  var lines=[['Name','Email','Lessons completed','Exam best %','Exam attempts','Passed','Certificate ID','Certificate date'].map(c).join(',')];
+  adminRows().forEach(function(r){lines.push([r.name,r.email,r.done,r.quiz==null?'':r.quiz,r.attempts,r.passed?'yes':'no',r.cert,r.date].map(c).join(','));});
+  saveBlob(new Blob([lines.join('\n')],{type:'text/csv;charset=utf-8'}),'apex-students.csv');
+}
+
+/* =====================================================================
+   SEQUENTIAL LEARNING: a module opens only after the previous one is finished
+   ===================================================================== */
+function afterComplete(id){
+  var l=LESSONS[id-1],m=MODULES[l.m-1];
+  if(completed.length>=TOTAL){
+    toast('All lessons complete! The final exam is now unlocked.');
+    if(!isAdmin())setTimeout(function(){closeReader();openQuizIntro();},900);
+    return;
+  }
+  if(modDone(m)&&MODULES[m.id]){openMods[m.id+1]=true;renderModules();toast('Module '+m.id+' complete! Module '+(m.id+1)+' is now unlocked.');}
+}
+
+checkForfeit();
 buildBg();loadProgress();loadRead();updateAuthUI();applyWatermark();initProtection();startReadTimer();
 </script>
 </body>
