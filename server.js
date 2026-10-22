@@ -25,8 +25,8 @@ bot.on('polling_error', (error) => {
 });
 
 // Storage
-const pendingUsers = new Map();  // chatId -> userData
-const verifiedCodes = new Map(); // otpCode -> { email, verified }
+const pendingUsers = new Map();     // chatId -> userData
+const verifiedCodes = new Map();    // otpCode -> { email, verified }
 const pendingApprovals = new Map(); // pendingId -> { userChatId, email, method }
 
 // ---------------- TELEGRAM BOT FLOW ----------------
@@ -49,7 +49,7 @@ bot.on('message', (msg) => {
   if (msg.photo || !msg.text || msg.text.startsWith('/')) return;
 
   const chatId = msg.chat.id;
-  const text = msg.text.trim();
+  const text = msg.text.trim().toLowerCase(); // Normalize email input
   const userState = pendingUsers.get(chatId);
 
   if (userState && userState.step === 'AWAITING_EMAIL') {
@@ -108,10 +108,15 @@ bot.on('callback_query', (query) => {
     if (data.startsWith('APPROVE_')) {
       // Generate Real 6-Digit Random Verification OTP Code
       const generatedCode = String(Math.floor(100000 + Math.random() * 900000));
-      verifiedCodes.set(generatedCode, { email: pendingData.email, verified: false });
+      
+      // Store code linked to the registered student's email
+      verifiedCodes.set(generatedCode, { 
+        email: pendingData.email.toLowerCase(), 
+        verified: false 
+      });
 
-      // Build English Approval Message with Real Code
-      const studentMessage = "🎉 *Payment Approved by Admin!*\n\nYour payment has been successfully verified.\n\n🔑 *Your Verification OTP Code:* `" + generatedCode + "`\n\nEnter this code on the website to instantly unlock VIP Masterclass Access!";
+      // Build Approval Message with Real Code
+      const studentMessage = `🎉 *Payment Approved by Admin!*\n\nYour payment has been successfully verified.\n\n🔑 *Your Verification OTP Code:* \`\${generatedCode}\`\n\nEnter this code along with your registered email (*${pendingData.email}*) on the website to instantly unlock VIP Masterclass Access!`;
 
       // Notify Student with Real OTP Code
       bot.sendMessage(
@@ -195,22 +200,44 @@ bot.on('photo', (msg) => {
   );
 });
 
-// REST API for Website Verification
+// REST API for Website Verification (STRICT CHECK FOR BOTH OTP & EMAIL)
 app.post('/api/verify-code', (req, res) => {
-  const { code } = req.body;
+  const { code, email } = req.body;
 
-  if (!code) {
-    return res.status(400).json({ success: false, message: 'Code is required!' });
+  if (!code || !email) {
+    return res.status(400).json({ 
+      success: false, 
+      message: 'Both Email and Verification Code are required!' 
+    });
   }
 
-  const record = verifiedCodes.get(code.trim());
+  const cleanCode = code.trim();
+  const cleanEmail = email.trim().toLowerCase();
 
-  if (record) {
-    record.verified = true;
-    return res.json({ success: true, message: 'Verification successful!' });
-  } else {
-    return res.status(400).json({ success: false, message: 'Invalid Verification Code!' });
+  const record = verifiedCodes.get(cleanCode);
+
+  if (!record) {
+    return res.status(400).json({ 
+      success: false, 
+      message: 'Invalid Verification Code!' 
+    });
   }
+
+  // Verify that the code belongs to this specific email address
+  if (record.email !== cleanEmail) {
+    return res.status(403).json({ 
+      success: false, 
+      message: 'This OTP code is not valid for the provided email address!' 
+    });
+  }
+
+  // Mark as verified
+  record.verified = true;
+
+  return res.json({ 
+    success: true, 
+    message: 'Verification successful! Masterclass unlocked.' 
+  });
 });
 
 // Single Page Application Fallback
